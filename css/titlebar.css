@@ -1,0 +1,69 @@
+/* Titlebar CSS */
+
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('./../resources/fonts/RobotoMono.ttf');
+}
+
+#title-bar {
+  -webkit-app-region: drag;
+  height: 32px;
+  padding: 0px;
+  margin: 0px;
+  color: #F1F1F1;
+  font-family: sans-serif;
+  -webkit-user-select: none;
+}
+
+#title {
+  position: fixed;
+  top: 0px;
+  left: 50%; 
+  line-height: 32px;
+  transform: translate(-50%,0);
+  font-size: 14px;
+}
+
+#title-bar-btns {
+  -webkit-app-region: no-drag;
+  position: fixed;
+  top: 1px;
+  right: 0px;
+  float: right;
+}
+
+#title-bar-btns button {
+  font-family: 'Roboto Mono', monospace;
+  height: 24px;
+  width: 35px;
+  background-color: transparent;
+  border: none;
+  color: #F1F1F1;
+  font-size: 16px;
+  padding-top: 0px; 
+  top: 1px;
+}
+
+#title-bar-btns button:hover {
+  color: #9F9F41;
+}
+
+#title-bar-btns #close-btn:hover {
+  color: #fF3F41;
+}
+
+#title-bar-btns button:active {
+  color: #3F3F41;
+}
+
+#title-bar-btns #close-btn:active {
+  color: #aF3F41;
+}
+
+/*#title-bar-btns #max-btn {
+  display: none;
+}
+*/
+#title-bar-btns button:focus {
+  outline:0;
+}
