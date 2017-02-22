@@ -1,40 +1,31 @@
-# electron-quick-start
+# The Aviator
 
-**Clone and run for a quick way to see Electron in action.**
+Demos and game for the tutorial "The Making of 'The Aviator': Animating a Basic 3D Scene with Three.js", by Karim Maaloul.
 
-This is a minimal Electron application based on the [Quick Start Guide](http://electron.atom.io/docs/tutorial/quick-start) within the Electron documentation.
+[Article on Codrops](http://tympanus.net/codrops/?p=26501)
 
-**Use this app along with the [Electron API Demos](http://electron.atom.io/#get-started) app for API code examples to help you get started.**
+[Demo](http://tympanus.net/Tutorials/TheAviator/)
 
-A basic Electron application needs just these files:
+## License
 
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
+Integrate or build upon it for free in your personal or commercial projects. Don't republish, redistribute or sell "as-is". 
 
-You can learn more about each of these components within the [Quick Start Guide](http://electron.atom.io/docs/tutorial/quick-start).
+Read more here: [License](http://tympanus.net/codrops/licensing/)
 
-## To Use
+## Credits
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+- [Three.js](http://threejs.org/)
+- [TweenMax](http://greensock.com)
 
-```bash
-# Clone this repository
-git clone https://github.com/electron/electron-quick-start
-# Go into the repository
-cd electron-quick-start
-# Install dependencies
-npm install
-# Run the app
-npm start
-```
+## Misc
 
-Learn more about Electron and its API in the [documentation](http://electron.atom.io/docs/).
+Follow Karim: [Twitter](https://twitter.com/yakudoo), [Codepen](http://codepen.io/Yakudoo/)
 
-## Other Example Apps
+Follow Codrops: [Twitter](http://www.twitter.com/codrops), [Facebook](http://www.facebook.com/pages/Codrops/159107397912), [Google+](https://plus.google.com/101095823814290637419), [GitHub](https://github.com/codrops), [Pinterest](http://www.pinterest.com/codrops/)
 
-For more example apps, see the
-[list of boilerplates](http://electron.atom.io/community/#boilerplates)
-created by the awesome electron community.
+[© Codrops 2016](http://www.codrops.com)
 
-#### License [CC0 1.0 (Public Domain)](LICENSE.md)
+
+
+
+
