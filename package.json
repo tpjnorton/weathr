@@ -1,0 +1,22 @@
+{
+  "name": "Weather",
+  "version": "1.0.0",
+  "description": "A beautiful weather application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Weather",
+    "web",
+    "three",
+    "js",
+    "electron"
+  ],
+  "author": "Tom Norton",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  }
+}
