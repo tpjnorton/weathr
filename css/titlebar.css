@@ -13,10 +13,11 @@
   color: #F1F1F1;
   font-family: sans-serif;
   -webkit-user-select: none;
+  overflow: hidden;
 }
 
 #title {
-  position: fixed;
+  position: absolute;
   top: 0px;
   left: 50%; 
   line-height: 32px;
@@ -26,7 +27,7 @@
 
 #title-bar-btns {
   -webkit-app-region: no-drag;
-  position: fixed;
+  position: absolute;
   top: 1px;
   right: 0px;
   float: right;
