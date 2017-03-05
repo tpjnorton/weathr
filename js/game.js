@@ -19,66 +19,68 @@ var newTime = new Date().getTime();
 var oldTime = new Date().getTime();
 
 function resetGame(){
-  game = {speed:0,
-          initSpeed:.00035,
-          baseSpeed:.00035,
-          targetBaseSpeed:.00035,
-          incrementSpeedByTime:.0000025,
-          incrementSpeedByLevel:.000005,
-          distanceForSpeedUpdate:100,
-          speedLastUpdate:0,
+  game = {
+    speed:0,
+    initSpeed:.00035,
+    baseSpeed:.00035,
+    targetBaseSpeed:.00035,
+    incrementSpeedByTime:.0000025,
+    incrementSpeedByLevel:.000005,
+    distanceForSpeedUpdate:100,
+    speedLastUpdate:0,
 
-          distance:0,
-          ratioSpeedDistance:50,
-          energy:100,
-          ratioSpeedEnergy:3,
+    distance:0,
+    ratioSpeedDistance:50,
+    energy:100,
+    ratioSpeedEnergy:3,
 
-          level:1,
-          levelLastUpdate:0,
-          distanceForLevelUpdate:1000,
+    level:1,
+    levelLastUpdate:0,
+    distanceForLevelUpdate:1000,
 
-          planeDefaultHeight:100,
-          planeAmpHeight:80,
-          planeAmpWidth:75,
-          planeMoveSensivity:0.005,
-          planeRotXSensivity:0.0008,
-          planeRotZSensivity:0.0004,
-          planeFallSpeed:.001,
-          planeMinSpeed:1.2,
-          planeMaxSpeed:1.6,
-          planeSpeed:0,
-          planeCollisionDisplacementX:0,
-          planeCollisionSpeedX:0,
+    planeDefaultHeight:100,
+    planeAmpHeight:80,
+    planeAmpWidth:75,
+    planeMoveSensivity:0.005,
+    planeRotXSensivity:0.0008,
+    planeRotZSensivity:0.0004,
+    planeFallSpeed:.001,
+    planeMinSpeed:1.2,
+    planeMaxSpeed:1.6,
+    planeSpeed:0,
+    planeCollisionDisplacementX:0,
+    planeCollisionSpeedX:0,
 
-          planeCollisionDisplacementY:0,
-          planeCollisionSpeedY:0,
+    planeCollisionDisplacementY:0,
+    planeCollisionSpeedY:0,
 
-          earthRadius:800,
-          earthLength:800,
-          earthRotationSpeed:0.006,
-          wavesMinAmp : 5,
-          wavesMaxAmp : 20,
-          wavesMinSpeed : 0.001,
-          wavesMaxSpeed : 0.003,
+    earthRadius:800,
+    earthLength:800,
+    earthRotationSpeed:0.006,
+    wavesMinAmp : 5,
+    wavesMaxAmp : 20,
+    wavesMinSpeed : 0.001,
+    wavesMaxSpeed : 0.003,
 
-          cameraFarPos:500,
-          cameraNearPos:150,
-          cameraSensivity:0.002,
+    cameraFarPos:500,
+    cameraNearPos:150,
+    cameraSensivity:0.002,
 
-          coinDistanceTolerance:15,
-          coinValue:3,
-          coinsSpeed:.5,
-          coinLastSpawn:0,
-          distanceForCoinsSpawn:100,
+    coinDistanceTolerance:15,
+    coinValue:3,
+    coinsSpeed:.5,
+    coinLastSpawn:0,
+    distanceForCoinsSpawn:100,
 
-          ennemyDistanceTolerance:10,
-          ennemyValue:10,
-          ennemiesSpeed:.6,
-          ennemyLastSpawn:0,
-          distanceForEnnemiesSpawn:50,
+    ennemyDistanceTolerance:10,
+    ennemyValue:10,
+    ennemiesSpeed:.6,
+    ennemyLastSpawn:0,
+    distanceForEnnemiesSpawn:50,
 
-          status : "playing",
-         };
+    status : "playing",
+
+  };
 }
 
 //THREEJS RELATED VARIABLES
@@ -276,12 +278,12 @@ earth.prototype.moveWaves = function (){
 Cloud = function(){
   this.mesh = new THREE.Object3D();
   this.mesh.name = "cloud";
-  var geom = new THREE.DodecahedronGeometry(5,0);
+  var geom = new THREE.CubeGeometry(5,5,5);
   var mat = new THREE.MeshPhongMaterial({
     color:Colors.white,
-    shininess: 0,
+    shininess: 1,
     transparent: true,
-    opacity: 0.5 + Math.random()/3
+    opacity: 0.6 + Math.random()/3
   });
 
   //*
