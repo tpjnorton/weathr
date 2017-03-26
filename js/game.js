@@ -239,7 +239,6 @@ earth = function(){
 
   for (var i=0;i<l;i++){
     var v = geom.vertices[i];
-    //v.y = Math.random()*30;
     this.waves.push({y:v.y,
                      x:v.x,
                      z:v.z,
@@ -302,7 +301,6 @@ Cloud = function(){
     m.receiveShadow = true;
 
   }
-  //*/
 }
 
 Cloud.prototype.rotate = function(){
@@ -314,15 +312,29 @@ Cloud.prototype.rotate = function(){
   }
 }
 
+
+Sun = function(){
+  var geom = new THREE.OctahedronGeometry(1000,2);
+  var mat = new THREE.MeshPhongMaterial({
+    color:Colors.yellow,
+    shading:THREE.FlatShading
+  });
+
+  this.mesh = new THREE.Mesh(geom, mat);
+  this.mesh.name = "Sun";
+}
+
 // 3D Models
 var earth;
 var sun;
 
 function createSun(){
-
+  sun = new Sun();
+  console.log(sun.mesh.position.x)
+  scene.add(sun.mesh)
 }
 
-function createearth(){
+function createEarth(){
   earth = new earth();
   earth.mesh.position.y = -game.earthRadius;
   scene.add(earth.mesh);
@@ -335,7 +347,6 @@ function createSky(){
 }
 
 function createCoins(){
-
   coinsHolder = new CoinsHolder(20);
   scene.add(coinsHolder.mesh)
 }
@@ -397,7 +408,8 @@ function init(event){
   createScene();
 
   createLights();
-  createearth();
+  createEarth();
+  createSun();
   createSky();
 
   document.addEventListener('mousemove', handleMouseMove, false);
