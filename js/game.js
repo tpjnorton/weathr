@@ -312,7 +312,6 @@ Cloud.prototype.rotate = function() {
   }
 }
 
-
 Sun = function() {
   var geom = new THREE.OctahedronGeometry(1000,2);
   var mat = new THREE.MeshPhongMaterial({
@@ -321,6 +320,11 @@ Sun = function() {
   });
 
   this.mesh = new THREE.Mesh(geom, mat);
+  var a = (-5);
+  var h = game.earthRadius + 150;
+  this.mesh.position.y = Math.sin(a)*h;
+  this.mesh.position.x = Math.cos(a)*h;
+  this.mesh.position.z = 10;
   this.mesh.name = "Sun";
 }
 
@@ -330,7 +334,6 @@ var sun;
 
 function createSun() {
   sun = new Sun();
-  console.log(sun.mesh.position.x)
   scene.add(sun.mesh)
 }
 
