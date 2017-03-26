@@ -14,13 +14,13 @@ var Colors = {
 
 // GAME VARIABLES
 var game;
-var deltaTime = 0;
+var deltaTime = 0.01;
 var newTime = new Date().getTime();
 var oldTime = new Date().getTime();
 
 function resetGame(){
   game = {
-    speed:0,
+    speed:0.00002,
     initSpeed:.00035,
     baseSpeed:.00035,
     targetBaseSpeed:.00035,

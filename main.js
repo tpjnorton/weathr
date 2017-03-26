@@ -11,7 +11,7 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-var w = 400;
+var w = 800;
 var h = 600;
 
 function createWindow () {
@@ -20,7 +20,7 @@ function createWindow () {
     width: w,
     minWidth: 400,
     height: h,
-    minHeight: 600, 
+    minHeight: 600,
     frame: false
   });
 
