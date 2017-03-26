@@ -72,11 +72,11 @@ function resetGame(){
     coinLastSpawn:0,
     distanceForCoinsSpawn:100,
 
-    ennemyDistanceTolerance:10,
-    ennemyValue:10,
-    ennemiesSpeed:.6,
-    ennemyLastSpawn:0,
-    distanceForEnnemiesSpawn:50,
+    enemyDistanceTolerance:10,
+    enemyValue:10,
+    enemiesSpeed:.6,
+    enemyLastSpawn:0,
+    distanceForEnemiesSpawn:50,
 
     status : "playing",
 
@@ -340,14 +340,14 @@ function createCoins(){
   scene.add(coinsHolder.mesh)
 }
 
-function createEnnemies(){
+function createEnemies(){
   for (var i=0; i<10; i++){
-    var ennemy = new Ennemy();
-    ennemiesPool.push(ennemy);
+    var enemy = new Ennemy();
+    enemiesPool.push(enemy);
   }
-  ennemiesHolder = new EnnemiesHolder();
-  //ennemiesHolder.mesh.position.y = -game.earthRadius;
-  scene.add(ennemiesHolder.mesh)
+  enemiesHolder = new EnemiesHolder();
+  //enemiesHolder.mesh.position.y = -game.earthRadius;
+  scene.add(enemiesHolder.mesh)
 }
 
 function createParticles(){
@@ -356,7 +356,7 @@ function createParticles(){
     particlesPool.push(particle);
   }
   particlesHolder = new ParticlesHolder();
-  //ennemiesHolder.mesh.position.y = -game.earthRadius;
+  //enemiesHolder.mesh.position.y = -game.earthRadius;
   scene.add(particlesHolder.mesh)
 }
 
@@ -396,12 +396,6 @@ var fieldDistance, energyBar, replayMessage, fieldLevel, levelCircle;
 function init(event){
 
   // UI
-
-  fieldDistance = document.getElementById("distValue");
-  energyBar = document.getElementById("energyBar");
-  replayMessage = document.getElementById("replayMessage");
-  fieldLevel = document.getElementById("levelValue");
-  levelCircle = document.getElementById("levelCircleStroke");
 
   resetGame();
   createScene();
