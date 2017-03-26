@@ -262,7 +262,7 @@ earth = function(){
 
 }
 
-earth.prototype.moveWaves = function (){
+earth.prototype.moveSurface = function (){
   var verts = this.mesh.geometry.vertices;
   var l = verts.length;
   for (var i=0; i<l; i++){
@@ -278,7 +278,7 @@ earth.prototype.moveWaves = function (){
 Cloud = function(){
   this.mesh = new THREE.Object3D();
   this.mesh.name = "cloud";
-  var geom = new THREE.CubeGeometry(5,5,5);
+  var geom = new THREE.BoxGeometry(5,5,5);
   var mat = new THREE.MeshPhongMaterial({
     color:Colors.white,
     shininess: 1,
@@ -346,7 +346,6 @@ function createEnemies(){
     enemiesPool.push(enemy);
   }
   enemiesHolder = new EnemiesHolder();
-  //enemiesHolder.mesh.position.y = -game.earthRadius;
   scene.add(enemiesHolder.mesh)
 }
 
@@ -356,7 +355,6 @@ function createParticles(){
     particlesPool.push(particle);
   }
   particlesHolder = new ParticlesHolder();
-  //enemiesHolder.mesh.position.y = -game.earthRadius;
   scene.add(particlesHolder.mesh)
 }
 
@@ -366,14 +364,12 @@ function loop(){
   deltaTime = newTime-oldTime;
   oldTime = newTime;
 
-  earth.mesh.rotation.z += game.speed*deltaTime;//*game.earthRotationSpeed;
-
   if ( earth.mesh.rotation.z > 2*Math.PI)  earth.mesh.rotation.z -= 2*Math.PI;
 
   ambientLight.intensity += (.5 - ambientLight.intensity)*deltaTime*0.005;
 
   sky.moveClouds();
-  earth.moveWaves();
+  earth.moveSurface();
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);
