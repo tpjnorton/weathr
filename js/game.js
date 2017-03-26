@@ -18,7 +18,7 @@ var deltaTime = 0.01;
 var newTime = new Date().getTime();
 var oldTime = new Date().getTime();
 
-function resetGame(){
+function resetGame() {
   game = {
     speed:0.00002,
     initSpeed:.00035,
@@ -154,16 +154,16 @@ function handleTouchMove(event) {
     mousePos = {x:tx, y:ty};
 }
 
-function handleMouseUp(event){
-  if (game.status == "waitingReplay"){
+function handleMouseUp(event) {
+  if (game.status == "waitingReplay") {
     resetGame();
     hideReplay();
   }
 }
 
 
-function handleTouchEnd(event){
-  if (game.status == "waitingReplay"){
+function handleTouchEnd(event) {
+  if (game.status == "waitingReplay") {
     resetGame();
     hideReplay();
   }
@@ -200,12 +200,12 @@ function createLights() {
 
 }
 
-Sky = function(){
+Sky = function() {
   this.mesh = new THREE.Object3D();
   this.nClouds = 40;
   this.clouds = [];
   var stepAngle = Math.PI*2 / this.nClouds;
-  for(var i=0; i<this.nClouds; i++){
+  for(var i=0; i<this.nClouds; i++) {
     var c = new Cloud();
     this.clouds.push(c);
     var a = stepAngle*i + (-5 + Math.random()*10);
@@ -220,8 +220,8 @@ Sky = function(){
   }
 }
 
-Sky.prototype.moveClouds = function(){
-  for(var i=0; i<this.nClouds; i++){
+Sky.prototype.moveClouds = function() {
+  for(var i=0; i<this.nClouds; i++) {
     var c = this.clouds[i];
     c.rotate();
   }
@@ -229,7 +229,7 @@ Sky.prototype.moveClouds = function(){
 
 }
 
-earth = function(){
+earth = function() {
   var geom = new THREE.CylinderGeometry(game.earthRadius,game.earthRadius,game.earthLength,40,10);
   geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
   geom.mergeVertices();
@@ -237,7 +237,7 @@ earth = function(){
 
   this.waves = [];
 
-  for (var i=0;i<l;i++){
+  for (var i=0;i<l;i++) {
     var v = geom.vertices[i];
     this.waves.push({y:v.y,
                      x:v.x,
@@ -261,10 +261,10 @@ earth = function(){
 
 }
 
-earth.prototype.moveSurface = function (){
+earth.prototype.moveSurface = function () {
   var verts = this.mesh.geometry.vertices;
   var l = verts.length;
-  for (var i=0; i<l; i++){
+  for (var i=0; i<l; i++) {
     var v = verts[i];
     var vprops = this.waves[i];
     v.x =  vprops.x + Math.cos(vprops.ang/10)*vprops.amp;
@@ -274,7 +274,7 @@ earth.prototype.moveSurface = function (){
   }
 }
 
-Cloud = function(){
+Cloud = function() {
   this.mesh = new THREE.Object3D();
   this.mesh.name = "cloud";
   var geom = new THREE.BoxGeometry(5,5,5);
@@ -287,7 +287,7 @@ Cloud = function(){
 
   //*
   var nBlocs = 15+Math.floor(Math.random()*5);
-  for (var i=0; i<nBlocs; i++ ){
+  for (var i=0; i<nBlocs; i++ ) {
     var m = new THREE.Mesh(geom.clone(), mat);
     m.position.x = i*1.1;
     m.position.y = Math.random()*5;
@@ -303,9 +303,9 @@ Cloud = function(){
   }
 }
 
-Cloud.prototype.rotate = function(){
+Cloud.prototype.rotate = function() {
   var l = this.mesh.children.length;
-  for(var i=0; i<l; i++){
+  for(var i=0; i<l; i++) {
     var m = this.mesh.children[i];
     m.rotation.z+= Math.random()*.005;
     m.rotation.y+= Math.random()*.002;
@@ -313,7 +313,7 @@ Cloud.prototype.rotate = function(){
 }
 
 
-Sun = function(){
+Sun = function() {
   var geom = new THREE.OctahedronGeometry(1000,2);
   var mat = new THREE.MeshPhongMaterial({
     color:Colors.yellow,
@@ -328,31 +328,31 @@ Sun = function(){
 var earth;
 var sun;
 
-function createSun(){
+function createSun() {
   sun = new Sun();
   console.log(sun.mesh.position.x)
   scene.add(sun.mesh)
 }
 
-function createEarth(){
+function createEarth() {
   earth = new earth();
   earth.mesh.position.y = -game.earthRadius;
   scene.add(earth.mesh);
 }
 
-function createSky(){
+function createSky() {
   sky = new Sky();
   sky.mesh.position.y = -game.earthRadius;
   scene.add(sky.mesh);
 }
 
-function createCoins(){
+function createCoins() {
   coinsHolder = new CoinsHolder(20);
   scene.add(coinsHolder.mesh)
 }
 
-function createEnemies(){
-  for (var i=0; i<10; i++){
+function createEnemies() {
+  for (var i=0; i<10; i++) {
     var enemy = new Ennemy();
     enemiesPool.push(enemy);
   }
@@ -360,8 +360,8 @@ function createEnemies(){
   scene.add(enemiesHolder.mesh)
 }
 
-function createParticles(){
-  for (var i=0; i<10; i++){
+function createParticles() {
+  for (var i=0; i<10; i++) {
     var particle = new Particle();
     particlesPool.push(particle);
   }
@@ -369,7 +369,7 @@ function createParticles(){
   scene.add(particlesHolder.mesh)
 }
 
-function loop(){
+function loop() {
 
   newTime = new Date().getTime();
   deltaTime = newTime-oldTime;
@@ -389,7 +389,7 @@ function loop(){
 var blinkEnergy=false;
 
 
-function normalize(v,vmin,vmax,tmin, tmax){
+function normalize(v,vmin,vmax,tmin, tmax) {
   var nv = Math.max(Math.min(v,vmax), vmin);
   var dv = vmax-vmin;
   var pc = (nv-vmin)/dv;
@@ -400,7 +400,7 @@ function normalize(v,vmin,vmax,tmin, tmax){
 
 var fieldDistance, energyBar, replayMessage, fieldLevel, levelCircle;
 
-function init(event){
+function init(event) {
 
   // UI
 
