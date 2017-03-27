@@ -1,4 +1,5 @@
 //COLORS
+var THREE = require('three')
 var Colors = {
     red:0xf25346,
     white:0xd8d0d1,
@@ -118,7 +119,6 @@ function createScene() {
   camera.position.x = 0;
   camera.position.z = 200;
   camera.position.y = game.planeDefaultHeight;
-  //camera.lookAt(new THREE.Vector3(0, 400, 0));
 
   renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(WIDTH, HEIGHT);
@@ -210,13 +210,14 @@ Sky = function() {
     this.clouds.push(c);
     var a = stepAngle*i + (-5 + Math.random()*10);
     var h = game.earthRadius + 150 + Math.random();
-    c.mesh.position.y = Math.sin(a)*h;
+    c.mesh.position.y = 1.01*Math.sin(a)*h;
     c.mesh.position.x = Math.cos(a)*h;
     c.mesh.position.z = 10;
     c.mesh.rotation.z = a + Math.PI/2;
     var s = 1+Math.random()*2;
     c.mesh.scale.set(s,s,s);
     this.mesh.add(c.mesh);
+    console.log(c.mesh.position)
   }
 }
 
@@ -313,17 +314,15 @@ Cloud.prototype.rotate = function() {
 }
 
 Sun = function() {
-  var geom = new THREE.OctahedronGeometry(1000,2);
+  var geom = new THREE.OctahedronGeometry(15,2);
   var mat = new THREE.MeshPhongMaterial({
     color:Colors.yellow,
     shading:THREE.FlatShading
   });
 
   this.mesh = new THREE.Mesh(geom, mat);
-  var a = (-5);
-  var h = game.earthRadius + 150;
-  this.mesh.position.y = Math.sin(a)*h;
-  this.mesh.position.x = Math.cos(a)*h;
+  this.mesh.position.x = 260.9991703528527
+  this.mesh.position.y = 914.1935940037066
   this.mesh.position.z = 10;
   this.mesh.name = "Sun";
 }
@@ -347,29 +346,6 @@ function createSky() {
   sky = new Sky();
   sky.mesh.position.y = -game.earthRadius;
   scene.add(sky.mesh);
-}
-
-function createCoins() {
-  coinsHolder = new CoinsHolder(20);
-  scene.add(coinsHolder.mesh)
-}
-
-function createEnemies() {
-  for (var i=0; i<10; i++) {
-    var enemy = new Ennemy();
-    enemiesPool.push(enemy);
-  }
-  enemiesHolder = new EnemiesHolder();
-  scene.add(enemiesHolder.mesh)
-}
-
-function createParticles() {
-  for (var i=0; i<10; i++) {
-    var particle = new Particle();
-    particlesPool.push(particle);
-  }
-  particlesHolder = new ParticlesHolder();
-  scene.add(particlesHolder.mesh)
 }
 
 function loop() {
@@ -419,6 +395,8 @@ function init(event) {
   document.addEventListener('touchmove', handleTouchMove, false);
   document.addEventListener('mouseup', handleMouseUp, false);
   document.addEventListener('touchend', handleTouchEnd, false);
+
+
 
   loop();
 }
