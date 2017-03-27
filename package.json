@@ -20,6 +20,8 @@
     "electron": "^1.4.1"
   },
   "dependencies": {
-    "is-online": "^6.1.0"
+    "is-online": "^6.1.0",
+    "three": "^0.84.0",
+    "three-effectcomposer": "0.0.1"
   }
 }
