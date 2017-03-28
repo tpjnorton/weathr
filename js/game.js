@@ -118,7 +118,6 @@ function createScene() {
   camera.position.x = 0;
   camera.position.z = 200;
   camera.position.y = game.planeDefaultHeight;
-  //camera.lookAt(new THREE.Vector3(0, 400, 0));
 
   renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(WIDTH, HEIGHT);
@@ -207,6 +206,7 @@ Sky = function() {
   var stepAngle = Math.PI*2 / this.nClouds;
   for(var i=0; i<this.nClouds; i++) {
     var c = new Cloud();
+    var sun = new Sun();
     this.clouds.push(c);
     var a = stepAngle*i + (-5 + Math.random()*10);
     var h = game.earthRadius + 150 + Math.random();
@@ -214,8 +214,17 @@ Sky = function() {
     c.mesh.position.x = Math.cos(a)*h;
     c.mesh.position.z = 10;
     c.mesh.rotation.z = a + Math.PI/2;
+
+    sun.mesh.position.y = Math.sin(a)*h;
+    sun.mesh.position.x = Math.cos(a)*h;
+    sun.mesh.position.z = 10;
+    sun.mesh.rotation.z = a + Math.PI/2;
+
+
     var s = 1+Math.random()*2;
     c.mesh.scale.set(s,s,s);
+    sun.mesh.scale.set(s,s,s);
+    this.mesh.add(sun.mesh);
     this.mesh.add(c.mesh);
   }
 }
@@ -226,7 +235,6 @@ Sky.prototype.moveClouds = function() {
     c.rotate();
   }
   this.mesh.rotation.z += game.speed*deltaTime/4;
-
 }
 
 earth = function() {
@@ -313,19 +321,28 @@ Cloud.prototype.rotate = function() {
 }
 
 Sun = function() {
-  var geom = new THREE.OctahedronGeometry(1000,2);
+  this.mesh = new THREE.Object3D();
+  this.mesh.name = "sun";
+  var geom = new THREE.OctahedronGeometry(5, 3);
   var mat = new THREE.MeshPhongMaterial({
+    map: THREE.ImageUtils.loadTexture('resources/images/5.jpg'),
     color:Colors.yellow,
-    shading:THREE.FlatShading
+    shading:THREE.FlatShading,
+    shininess: 1
   });
 
-  this.mesh = new THREE.Mesh(geom, mat);
-  var a = (-5);
-  var h = game.earthRadius + 150;
-  this.mesh.position.y = Math.sin(a)*h;
-  this.mesh.position.x = Math.cos(a)*h;
-  this.mesh.position.z = 10;
-  this.mesh.name = "Sun";
+  var spriteMap = new THREE.TextureLoader().load( "resources/images/glow.png" );
+  var spriteMaterial = new THREE.SpriteMaterial( {
+    map: spriteMap,
+    color: Colors.yellow,
+    transparent: true,
+    blending: THREE.AdditiveBlending
+  } );
+  var sprite = new THREE.Sprite( spriteMaterial );
+  sprite.scale.set(50, 50, 1)
+  this.mesh.add(sprite); // this centers the glow at the mesh
+
+  this.mesh.add(new THREE.Mesh(geom, mat));
 }
 
 // 3D Models
