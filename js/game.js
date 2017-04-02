@@ -324,11 +324,9 @@ Sun = function() {
   this.mesh = new THREE.Object3D();
   this.mesh.name = "sun";
   var geom = new THREE.OctahedronGeometry(5, 3);
-  var mat = new THREE.MeshPhongMaterial({
+  var mat = new THREE.MeshBasicMaterial({
     map: THREE.ImageUtils.loadTexture('resources/images/5.jpg'),
-    color:Colors.yellow,
     shading:THREE.FlatShading,
-    shininess: 1
   });
 
   var spriteMap = new THREE.TextureLoader().load( "resources/images/glow.png" );
