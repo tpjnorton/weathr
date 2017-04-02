@@ -209,7 +209,7 @@ Sky = function() {
     this.clouds.push(c);
     var a = stepAngle*i + (-5 + Math.random()*10);
     var h = game.earthRadius + 150 + Math.random();
-    c.mesh.position.y = Math.sin(a)*h;
+    c.mesh.position.y = Math.sin(a)*h + 10;
     c.mesh.position.x = Math.cos(a)*h;
     c.mesh.position.z = 10;
     c.mesh.rotation.z = a + Math.PI/2;
@@ -316,7 +316,7 @@ Sun = function() {
   this.mesh.name = "sun";
   var geom = new THREE.OctahedronGeometry(16, 3);
   var mat = new THREE.MeshBasicMaterial({
-    map: THREE.ImageUtils.loadTexture('resources/images/5.jpg'),
+    map: THREE.ImageUtils.loadTexture('resources/images/sunbig.jpg'),
     shading:THREE.FlatShading,
   });
 
@@ -416,6 +416,8 @@ var fieldDistance, energyBar, replayMessage, fieldLevel, levelCircle;
 function init(event) {
 
   // UI
+  var date = new Date();
+  var current_hour = date.getHours();
   resetGame();
   createScene();
 
