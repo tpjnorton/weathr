@@ -6,7 +6,7 @@ const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
-
+process.env.GOOGLE_API_KEY = 'AIzaSyCqSSjwgqpY4EMwtLgvlFF4tf0KH5yMx2M'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
