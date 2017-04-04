@@ -35,7 +35,7 @@ function getCountryFromGeocodeResponse() {
   return "hej"
 }
 
-isOnline().then(online => {
+isOnline(1000).then(online => {
     var locDOM = document.getElementById("location");
     var tempDOM = document.getElementById("temp");
     if (online) {
