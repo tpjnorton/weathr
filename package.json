@@ -1,12 +1,12 @@
 {
   "name": "Weather",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A beautiful weather application",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/tn12787/weather",
   "keywords": [
     "Weather",
     "web",
