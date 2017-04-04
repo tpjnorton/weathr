@@ -6,6 +6,8 @@ var loc,weather;
 const locUrl = "http://ip-api.com/json";
 const tempUrl = "http://api.openweathermap.org/data/2.5/weather"
 const weatherApiKey = "d878ff95dda20eadb8502ada8fd89ecd";
+const geolocationApiKey = "AIzaSyCqSSjwgqpY4EMwtLgvlFF4tf0KH5yMx2M"
+const geocodingApiKey = "AIzaSyAkoWK8DQYxvG98WIEqKs06yl4b2Cqf-SU"
 
 isOnline().then(online => {
     var locDOM = document.getElementById("location");

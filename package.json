@@ -20,6 +20,7 @@
     "electron": "^1.4.1"
   },
   "dependencies": {
-    "is-online": "^6.1.0"
+    "is-online": "^6.1.0",
+    "macaddress": "^0.2.8",
   }
 }
