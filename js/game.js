@@ -218,7 +218,6 @@ Sky = function() {
     var s = 1+Math.random()*2;
     c.mesh.scale.set(s,s,s);
     this.mesh.add(c.mesh);
-    console.log(c.mesh.position)
   }
 }
 
@@ -317,9 +316,10 @@ Sun = function() {
   this.mesh = new THREE.Object3D();
   this.mesh.name = "sun";
   var geom = new THREE.OctahedronGeometry(16, 3);
+  var sunTexture = new THREE.TextureLoader().load( "resources/images/sunbig.jpg" );
   var mat = new THREE.MeshBasicMaterial({
-    map: THREE.ImageUtils.loadTexture('resources/images/sunbig.jpg'),
-    shading:THREE.FlatShading,
+    map: sunTexture,
+    shading:THREE.FlatShading
   });
 
   var spriteMap = new THREE.TextureLoader().load( "resources/images/glow.png" );
