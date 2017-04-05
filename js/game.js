@@ -115,7 +115,7 @@ function createScene() {
     nearPlane,
     farPlane
     );
-  scene.fog = new THREE.Fog(0xcacaca, 100,950);
+  scene.fog = new THREE.Fog(0xcacaca, 100, 950);
   camera.position.x = 0;
   camera.position.z = 200;
   camera.position.y = game.planeDefaultHeight;
@@ -214,6 +214,7 @@ Sky = function() {
     c.mesh.position.x = Math.cos(a)*h;
     c.mesh.position.z = 10;
     c.mesh.rotation.z = a + Math.PI/2;
+    
     var s = 1+Math.random()*2;
     c.mesh.scale.set(s,s,s);
     this.mesh.add(c.mesh);
@@ -227,7 +228,6 @@ Sky.prototype.moveClouds = function() {
     c.rotate();
   }
   this.mesh.rotation.z += game.speed*deltaTime/4;
-
 }
 
 earth = function() {
@@ -257,7 +257,7 @@ earth = function() {
   });
 
   this.mesh = new THREE.Mesh(geom, mat);
-  this.mesh.name = "waves";
+  this.mesh.name = "earth";
   this.mesh.receiveShadow = true;
 
 }
@@ -314,17 +314,30 @@ Cloud.prototype.rotate = function() {
 }
 
 Sun = function() {
-  var geom = new THREE.OctahedronGeometry(15,2);
-  var mat = new THREE.MeshPhongMaterial({
-    color:Colors.yellow,
-    shading:THREE.FlatShading
+  this.mesh = new THREE.Object3D();
+  this.mesh.name = "sun";
+  var geom = new THREE.OctahedronGeometry(16, 3);
+  var mat = new THREE.MeshBasicMaterial({
+    map: THREE.ImageUtils.loadTexture('resources/images/sunbig.jpg'),
+    shading:THREE.FlatShading,
   });
 
-  this.mesh = new THREE.Mesh(geom, mat);
-  this.mesh.position.x = 260.9991703528527
-  this.mesh.position.y = 914.1935940037066
-  this.mesh.position.z = 10;
-  this.mesh.name = "Sun";
+  var spriteMap = new THREE.TextureLoader().load( "resources/images/glow.png" );
+  var spriteMaterial = new THREE.SpriteMaterial( {
+    map: spriteMap,
+    color: Colors.yellow,
+    transparent: true,
+    blending: THREE.AdditiveBlending
+  } );
+  var sprite = new THREE.Sprite( spriteMaterial );
+  sprite.scale.set(50, 50, 1)
+  this.mesh.add(sprite); // this centers the glow at the mesh
+
+  this.mesh.position.x = 0;
+  this.mesh.position.z = -200;
+  this.mesh.position.y = game.planeDefaultHeight*2.5;
+
+  this.mesh.add(new THREE.Mesh(geom, mat));
 }
 
 // 3D Models
@@ -382,14 +395,15 @@ var fieldDistance, energyBar, replayMessage, fieldLevel, levelCircle;
 function init(event) {
 
   // UI
-
+  var date = new Date();
+  var current_hour = date.getHours();
   resetGame();
   createScene();
 
   createLights();
   createEarth();
-  createSun();
   createSky();
+  createSun();
 
   document.addEventListener('mousemove', handleMouseMove, false);
   document.addEventListener('touchmove', handleTouchMove, false);
