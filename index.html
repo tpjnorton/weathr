@@ -14,26 +14,29 @@
         <script type="text/javascript" src="js/TweenMax.min.js"></script>
         <script type="text/javascript" src="js/three.min.js"></script>
         <script type="text/javascript" src="js/game.js" /></script>
+        <script type="text/javascript" src="js/SkyShader.js" /></script>
+        <script type="text/javascript" src="node_modules/dat.gui/build/dat.gui.min.js"></script>
     </head>
     <body>
         <div class="game-holder" id="gameHolder">
-            <div id="title-bar">
-                <div id="title-bar-btns">
+            <div class="title-bar">
+                <div class="title-bar-btns">
                   <button id="min-btn">-</i></button>
                   <button id="max-btn">+</i></button>
                   <button id="close-btn">x</i></button>
                 </div>
             </div>
-            <div class="header">
-                <h1><span>3D</span>Weather</h1>
-                <h2>What's it like outside?</h2>
-                <div class="weatherData"> 
-                    <p id="location"></p>
-                    <p id="temp"></p>
-                    <p id="demo"></p>
+            <div class="world" id="world">
+                <div class="header">
+                    <h1><span>3D</span>Weather</h1>
+                    <h2>What's it like outside?</h2>
+                    <div class="weatherData"> 
+                        <p id="location"></p>
+                        <p id="temp"></p>
+                        <p id="demo"></p>
+                    </div>
                 </div>
             </div>
-            <div class="world" id="world"></div>
         </div>
         <!-- Demo links -->
     </body>
