@@ -116,7 +116,7 @@ THREE.ShaderLib[ 'sky' ] = {
     "uniform float luminance;",
     "uniform float mieDirectionalG;",
 
-    "const vec3 cameraPos = vec3( 0.0, 100.0, 200.0 );",
+    "const vec3 cameraPos = vec3( 0.0, -50.0, 200.0 );",
 
     // constants for atmospheric scattering
     "const float pi = 3.141592653589793238462643383279502884197169;",
@@ -228,7 +228,7 @@ THREE.Sky = function () {
     side: THREE.BackSide
   } );
 
-  var skyGeo = new THREE.SphereBufferGeometry( 450000, 32, 15 );
+  var skyGeo = new THREE.SphereBufferGeometry( 600, 32, 15 );
   var skyMesh = new THREE.Mesh( skyGeo, skyMat );
   skyMesh.rotation.x = Math.PI;
 

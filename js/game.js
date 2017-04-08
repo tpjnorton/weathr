@@ -399,7 +399,7 @@ function initSky() {
   scene.add( sky.mesh );
   // Add Sun Helper
   sunSphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry( 16, 16, 16 ),
+    new THREE.SphereBufferGeometry( 80, 16, 16 ),
     new THREE.MeshBasicMaterial( { color: 0xff00ff } )
   );
   sunSphere.visible = true;
@@ -422,9 +422,9 @@ function initSky() {
     uniforms.luminance.value = effectController.luminance;
     uniforms.mieCoefficient.value = effectController.mieCoefficient;
     uniforms.mieDirectionalG.value = effectController.mieDirectionalG;
-    sunSphere.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI) - (0.5 * Math.PI))*150;
-    sunSphere.position.y = Math.cos((effectController.timeOfDay * 2 * Math.PI) - (0.5 * Math.PI))*150;
-    sunSphere.position.z = -200;
+    sunSphere.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI) - (0.5 * Math.PI))*300;
+    sunSphere.position.y = 100 + Math.cos((effectController.timeOfDay * 2 * Math.PI) - (0.5 * Math.PI))*300;
+    sunSphere.position.z = -2000;
     sunSphere.visible = effectController.sun;
     sky.uniforms.sunPosition.value.copy( sunSphere.position );
     renderer.render( scene, camera );
@@ -448,10 +448,10 @@ function init(event) {
   resetGame();
   createScene();
 
-  controls = new THREE.OrbitControls( camera, renderer.domElement );
-  controls.addEventListener( 'change', render );
-  controls.enableZoom = false;
-  controls.enablePan = false;
+  // controls = new THREE.OrbitControls( camera, renderer.domElement );
+  // controls.addEventListener( 'change', render );
+  // controls.enableZoom = false;
+  // controls.enablePan = false;
 
   createLights();
   createEarth();
