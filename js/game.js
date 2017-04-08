@@ -377,6 +377,9 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
+function render() {
+  renderer.render(scene, camera);
+}
 var blinkEnergy=false;
 
 
@@ -396,11 +399,10 @@ function initSky() {
   scene.add( sky.mesh );
   // Add Sun Helper
   sunSphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry( 20000, 16, 8 ),
-    new THREE.MeshBasicMaterial( { color: 0xffffff } )
+    new THREE.SphereBufferGeometry( 1600, 16, 16 ),
+    new THREE.MeshBasicMaterial( { color: 0xff00ff } )
   );
-  sunSphere.position.y = - 700000;
-  sunSphere.visible = false;
+  sunSphere.visible = true;
   scene.add( sunSphere );
   /// GUI
   var effectController  = {
@@ -409,11 +411,10 @@ function initSky() {
     mieCoefficient: 0.005,
     mieDirectionalG: 0.8,
     luminance: 1,
-    inclination: 0.49, // elevation / inclination
-    azimuth: 0.25, // Facing front,
-    sun: ! true
+    timeOfDay: 0.5,
+    sun: true
   };
-  var distance = 400000;
+
   function guiChanged() {
     var uniforms = sky.uniforms;
     uniforms.turbidity.value = effectController.turbidity;
@@ -421,11 +422,9 @@ function initSky() {
     uniforms.luminance.value = effectController.luminance;
     uniforms.mieCoefficient.value = effectController.mieCoefficient;
     uniforms.mieDirectionalG.value = effectController.mieDirectionalG;
-    var theta = Math.PI * ( effectController.inclination - 0.5 );
-    var phi = 2 * Math.PI * ( effectController.azimuth - 0.5 );
-    sunSphere.position.x = distance * Math.cos( phi );
-    sunSphere.position.y = distance * Math.sin( phi ) * Math.sin( theta );
-    sunSphere.position.z = distance * Math.sin( phi ) * Math.cos( theta );
+    sunSphere.position.x = 0;
+    sunSphere.position.y = game.planeDefaultHeight*10;
+    sunSphere.position.z = -200*100;
     sunSphere.visible = effectController.sun;
     sky.uniforms.sunPosition.value.copy( sunSphere.position );
     renderer.render( scene, camera );
@@ -436,8 +435,7 @@ function initSky() {
   gui.add( effectController, "mieCoefficient", 0.0, 0.1, 0.001 ).onChange( guiChanged );
   gui.add( effectController, "mieDirectionalG", 0.0, 1, 0.001 ).onChange( guiChanged );
   gui.add( effectController, "luminance", 0.0, 2 ).onChange( guiChanged );
-  gui.add( effectController, "inclination", 0, 1, 0.0001 ).onChange( guiChanged );
-  gui.add( effectController, "azimuth", 0, 1, 0.0001 ).onChange( guiChanged );
+  gui.add( effectController, "timeOfDay", 0, 1, 0.0001 ).onChange( guiChanged );
   gui.add( effectController, "sun" ).onChange( guiChanged );
   guiChanged();
 }
@@ -450,11 +448,16 @@ function init(event) {
   resetGame();
   createScene();
 
+  controls = new THREE.OrbitControls( camera, renderer.domElement );
+  controls.addEventListener( 'change', render );
+  controls.enableZoom = false;
+  controls.enablePan = false;
+
   createLights();
   createEarth();
   // createSky();
   initSky();
-  createSun();
+  // createSun();
 
   document.addEventListener('mousemove', handleMouseMove, false);
   document.addEventListener('touchmove', handleTouchMove, false);

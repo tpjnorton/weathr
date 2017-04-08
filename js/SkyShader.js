@@ -69,7 +69,7 @@ THREE.ShaderLib[ 'sky' ] = {
     "float sunIntensity( float zenithAngleCos )",
     "{",
       "zenithAngleCos = clamp( zenithAngleCos, -1.0, 1.0 );",
-      "return EE * max( 0.0, 1.0 - pow( e, -( ( cutoffAngle - acos( zenithAngleCos ) ) / steepness ) ) );",
+      "return EE * max( 0.0, 1.0 - pow( abs(e), -( ( cutoffAngle - acos( zenithAngleCos ) ) / steepness ) ) );",
     "}",
 
     "vec3 totalMie( float T )",
@@ -116,7 +116,7 @@ THREE.ShaderLib[ 'sky' ] = {
     "uniform float luminance;",
     "uniform float mieDirectionalG;",
 
-    "const vec3 cameraPos = vec3( 0.0, 0.0, 0.0 );",
+    "const vec3 cameraPos = vec3( 0.0, 100.0, 200.0 );",
 
     // constants for atmospheric scattering
     "const float pi = 3.141592653589793238462643383279502884197169;",
@@ -139,13 +139,13 @@ THREE.ShaderLib[ 'sky' ] = {
 
     "float rayleighPhase( float cosTheta )",
     "{",
-      "return THREE_OVER_SIXTEENPI * ( 1.0 + pow( cosTheta, 2.0 ) );",
+      "return THREE_OVER_SIXTEENPI * ( 1.0 + pow( abs(cosTheta), 2.0 ) );",
     "}",
 
     "float hgPhase( float cosTheta, float g )",
     "{",
-      "float g2 = pow( g, 2.0 );",
-      "float inverse = 1.0 / pow( 1.0 - 2.0 * g * cosTheta + g2, 1.5 );",
+      "float g2 = pow( abs(g), 2.0 );",
+      "float inverse = 1.0 / pow( abs(1.0 - 2.0 * g * cosTheta + g2), 1.5 );",
       "return ONE_OVER_FOURPI * ( ( 1.0 - g2 ) * inverse );",
     "}",
 
@@ -170,7 +170,7 @@ THREE.ShaderLib[ 'sky' ] = {
       // optical length
       // cutoff angle at 90 to avoid singularity in next formula.
       "float zenithAngle = acos( max( 0.0, dot( up, normalize( vWorldPosition - cameraPos ) ) ) );",
-      "float inverse = 1.0 / ( cos( zenithAngle ) + 0.15 * pow( 93.885 - ( ( zenithAngle * 180.0 ) / pi ), -1.253 ) );",
+      "float inverse = 1.0 / ( cos( zenithAngle ) + 0.15 * pow( abs(93.885 - ( ( zenithAngle * 180.0 ) / pi )), -1.253 ) );",
       "float sR = rayleighZenithLength * inverse;",
       "float sM = mieZenithLength * inverse;",
 
@@ -186,8 +186,8 @@ THREE.ShaderLib[ 'sky' ] = {
       "float mPhase = hgPhase( cosTheta, mieDirectionalG );",
       "vec3 betaMTheta = vBetaM * mPhase;",
 
-      "vec3 Lin = pow( vSunE * ( ( betaRTheta + betaMTheta ) / ( vBetaR + vBetaM ) ) * ( 1.0 - Fex ), vec3( 1.5 ) );",
-      "Lin *= mix( vec3( 1.0 ), pow( vSunE * ( ( betaRTheta + betaMTheta ) / ( vBetaR + vBetaM ) ) * Fex, vec3( 1.0 / 2.0 ) ), clamp( pow( 1.0 - dot( up, vSunDirection ), 5.0 ), 0.0, 1.0 ) );",
+      "vec3 Lin = pow( abs(vSunE * ( ( betaRTheta + betaMTheta ) / ( vBetaR + vBetaM ) ) * ( 1.0 - Fex )), vec3( 1.5 ) );",
+      "Lin *= mix( vec3( 1.0 ), pow( abs(vSunE) * ( ( betaRTheta + betaMTheta ) / ( vBetaR + vBetaM ) ) * Fex, vec3( 1.0 / 2.0 ) ), clamp( pow( abs(1.0 - dot( up, vSunDirection )), 5.0 ), 0.0, 1.0 ) );",
 
       //nightsky
       "vec3 direction = normalize( vWorldPosition - cameraPos );",
@@ -202,10 +202,10 @@ THREE.ShaderLib[ 'sky' ] = {
 
       "vec3 texColor = ( Lin + L0 ) * 0.04 + vec3( 0.0, 0.0003, 0.00075 );",
 
-      "vec3 curr = Uncharted2Tonemap( ( log2( 2.0 / pow( luminance, 4.0 ) ) ) * texColor );",
+      "vec3 curr = Uncharted2Tonemap( ( log2( 2.0 / pow( abs(luminance), 4.0 ) ) ) * texColor );",
       "vec3 color = curr * whiteScale;",
 
-      "vec3 retColor = pow( color, vec3( 1.0 / ( 1.2 + ( 1.2 * vSunfade ) ) ) );",
+      "vec3 retColor = pow( abs(color), vec3( 1.0 / ( 1.2 + ( 1.2 * vSunfade ) ) ) );",
 
       "gl_FragColor.rgb = retColor;",
 
