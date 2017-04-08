@@ -399,7 +399,7 @@ function initSky() {
   scene.add( sky.mesh );
   // Add Sun Helper
   sunSphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry( 1600, 16, 16 ),
+    new THREE.SphereBufferGeometry( 16, 16, 16 ),
     new THREE.MeshBasicMaterial( { color: 0xff00ff } )
   );
   sunSphere.visible = true;
@@ -411,7 +411,7 @@ function initSky() {
     mieCoefficient: 0.005,
     mieDirectionalG: 0.8,
     luminance: 1,
-    timeOfDay: 0.5,
+    timeOfDay: 0.25,
     sun: true
   };
 
@@ -422,9 +422,9 @@ function initSky() {
     uniforms.luminance.value = effectController.luminance;
     uniforms.mieCoefficient.value = effectController.mieCoefficient;
     uniforms.mieDirectionalG.value = effectController.mieDirectionalG;
-    sunSphere.position.x = 0;
-    sunSphere.position.y = game.planeDefaultHeight*10;
-    sunSphere.position.z = -200*100;
+    sunSphere.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI) - (0.5 * Math.PI))*150;
+    sunSphere.position.y = Math.cos((effectController.timeOfDay * 2 * Math.PI) - (0.5 * Math.PI))*150;
+    sunSphere.position.z = -200;
     sunSphere.visible = effectController.sun;
     sky.uniforms.sunPosition.value.copy( sunSphere.position );
     renderer.render( scene, camera );
