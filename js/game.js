@@ -58,8 +58,8 @@ function resetGame() {
     earthRadius:800,
     earthLength:800,
     earthRotationSpeed:0.006,
-    wavesMinAmp : 5,
-    wavesMaxAmp : 20,
+    wavesMinAmp : 4,
+    wavesMaxAmp : 10,
     wavesMinSpeed : 0.001,
     wavesMaxSpeed : 0.003,
 
@@ -90,7 +90,8 @@ var scene,
     camera, fieldOfView, aspectRatio, nearPlane, farPlane,
     renderer,
     container,
-    controls;
+    controls,
+    sun, stars;
 
 //SCREEN & MOUSE VARIABLES
 
@@ -115,7 +116,7 @@ function createScene() {
     nearPlane,
     farPlane
     );
-  scene.fog = new THREE.Fog(0xcacaca, 100, 950);
+  scene.fog = new THREE.Fog(0xcacaca, 100, 2000);
   camera.position.x = 0;
   camera.position.z = 200;
   camera.position.y = game.planeDefaultHeight;
@@ -139,33 +140,6 @@ function handleWindowResize() {
   renderer.setSize(WIDTH, HEIGHT);
   camera.aspect = WIDTH / HEIGHT;
   camera.updateProjectionMatrix();
-}
-
-function handleMouseMove(event) {
-  var tx = -1 + (event.clientX / WIDTH)*2;
-  var ty = 1 - (event.clientY / HEIGHT)*2;
-  mousePos = {x:tx, y:ty};
-}
-
-function handleTouchMove(event) {
-    event.preventDefault();
-    var tx = -1 + (event.touches[0].pageX / WIDTH)*2;
-    var ty = 1 - (event.touches[0].pageY / HEIGHT)*2;
-    mousePos = {x:tx, y:ty};
-}
-
-function handleMouseUp(event) {
-  if (game.status == "waitingReplay") {
-    resetGame();
-    hideReplay();
-  }
-}
-
-function handleTouchEnd(event) {
-  if (game.status == "waitingReplay") {
-    resetGame();
-    hideReplay();
-  }
 }
 
 // LIGHTS
@@ -192,40 +166,10 @@ function createLights() {
 
   var ch = new THREE.CameraHelper(shadowLight.shadow.camera);
 
-  //scene.add(ch);
+  // scene.add(ch);
   scene.add(hemisphereLight);
   scene.add(shadowLight);
   scene.add(ambientLight);
-
-}
-
-Sky = function() {
-  this.mesh = new THREE.Object3D();
-  this.nClouds = 40;
-  this.clouds = [];
-  var stepAngle = Math.PI*2 / this.nClouds;
-  for(var i=0; i<this.nClouds; i++) {
-    var c = new Cloud();
-    this.clouds.push(c);
-    var a = stepAngle*i + (-5 + Math.random()*10);
-    var h = game.earthRadius + 150 + Math.random();
-    c.mesh.position.y = 1.01*Math.sin(a)*h;
-    c.mesh.position.x = Math.cos(a)*h;
-    c.mesh.position.z = 10;
-    c.mesh.rotation.z = a + Math.PI/2;
-    
-    var s = 1+Math.random()*2;
-    c.mesh.scale.set(s,s,s);
-    this.mesh.add(c.mesh);
-  }
-}
-
-Sky.prototype.moveClouds = function() {
-  for(var i=0; i<this.nClouds; i++) {
-    var c = this.clouds[i];
-    c.rotate();
-  }
-  this.mesh.rotation.z += game.speed*deltaTime/4;
 }
 
 earth = function() {
@@ -249,7 +193,7 @@ earth = function() {
   var mat = new THREE.MeshPhongMaterial({
     color:Colors.green,
     transparent:true,
-    opacity:.8,
+    opacity:1,
     shading:THREE.FlatShading,
 
   });
@@ -273,48 +217,10 @@ earth.prototype.moveSurface = function () {
   }
 }
 
-Cloud = function() {
-  this.mesh = new THREE.Object3D();
-  this.mesh.name = "cloud";
-  var geom = new THREE.BoxGeometry(5,5,5);
-  var mat = new THREE.MeshPhongMaterial({
-    color:Colors.white,
-    shininess: 1,
-    transparent: true,
-    opacity: 0.6 + Math.random()/3
-  });
-
-  //*
-  var nBlocs = 15+Math.floor(Math.random()*5);
-  for (var i=0; i<nBlocs; i++ ) {
-    var m = new THREE.Mesh(geom.clone(), mat);
-    m.position.x = i*1.1;
-    m.position.y = Math.random()*5;
-    m.position.z = Math.random()*4;
-    m.rotation.z = Math.random()*Math.PI*2;
-    m.rotation.y = Math.random()*Math.PI*2;
-    var s = .4+ Math.random()*.3;
-    m.scale.set(s,s,s);
-    this.mesh.add(m);
-    m.castShadow = true;
-    m.receiveShadow = true;
-
-  }
-}
-
-Cloud.prototype.rotate = function() {
-  var l = this.mesh.children.length;
-  for(var i=0; i<l; i++) {
-    var m = this.mesh.children[i];
-    m.rotation.z+= Math.random()*.005;
-    m.rotation.y+= Math.random()*.002;
-  }
-}
-
 Sun = function() {
   this.mesh = new THREE.Object3D();
   this.mesh.name = "sun";
-  var geom = new THREE.OctahedronGeometry(16, 3);
+  var geom = new THREE.OctahedronGeometry(24, 3);
   var sunTexture = new THREE.TextureLoader().load( "resources/images/sunbig.jpg" );
   var mat = new THREE.MeshBasicMaterial({
     map: sunTexture,
@@ -329,11 +235,11 @@ Sun = function() {
     blending: THREE.AdditiveBlending
   } );
   var sprite = new THREE.Sprite( spriteMaterial );
-  sprite.scale.set(50, 50, 1)
+  sprite.scale.set(100, 100, 1)
   this.mesh.add(sprite); // this centers the glow at the mesh
 
   this.mesh.position.x = 0;
-  this.mesh.position.z = -200;
+  this.mesh.position.z = -500;
   this.mesh.position.y = game.planeDefaultHeight*2.5;
 
   this.mesh.add(new THREE.Mesh(geom, mat));
@@ -354,11 +260,6 @@ function createEarth() {
   scene.add(earth.mesh);
 }
 
-function createSky() {
-  sky = new Sky();
-  sky.mesh.position.y = -game.earthRadius;
-  scene.add(sky.mesh);
-}
 
 function loop() {
 
@@ -370,7 +271,6 @@ function loop() {
 
   ambientLight.intensity += (.5 - ambientLight.intensity)*deltaTime*0.005;
 
-  // sky.moveClouds();
   earth.moveSurface();
 
   renderer.render(scene, camera);
@@ -380,26 +280,14 @@ function loop() {
 function render() {
   renderer.render(scene, camera);
 }
-var blinkEnergy=false;
 
-
-function normalize(v,vmin,vmax,tmin, tmax) {
-  var nv = Math.max(Math.min(v,vmax), vmin);
-  var dv = vmax-vmin;
-  var pc = (nv-vmin)/dv;
-  var dt = tmax-tmin;
-  var tv = tmin + (pc*dt);
-  return tv;
-}
-
-var fieldDistance, energyBar, replayMessage, fieldLevel, levelCircle;
 function initSky() {
   // Add Sky Mesh
   sky = new THREE.Sky();
   scene.add( sky.mesh );
   // Add Sun Helper
   sunSphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry( 80, 16, 16 ),
+    new THREE.SphereBufferGeometry( 160, 16, 16 ),
     new THREE.MeshBasicMaterial( { color: 0xff00ff } )
   );
   sunSphere.visible = true;
@@ -409,11 +297,90 @@ function initSky() {
     turbidity: 10,
     rayleigh: 2,
     mieCoefficient: 0.005,
-    mieDirectionalG: 0.8,
+    mieDirectionalG: 0.261,
     luminance: 1,
-    timeOfDay: 0.25,
-    sun: true
+    timeOfDay: 0.5,
+    sun: false
   };
+
+  stars = addStars();
+
+  function updateLightColors() {
+    if (effectController.timeOfDay < 0.25 || effectController.timeOfDay > 0.75 ) {      
+      shadowLight.color = new THREE.Color(0x010321);
+      ambientLight.color = new THREE.Color(0x010321);
+      hemisphereLight.color = new THREE.Color(0x010321);
+      stars.material.opacity = 0.8;
+    }
+    else if (effectController.timeOfDay < 0.28 && effectController.timeOfDay > 0.2 ) {
+      shadowLight.color = new THREE.Color(0x351304);
+      ambientLight.color = new THREE.Color(0x351304);
+      hemisphereLight.color = new THREE.Color(0x351304);
+      stars.material.opacity = 0.2;
+    }
+    else if (effectController.timeOfDay < 0.31 && effectController.timeOfDay >= 0.28 ) {
+      shadowLight.color = new THREE.Color(0xd1a287);
+      ambientLight.color = new THREE.Color(0xd1a287);
+      hemisphereLight.color = new THREE.Color(0xd1a287);
+      stars.material.opacity = 0;
+    }
+    else if (effectController.timeOfDay < 0.72 && effectController.timeOfDay >= 0.68 ) {
+      shadowLight.color = new THREE.Color(0xd1a287);
+      ambientLight.color = new THREE.Color(0xd1a287);
+      hemisphereLight.color = new THREE.Color(0xd1a287);
+      stars.material.opacity = 0;
+    }
+    else if (effectController.timeOfDay < 0.75 && effectController.timeOfDay >= 0.72 ) {
+      shadowLight.color = new THREE.Color(0x351304);
+      ambientLight.color = new THREE.Color(0x351304);
+      hemisphereLight.color = new THREE.Color(0x351304);
+      stars.material.opacity = 0.2;
+    }
+    else {
+      shadowLight.color = new THREE.Color(0xffffff);
+      ambientLight.color = new THREE.Color(0xdc8874);
+      hemisphereLight.color = new THREE.Color(0xaaaaaa);
+      stars.material.opacity = 0;
+    }
+  }
+
+  function addStars() {
+    // create the particle variables
+    // The number of particles in a particle system is not easily changed.
+    var particleCount = 2000;
+     
+    // Particles are just individual vertices in a geometry
+    // Create the geometry that will hold all of the vertices
+    var particles = new THREE.Geometry();
+ 
+    // Create the vertices and add them to the particles geometry
+    for (var p = 0; p < particleCount; p++) {
+     
+        // This will create all the vertices in a range of -200 to 200 in all directions
+        var x = Math.random() *  1000 - 500;
+        var y = Math.random() *  800 - 200;
+        var z = Math.random() * -200 - 500;
+               
+        // Create the vertex
+        var particle = new THREE.Vector3(x, y, z);
+         
+        // Add the vertex to the geometry
+        particles.vertices.push(particle);
+    }
+    // Create the material that will be used to render each vertex of the geometry
+    var particleMaterial = new THREE.PointsMaterial({
+      color: 0xffffff, 
+      size: 2,
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+    });
+      
+    // Create the particle system
+    particleSystem = new THREE.Points(particles, particleMaterial);
+    stars = particleSystem;
+    scene.add(particleSystem);
+    return stars; 
+  }
 
   function guiChanged() {
     var uniforms = sky.uniforms;
@@ -422,10 +389,15 @@ function initSky() {
     uniforms.luminance.value = effectController.luminance;
     uniforms.mieCoefficient.value = effectController.mieCoefficient;
     uniforms.mieDirectionalG.value = effectController.mieDirectionalG;
-    sunSphere.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI) - (0.5 * Math.PI))*300;
-    sunSphere.position.y = 100 + Math.cos((effectController.timeOfDay * 2 * Math.PI) - (0.5 * Math.PI))*300;
-    sunSphere.position.z = -2000;
+    sunSphere.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI) - (Math.PI))*250;
+    sunSphere.position.y = -30 + Math.cos((effectController.timeOfDay * 2 * Math.PI) - (Math.PI))*500;
+    sunSphere.position.z = -600;
+    updateLightColors();
+    sun.mesh.position.x = sunSphere.position.x*1.2;
+    sun.mesh.position.y = sunSphere.position.y*1.1 - 100;
     sunSphere.visible = effectController.sun;
+    shadowLight.position.x = sunSphere.position.x;
+    shadowLight.position.y = sunSphere.position.y;
     sky.uniforms.sunPosition.value.copy( sunSphere.position );
     renderer.render( scene, camera );
   }
@@ -440,6 +412,7 @@ function initSky() {
   guiChanged();
 }
 
+
 function init(event) {
 
   // UI
@@ -453,17 +426,10 @@ function init(event) {
   // controls.enableZoom = false;
   // controls.enablePan = false;
 
+  createSun();
   createLights();
   createEarth();
-  // createSky();
   initSky();
-  // createSun();
-
-  document.addEventListener('mousemove', handleMouseMove, false);
-  document.addEventListener('touchmove', handleTouchMove, false);
-  document.addEventListener('mouseup', handleMouseUp, false);
-  document.addEventListener('touchend', handleTouchEnd, false);
-
 
   loop();
 }
