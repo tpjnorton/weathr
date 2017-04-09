@@ -259,6 +259,32 @@ Sun = function() {
   this.mesh.add(new THREE.Mesh(geom, mat));
 }
 
+Stars = function() {
+    this.particleCount = 4000;
+     
+    this.particles = new THREE.Geometry();
+ 
+    for (var p = 0; p < this.particleCount; p++) {
+        var x = Math.random() *  4000 - 2000;
+        var y = Math.random() *  800 - 200;
+        var z = Math.random() * -200 - 500;
+               
+        var particle = new THREE.Vector3(x, y, z);
+         
+        this.particles.vertices.push(particle);
+    }
+
+    this.particleMaterial = new THREE.PointsMaterial({
+      color: 0xffffff, 
+      size: 2,
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+    });
+      
+    this.particleSystem = new THREE.Points(this.particles, this.particleMaterial);
+    this.stars = this.particleSystem;
+}
+
 Moon = function() {
   this.mesh = new THREE.Object3D();
   this.mesh.name = "moon";
@@ -287,6 +313,12 @@ Moon = function() {
 var earth;
 var sun;
 var moon;
+var stars;
+
+function createStars() {
+  stars = new Stars();
+  scene.add(stars.stars);
+}
 
 function createSun() {
   sun = new Sun();
@@ -323,7 +355,7 @@ function render() {
   renderer.render(scene, camera);
 }
 
-function initSky() {
+function initSky(effectController) {
   // Add Sky Mesh
   sky = new THREE.Sky();
   scene.add( sky.mesh );
@@ -334,94 +366,50 @@ function initSky() {
   );
   sunSphere.visible = true;
   scene.add( sunSphere );
-  /// GUI
-  var effectController  = {
-    turbidity: 10,
-    rayleigh: 2,
-    mieCoefficient: 0.005,
-    mieDirectionalG: 0.261,
-    luminance: 1,
-    timeOfDay: 0.5,
-    sun: false
-  };
-
-  stars = addStars();
 
   function updateLightColors() {
     if (effectController.timeOfDay < 0.25 || effectController.timeOfDay > 0.75 ) {      
       sunLight.color = new THREE.Color(0x010321);
       ambientLight.color = new THREE.Color(0x010321);
       hemisphereLight.color = new THREE.Color(0x010321);
-      stars.material.opacity = 0.8;
+      if (stars)
+        stars.stars.material.opacity = 0.8;
     }
     else if (effectController.timeOfDay < 0.28 && effectController.timeOfDay > 0.2 ) {
       sunLight.color = new THREE.Color(0x351304);
       ambientLight.color = new THREE.Color(0x351304);
       hemisphereLight.color = new THREE.Color(0x351304);
-      stars.material.opacity = 0.2;
+      if (stars)
+        stars.stars.material.opacity = 0.2;
     }
     else if (effectController.timeOfDay < 0.31 && effectController.timeOfDay >= 0.28 ) {
       sunLight.color = new THREE.Color(0xd1a287);
       ambientLight.color = new THREE.Color(0xd1a287);
       hemisphereLight.color = new THREE.Color(0xd1a287);
-      stars.material.opacity = 0;
+      if (stars)
+        stars.stars.material.opacity = 0;
     }
     else if (effectController.timeOfDay < 0.72 && effectController.timeOfDay >= 0.68 ) {
       sunLight.color = new THREE.Color(0xd1a287);
       ambientLight.color = new THREE.Color(0xd1a287);
       hemisphereLight.color = new THREE.Color(0xd1a287);
-      stars.material.opacity = 0;
+      if (stars)
+        stars.stars.material.opacity = 0;
     }
     else if (effectController.timeOfDay < 0.75 && effectController.timeOfDay >= 0.72 ) {
       sunLight.color = new THREE.Color(0x351304);
       ambientLight.color = new THREE.Color(0x351304);
       hemisphereLight.color = new THREE.Color(0x351304);
-      stars.material.opacity = 0.2;
+      if (stars)
+        stars.stars.material.opacity = 0.2;
     }
     else {
       sunLight.color = new THREE.Color(0xffffff);
       ambientLight.color = new THREE.Color(0xdc8874);
       hemisphereLight.color = new THREE.Color(0xaaaaaa);
-      stars.material.opacity = 0;
+      if (stars)
+        stars.stars.material.opacity = 0;
     }
-  }
-
-  function addStars() {
-    // create the particle variables
-    // The number of particles in a particle system is not easily changed.
-    var particleCount = 2000;
-     
-    // Particles are just individual vertices in a geometry
-    // Create the geometry that will hold all of the vertices
-    var particles = new THREE.Geometry();
- 
-    // Create the vertices and add them to the particles geometry
-    for (var p = 0; p < particleCount; p++) {
-     
-        // This will create all the vertices in a range of -200 to 200 in all directions
-        var x = Math.random() *  1000 - 500;
-        var y = Math.random() *  800 - 200;
-        var z = Math.random() * -200 - 500;
-               
-        // Create the vertex
-        var particle = new THREE.Vector3(x, y, z);
-         
-        // Add the vertex to the geometry
-        particles.vertices.push(particle);
-    }
-    // Create the material that will be used to render each vertex of the geometry
-    var particleMaterial = new THREE.PointsMaterial({
-      color: 0xffffff, 
-      size: 2,
-      blending: THREE.AdditiveBlending,
-      transparent: true,
-    });
-      
-    // Create the particle system
-    particleSystem = new THREE.Points(particles, particleMaterial);
-    stars = particleSystem;
-    scene.add(particleSystem);
-    return stars; 
   }
 
   function guiChanged() {
@@ -432,19 +420,24 @@ function initSky() {
     uniforms.mieCoefficient.value = effectController.mieCoefficient;
     uniforms.mieDirectionalG.value = effectController.mieDirectionalG;
     sunSphere.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI) - (Math.PI))*250;
-    sunSphere.position.y = -30 + Math.cos((effectController.timeOfDay * 2 * Math.PI) - (Math.PI))*500;
+    sunSphere.position.y = -50 + Math.cos((effectController.timeOfDay * 2 * Math.PI) - (Math.PI))*500;
     sunSphere.position.z = -600;
-    moon.mesh.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI))*250 * 1.2;
-    moon.mesh.position.y = -30 + Math.cos((effectController.timeOfDay * 2 * Math.PI))*500*1.1 - 100;
-    moon.mesh.position.z = -600;
+
+    if (moon) {
+      moon.mesh.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI))*250 * 1.2;
+      moon.mesh.position.y = -50 + Math.cos((effectController.timeOfDay * 2 * Math.PI))*500*1.1 - 100;
+      moon.mesh.position.z = -600;
+      moonLight.position.x = moon.mesh.position.x;
+      moonLight.position.y = moon.mesh.position.y;
+    }
+    if (sun) {
+      sun.mesh.position.x = sunSphere.position.x*1.2;
+      sun.mesh.position.y = sunSphere.position.y*1.1 - 100;
+    }
     updateLightColors();
-    sun.mesh.position.x = sunSphere.position.x*1.2;
-    sun.mesh.position.y = sunSphere.position.y*1.1 - 100;
-    sunSphere.visible = effectController.sun;
     sunLight.position.x = sunSphere.position.x;
     sunLight.position.y = sunSphere.position.y;
-    moonLight.position.x = moon.mesh.position.x;
-    moonLight.position.y = moon.mesh.position.y;
+    sunSphere.visible = effectController.sun;
     sky.uniforms.sunPosition.value.copy( sunSphere.position );
     renderer.render( scene, camera );
   }
@@ -459,7 +452,6 @@ function initSky() {
   guiChanged();
 }
 
-
 function init(event) {
 
   // UI
@@ -468,17 +460,40 @@ function init(event) {
   resetGame();
   createScene();
 
-  // controls = new THREE.OrbitControls( camera, renderer.domElement );
-  // controls.addEventListener( 'change', render );
-  // controls.enableZoom = false;
-  // controls.enablePan = false;
-  createMoon();
-  createSun();
-  createLights();
-  createEarth();
-  initSky();
-
-  loop();
+  var weather = new Weather();
+  window.addEventListener('weatherLoaded', function() {
+    var effectController  = {
+      turbidity: 10,
+      rayleigh: 2,
+      mieCoefficient: 0.005,
+      mieDirectionalG: 0.261,
+      luminance: 1,
+      timeOfDay: 0.5,
+      sun: false
+    };
+    var sunrise = weather.weatherData.sys.sunrise;
+    var sunset = weather.weatherData.sys.sunset;
+    var now = Date.now() / 1000;
+    console.log(sunrise, sunset, now);
+    if (now >= sunrise && now <= sunset) {
+      effectController.timeOfDay = 0.25 + (now - sunrise) / (sunset - sunrise);
+    }
+    else if (now > sunset) {
+      effectController.timeOfDay = 0.75 + (now - sunset) / ((sunrise + 86400) - sunset);
+    }
+    else if (now < sunrise) {
+      effectController.timeOfDay = (now - (sunset - 86400)) / (sunrise - (sunset - 86400))
+    }
+    if (weather.weatherData.clouds.all < 70) {
+      createMoon();
+      createStars();
+      createSun();
+    }
+    createLights();
+    createEarth();
+    initSky(effectController);
+    loop();
+  });
 }
 
 window.addEventListener('load', init, false);
