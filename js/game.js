@@ -476,13 +476,13 @@ function init(event) {
     var now = Date.now() / 1000;
     console.log(sunrise, sunset, now);
     if (now >= sunrise && now <= sunset) {
-      effectController.timeOfDay = 0.25 + (now - sunrise) / (sunset - sunrise);
+      effectController.timeOfDay = 0.25 + (now - sunrise) / (2 * (sunset - sunrise));
     }
     else if (now > sunset) {
-      effectController.timeOfDay = 0.75 + (now - sunset) / ((sunrise + 86400) - sunset);
+      effectController.timeOfDay = 0.75 + (now - sunset) / (2 * ((sunrise + 86400) - sunset));
     }
     else if (now < sunrise) {
-      effectController.timeOfDay = (now - (sunset - 86400)) / (sunrise - (sunset - 86400))
+      effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
     }
     if (weather.weatherData.clouds.all < 70) {
       createMoon();
