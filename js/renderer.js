@@ -31,17 +31,18 @@ navigator.geolocation.getCurrentPosition(
 
         var descs = [];
 
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 6; i++) {
           descs[i] = document.createElement("p");
         }
 
         descs[0].innerHTML = "Weather";
-        descs[1].innerHTML = "Visibility";
-        descs[2].innerHTML = "Humidity";
-        descs[3].innerHTML = "Sunrise";
-        descs[4].innerHTML = "Sunset";
+        descs[1].innerHTML = "Cloud&nbsp;Coverage";
+        descs[2].innerHTML = "Visibility";
+        descs[3].innerHTML = "Humidity";
+        descs[4].innerHTML = "Sunrise";
+        descs[5].innerHTML = "Sunset";
 
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 6; i++) {
           descriptors.appendChild(descs[i]);
         }
         
@@ -50,7 +51,7 @@ navigator.geolocation.getCurrentPosition(
 
         var vals = [];
 
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 6; i++) {
           vals[i] = document.createElement("p");
         }
 
@@ -58,12 +59,14 @@ navigator.geolocation.getCurrentPosition(
         var sunsetTime = new Date(weather.sys.sunset * 1000);
 
         vals[0].innerHTML = weather.weather[0].main;
-        vals[1].innerHTML = weather.visibility / 1000.0 + "km";
-        vals[2].innerHTML = weather.main.humidity+"%";
-        vals[3].innerHTML = formattedTime(sunriseTime);
-        vals[4].innerHTML = formattedTime(sunsetTime);
+        vals[1].innerHTML = weather.clouds.all+"%";
+        vals[2].innerHTML = weather.visibility / 1000.0 + "km";
+        vals[3].innerHTML = weather.main.humidity+"%";
+        vals[4].innerHTML = formattedTime(sunriseTime);
+        vals[5].innerHTML = formattedTime(sunsetTime);
         console.log(formattedTime(new Date(weather.dt)));
-        for (var i = 0; i < 5; i++) {
+
+        for (var i = 0; i < 6; i++) {
           values.appendChild(vals[i]);
         }
 
