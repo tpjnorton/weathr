@@ -20,9 +20,72 @@ navigator.geolocation.getCurrentPosition(
         console.log(weather);
         tempDOM.innerHTML = parseInt(weather.main.temp) + "&#176;";
         locDOM.innerHTML = weather.name + ", " + weather.sys.country;
+        var dataContainer = document.createElement("div");
+        dataContainer.setAttribute("class", "detailedData");        
+        var hr = document.createElement("hr");
+        locDOM.parentElement.appendChild(dataContainer);
+        dataContainer.appendChild(hr);
+
+        var descriptors = document.createElement("div");
+        descriptors.setAttribute("class", "descriptors");
+
+        var descs = [];
+
+        for (var i = 0; i < 5; i++) {
+          descs[i] = document.createElement("p");
+        }
+
+        descs[0].innerHTML = "Weather";
+        descs[1].innerHTML = "Visibility";
+        descs[2].innerHTML = "Humidity";
+        descs[3].innerHTML = "Sunrise";
+        descs[4].innerHTML = "Sunset";
+
+        for (var i = 0; i < 5; i++) {
+          descriptors.appendChild(descs[i]);
+        }
+        
+        var values = document.createElement("div");
+        values.setAttribute("class", "values");
+
+        var vals = [];
+
+        for (var i = 0; i < 5; i++) {
+          vals[i] = document.createElement("p");
+        }
+
+        var sunriseTime = new Date(weather.sys.sunrise * 1000);
+        var sunsetTime = new Date(weather.sys.sunset * 1000);
+
+        vals[0].innerHTML = weather.weather[0].main;
+        vals[1].innerHTML = weather.visibility / 1000.0 + "km";
+        vals[2].innerHTML = weather.main.humidity+"%";
+        vals[3].innerHTML = formattedTime(sunriseTime);
+        vals[4].innerHTML = formattedTime(sunsetTime);
+        console.log(formattedTime(new Date(weather.dt)));
+        for (var i = 0; i < 5; i++) {
+          values.appendChild(vals[i]);
+        }
+
+        dataContainer.appendChild(descriptors);
+        dataContainer.appendChild(values);
+
+
     })
 },  function(){
+    var gameHolder = document.getElementById("gameHolder");
     locDOM.innerHTML = "No Internet Connection :("
 });
 
+
+function formattedTime(time) {
+  var hours = time.getHours();
+  var minutes = time.getMinutes();
+  if (hours < 10)
+    hours = "0" + hours;
+  if (minutes < 10)
+    minutes = "0" + minutes;
+
+  return hours + ":" + minutes;
+}
 
