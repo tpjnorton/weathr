@@ -144,7 +144,7 @@ function handleWindowResize() {
 
 // LIGHTS
 
-var ambientLight, hemisphereLight, shadowLight;
+var ambientLight, hemisphereLight, sunLight, moonLight;
 
 function createLights() {
 
@@ -152,24 +152,38 @@ function createLights() {
 
   ambientLight = new THREE.AmbientLight(0xdc8874, .5);
 
-  shadowLight = new THREE.DirectionalLight(0xffffff, .9);
-  shadowLight.position.set(150, 350, 350);
-  shadowLight.castShadow = true;
-  shadowLight.shadow.camera.left = -400;
-  shadowLight.shadow.camera.right = 400;
-  shadowLight.shadow.camera.top = 400;
-  shadowLight.shadow.camera.bottom = -400;
-  shadowLight.shadow.camera.near = 1;
-  shadowLight.shadow.camera.far = 1000;
-  shadowLight.shadow.mapSize.width = 4096;
-  shadowLight.shadow.mapSize.height = 4096;
+  sunLight = new THREE.DirectionalLight(0xffffff, .9);
+  sunLight.position.set(150, 350, 350);
+  sunLight.castShadow = true;
+  sunLight.shadow.camera.left = -400;
+  sunLight.shadow.camera.right = 400;
+  sunLight.shadow.camera.top = 400;
+  sunLight.shadow.camera.bottom = -400;
+  sunLight.shadow.camera.near = 1;
+  sunLight.shadow.camera.far = 1000;
+  sunLight.shadow.mapSize.width = 4096;
+  sunLight.shadow.mapSize.height = 4096;
 
-  var ch = new THREE.CameraHelper(shadowLight.shadow.camera);
+  moonLight = new THREE.DirectionalLight(0xaaaaff, .6);
+  moonLight.position.set(0, 0, 350);
+  moonLight.castShadow = true;
+  moonLight.shadow.camera.left = -400;
+  moonLight.shadow.camera.right = 400;
+  moonLight.shadow.camera.top = 400;
+  moonLight.shadow.camera.bottom = -400;
+  moonLight.shadow.camera.near = 1;
+  moonLight.shadow.camera.far = 1000;
+  moonLight.shadow.mapSize.width = 4096;
+  moonLight.shadow.mapSize.height = 4096;
+
+
+  var ch = new THREE.CameraHelper(moonLight.shadow.camera);
 
   // scene.add(ch);
   scene.add(hemisphereLight);
-  scene.add(shadowLight);
+  scene.add(sunLight);
   scene.add(ambientLight);
+  scene.add(moonLight);
 }
 
 earth = function() {
@@ -245,13 +259,43 @@ Sun = function() {
   this.mesh.add(new THREE.Mesh(geom, mat));
 }
 
+Moon = function() {
+  this.mesh = new THREE.Object3D();
+  this.mesh.name = "moon";
+  var geom = new THREE.OctahedronGeometry(24, 3);
+  var sunTexture = new THREE.TextureLoader().load( "resources/images/moon.jpg" );
+  var mat = new THREE.MeshBasicMaterial({
+    map: sunTexture,
+    shading:THREE.FlatShading
+  });
+
+  var spriteMap = new THREE.TextureLoader().load( "resources/images/glow.png" );
+  var spriteMaterial = new THREE.SpriteMaterial( {
+    map: spriteMap,
+    color: Colors.white,
+    transparent: true,
+    blending: THREE.AdditiveBlending
+  } );
+  var sprite = new THREE.Sprite( spriteMaterial );
+  sprite.scale.set(80, 80, 1)
+  this.mesh.add(sprite); // this centers the glow at the mesh
+
+  this.mesh.add(new THREE.Mesh(geom, mat));
+}
+
 // 3D Models
 var earth;
 var sun;
+var moon;
 
 function createSun() {
   sun = new Sun();
   scene.add(sun.mesh)
+}
+
+function createMoon() {
+  moon = new Moon();
+  scene.add(moon.mesh);
 }
 
 function createEarth() {
@@ -268,8 +312,6 @@ function loop() {
   oldTime = newTime;
 
   if ( earth.mesh.rotation.z > 2*Math.PI)  earth.mesh.rotation.z -= 2*Math.PI;
-
-  ambientLight.intensity += (.5 - ambientLight.intensity)*deltaTime*0.005;
 
   earth.moveSurface();
 
@@ -307,37 +349,37 @@ function initSky() {
 
   function updateLightColors() {
     if (effectController.timeOfDay < 0.25 || effectController.timeOfDay > 0.75 ) {      
-      shadowLight.color = new THREE.Color(0x010321);
+      sunLight.color = new THREE.Color(0x010321);
       ambientLight.color = new THREE.Color(0x010321);
       hemisphereLight.color = new THREE.Color(0x010321);
       stars.material.opacity = 0.8;
     }
     else if (effectController.timeOfDay < 0.28 && effectController.timeOfDay > 0.2 ) {
-      shadowLight.color = new THREE.Color(0x351304);
+      sunLight.color = new THREE.Color(0x351304);
       ambientLight.color = new THREE.Color(0x351304);
       hemisphereLight.color = new THREE.Color(0x351304);
       stars.material.opacity = 0.2;
     }
     else if (effectController.timeOfDay < 0.31 && effectController.timeOfDay >= 0.28 ) {
-      shadowLight.color = new THREE.Color(0xd1a287);
+      sunLight.color = new THREE.Color(0xd1a287);
       ambientLight.color = new THREE.Color(0xd1a287);
       hemisphereLight.color = new THREE.Color(0xd1a287);
       stars.material.opacity = 0;
     }
     else if (effectController.timeOfDay < 0.72 && effectController.timeOfDay >= 0.68 ) {
-      shadowLight.color = new THREE.Color(0xd1a287);
+      sunLight.color = new THREE.Color(0xd1a287);
       ambientLight.color = new THREE.Color(0xd1a287);
       hemisphereLight.color = new THREE.Color(0xd1a287);
       stars.material.opacity = 0;
     }
     else if (effectController.timeOfDay < 0.75 && effectController.timeOfDay >= 0.72 ) {
-      shadowLight.color = new THREE.Color(0x351304);
+      sunLight.color = new THREE.Color(0x351304);
       ambientLight.color = new THREE.Color(0x351304);
       hemisphereLight.color = new THREE.Color(0x351304);
       stars.material.opacity = 0.2;
     }
     else {
-      shadowLight.color = new THREE.Color(0xffffff);
+      sunLight.color = new THREE.Color(0xffffff);
       ambientLight.color = new THREE.Color(0xdc8874);
       hemisphereLight.color = new THREE.Color(0xaaaaaa);
       stars.material.opacity = 0;
@@ -392,12 +434,17 @@ function initSky() {
     sunSphere.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI) - (Math.PI))*250;
     sunSphere.position.y = -30 + Math.cos((effectController.timeOfDay * 2 * Math.PI) - (Math.PI))*500;
     sunSphere.position.z = -600;
+    moon.mesh.position.x = Math.sin((effectController.timeOfDay * 2 * Math.PI))*250 * 1.2;
+    moon.mesh.position.y = -30 + Math.cos((effectController.timeOfDay * 2 * Math.PI))*500*1.1 - 100;
+    moon.mesh.position.z = -600;
     updateLightColors();
     sun.mesh.position.x = sunSphere.position.x*1.2;
     sun.mesh.position.y = sunSphere.position.y*1.1 - 100;
     sunSphere.visible = effectController.sun;
-    shadowLight.position.x = sunSphere.position.x;
-    shadowLight.position.y = sunSphere.position.y;
+    sunLight.position.x = sunSphere.position.x;
+    sunLight.position.y = sunSphere.position.y;
+    moonLight.position.x = moon.mesh.position.x;
+    moonLight.position.y = moon.mesh.position.y;
     sky.uniforms.sunPosition.value.copy( sunSphere.position );
     renderer.render( scene, camera );
   }
@@ -425,7 +472,7 @@ function init(event) {
   // controls.addEventListener( 'change', render );
   // controls.enableZoom = false;
   // controls.enablePan = false;
-
+  createMoon();
   createSun();
   createLights();
   createEarth();
