@@ -119,7 +119,7 @@ function createScene() {
   scene.fog = new THREE.Fog(0xcacaca, 100, 2000);
   camera.position.x = 0;
   camera.position.z = 200;
-  camera.position.y = game.planeDefaultHeight;
+  camera.position.y = game.planeDefaultHeight * 1.2;
 
   renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(WIDTH, HEIGHT);

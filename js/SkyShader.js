@@ -116,7 +116,7 @@ THREE.ShaderLib[ 'sky' ] = {
     "uniform float luminance;",
     "uniform float mieDirectionalG;",
 
-    "const vec3 cameraPos = vec3( 0.0, -140.0, 200.0 );",
+    "const vec3 cameraPos = vec3( 0.0, -150.0, 200.0 );",
 
     // constants for atmospheric scattering
     "const float pi = 3.141592653589793238462643383279502884197169;",
