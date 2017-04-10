@@ -267,7 +267,7 @@ Stars = function() {
     for (var p = 0; p < this.particleCount; p++) {
         var x = Math.random() *  4000 - 2000;
         var y = Math.random() *  800 - 200;
-        var z = Math.random() * -200 - 500;
+        var z = Math.random() * -200 - 400;
                
         var particle = new THREE.Vector3(x, y, z);
          
