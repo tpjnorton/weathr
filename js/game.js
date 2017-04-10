@@ -22,65 +22,16 @@ var oldTime = new Date().getTime();
 function resetGame() {
   game = {
     speed:0.00002,
-    initSpeed:.00035,
-    baseSpeed:.00035,
-    targetBaseSpeed:.00035,
-    incrementSpeedByTime:.0000025,
-    incrementSpeedByLevel:.000005,
-    distanceForSpeedUpdate:100,
-    speedLastUpdate:0,
-
-    distance:0,
-    ratioSpeedDistance:50,
-    energy:100,
-    ratioSpeedEnergy:3,
-
-    level:1,
-    levelLastUpdate:0,
-    distanceForLevelUpdate:1000,
-
-    planeDefaultHeight:100,
-    planeAmpHeight:80,
-    planeAmpWidth:75,
-    planeMoveSensivity:0.005,
-    planeRotXSensivity:0.0008,
-    planeRotZSensivity:0.0004,
-    planeFallSpeed:.001,
-    planeMinSpeed:1.2,
-    planeMaxSpeed:1.6,
-    planeSpeed:0,
-    planeCollisionDisplacementX:0,
-    planeCollisionSpeedX:0,
-
-    planeCollisionDisplacementY:0,
-    planeCollisionSpeedY:0,
+    defaultCamHeight:100,
 
     earthRadius:800,
     earthLength:800,
     earthRotationSpeed:0.006,
+
     wavesMinAmp : 4,
     wavesMaxAmp : 10,
     wavesMinSpeed : 0.001,
     wavesMaxSpeed : 0.003,
-
-    cameraFarPos:500,
-    cameraNearPos:150,
-    cameraSensivity:0.002,
-
-    coinDistanceTolerance:15,
-    coinValue:3,
-    coinsSpeed:.5,
-    coinLastSpawn:0,
-    distanceForCoinsSpawn:100,
-
-    enemyDistanceTolerance:10,
-    enemyValue:10,
-    enemiesSpeed:.6,
-    enemyLastSpawn:0,
-    distanceForEnemiesSpawn:50,
-
-    status : "playing",
-
   };
 }
 
@@ -90,8 +41,7 @@ var scene,
     camera, fieldOfView, aspectRatio, nearPlane, farPlane,
     renderer,
     container,
-    controls,
-    sun, stars;
+    controls;
 
 //SCREEN & MOUSE VARIABLES
 
@@ -119,7 +69,7 @@ function createScene() {
   scene.fog = new THREE.Fog(0xcacaca, 100, 2000);
   camera.position.x = 0;
   camera.position.z = 200;
-  camera.position.y = game.planeDefaultHeight * 1.2;
+  camera.position.y = game.defaultCamHeight * 1.3;
 
   renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(WIDTH, HEIGHT);
@@ -132,8 +82,6 @@ function createScene() {
   window.addEventListener('resize', handleWindowResize, false);
 }
 
-// MOUSE AND SCREEN EVENTS
-
 function handleWindowResize() {
   HEIGHT = window.innerHeight;
   WIDTH = window.innerWidth;
@@ -141,8 +89,6 @@ function handleWindowResize() {
   camera.aspect = WIDTH / HEIGHT;
   camera.updateProjectionMatrix();
 }
-
-// LIGHTS
 
 var ambientLight, hemisphereLight, sunLight, moonLight;
 
@@ -186,7 +132,7 @@ function createLights() {
   scene.add(moonLight);
 }
 
-earth = function() {
+Earth = function() {
   var geom = new THREE.CylinderGeometry(game.earthRadius,game.earthRadius,game.earthLength,40,10);
   geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
   geom.mergeVertices();
@@ -213,12 +159,11 @@ earth = function() {
   });
 
   this.mesh = new THREE.Mesh(geom, mat);
-  this.mesh.name = "earth";
+  this.mesh.name = "Earth";
   this.mesh.receiveShadow = true;
-
 }
 
-earth.prototype.moveSurface = function () {
+Earth.prototype.moveSurface = function () {
   var verts = this.mesh.geometry.vertices;
   var l = verts.length;
   for (var i=0; i<l; i++) {
@@ -229,34 +174,6 @@ earth.prototype.moveSurface = function () {
     vprops.ang += vprops.speed*deltaTime;
     this.mesh.geometry.verticesNeedUpdate=true;
   }
-}
-
-Sun = function() {
-  this.mesh = new THREE.Object3D();
-  this.mesh.name = "sun";
-  var geom = new THREE.OctahedronGeometry(24, 3);
-  var sunTexture = new THREE.TextureLoader().load( "resources/images/sunbig.jpg" );
-  var mat = new THREE.MeshBasicMaterial({
-    map: sunTexture,
-    shading:THREE.FlatShading
-  });
-
-  var spriteMap = new THREE.TextureLoader().load( "resources/images/glow.png" );
-  var spriteMaterial = new THREE.SpriteMaterial( {
-    map: spriteMap,
-    color: Colors.yellow,
-    transparent: true,
-    blending: THREE.AdditiveBlending
-  } );
-  var sprite = new THREE.Sprite( spriteMaterial );
-  sprite.scale.set(100, 100, 1)
-  this.mesh.add(sprite); // this centers the glow at the mesh
-
-  this.mesh.position.x = 0;
-  this.mesh.position.z = -500;
-  this.mesh.position.y = game.planeDefaultHeight*2.5;
-
-  this.mesh.add(new THREE.Mesh(geom, mat));
 }
 
 Stars = function() {
@@ -283,6 +200,34 @@ Stars = function() {
       
     this.particleSystem = new THREE.Points(this.particles, this.particleMaterial);
     this.stars = this.particleSystem;
+}
+
+Sun = function() {
+  this.mesh = new THREE.Object3D();
+  this.mesh.name = "sun";
+  var geom = new THREE.OctahedronGeometry(24, 3);
+  var sunTexture = new THREE.TextureLoader().load( "resources/images/sunbig.jpg" );
+  var mat = new THREE.MeshBasicMaterial({
+    map: sunTexture,
+    shading:THREE.FlatShading
+  });
+
+  var spriteMap = new THREE.TextureLoader().load( "resources/images/glow.png" );
+  var spriteMaterial = new THREE.SpriteMaterial( {
+    map: spriteMap,
+    color: Colors.yellow,
+    transparent: true,
+    blending: THREE.AdditiveBlending
+  } );
+  var sprite = new THREE.Sprite( spriteMaterial );
+  sprite.scale.set(100, 100, 1)
+  this.mesh.add(sprite); // this centers the glow at the mesh
+
+  this.mesh.position.x = 0;
+  this.mesh.position.z = -500;
+  this.mesh.position.y = game.defaultCamHeight*2.5;
+
+  this.mesh.add(new THREE.Mesh(geom, mat));
 }
 
 Moon = function() {
@@ -314,6 +259,7 @@ var earth;
 var sun;
 var moon;
 var stars;
+var clouds;
 
 function createStars() {
   stars = new Stars();
@@ -331,9 +277,14 @@ function createMoon() {
 }
 
 function createEarth() {
-  earth = new earth();
+  earth = new Earth();
   earth.mesh.position.y = -game.earthRadius;
   scene.add(earth.mesh);
+}
+
+function createClouds() {
+  clouds = new Clouds();
+  scene.add(clouds.mesh);
 }
 
 
@@ -484,10 +435,14 @@ function init(event) {
     else if (now < sunrise) {
       effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
     }
-    if (weather.weatherData.clouds.all < 70) {
+
+    if (weather.weatherData.clouds.all < 80) {
       createMoon();
       createStars();
       createSun();
+    }
+    else {
+      createClouds();
     }
     createLights();
     createEarth();
