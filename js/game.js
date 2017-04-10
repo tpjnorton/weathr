@@ -9,6 +9,8 @@ var Colors = {
     yellow:0xf4ce93,
     blue:0x68c3c0,
     green:0x47c149,
+    grey:0xd1d1d1,
+    greyDark:0x878787
 };
 
 ///////////////
@@ -32,6 +34,11 @@ function resetGame() {
     wavesMaxAmp : 10,
     wavesMinSpeed : 0.001,
     wavesMaxSpeed : 0.003,
+
+    cloudWavesMinAmp : 1,
+    cloudWavesMaxAmp : 4,
+    cloudWavesMinSpeed : 0.001,
+    cloudWavesMaxSpeed : 0.003,
   };
 }
 
@@ -176,6 +183,50 @@ Earth.prototype.moveSurface = function () {
   }
 }
 
+Clouds = function(dark) {
+  var geom = new THREE.BoxGeometry(300,300,game.earthLength/2,40,10);
+  geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
+  geom.mergeVertices();
+  var l = geom.vertices.length;
+
+  this.waves = [];
+  var cloudColor = dark ? Colors.greyDark : Colors.grey;
+  for (var i=0;i<l;i++) {
+    var v = geom.vertices[i];
+    this.waves.push({y:v.y,
+                     x:v.x,
+                     z:v.z,
+                     ang:Math.random()*Math.PI*2,
+                     amp:game.cloudWavesMinAmp + Math.random()*(game.cloudWavesMaxAmp-game.cloudWavesMinAmp),
+                     speed:game.cloudWavesMinSpeed + Math.random()*(game.cloudWavesMaxSpeed - game.cloudWavesMinSpeed)
+                    });
+  };
+  var mat = new THREE.MeshPhongMaterial({
+    color: cloudColor,
+    shading:THREE.FlatShading,
+    transparent: true,
+    opacity: 0.7
+  });
+
+  this.mesh = new THREE.Mesh(geom, mat);
+  this.mesh.name = "Clouds";
+  this.mesh.castShadow = false;
+  this.mesh.rotation.x = 0.2;
+}
+
+Clouds.prototype.moveSurface = function () {
+  var verts = this.mesh.geometry.vertices;
+  var l = verts.length;
+  for (var i=0; i<l; i++) {
+    var v = verts[i];
+    var vprops = this.waves[i];
+    v.x =  vprops.x + Math.cos(vprops.ang/10)*vprops.amp;
+    v.y = vprops.y + Math.sin(vprops.ang/10)*vprops.amp;
+    vprops.ang += vprops.speed*deltaTime;
+    this.mesh.geometry.verticesNeedUpdate=true;
+  }
+}
+
 Stars = function() {
     this.particleCount = 4000;
      
@@ -201,6 +252,51 @@ Stars = function() {
     this.particleSystem = new THREE.Points(this.particles, this.particleMaterial);
     this.stars = this.particleSystem;
 }
+
+Rain = function() {
+    this.particleCount = 9000;
+     
+    this.particles = new THREE.Geometry();
+ 
+    for (var p = 0; p < this.particleCount; p++) {
+        var x = Math.random() *  4000 - 2000;
+        var y = Math.random() *  1000 + 500;
+        var z = Math.random() *  200 - 400;
+               
+        var particle = new THREE.Vector3(x, y, z);
+        particle.velocity = new THREE.Vector3(0, 0, 0);
+        this.particles.vertices.push(particle);
+    }
+
+    this.particleMaterial = new THREE.PointsMaterial({
+      color: 0x1155ff, 
+      size: 2,
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+    });
+      
+    this.rainPointCloud = new THREE.Points(this.particles, this.particleMaterial);
+}
+
+Rain.prototype.simulateRain = function() {
+  var pCount = this.particleCount;
+  while (pCount--) {
+    var particle = this.particles.vertices[pCount];
+
+    if (particle.y < 0) {
+      particle.y = 500;
+    }
+
+    if (particle.velocity.y < -3)
+      particle.velocity.y = -3;
+
+    particle.velocity.y -= Math.random() * .02;
+
+    particle.y += particle.velocity.y;
+}
+
+  this.particles.verticesNeedUpdate = true;
+};
 
 Sun = function() {
   this.mesh = new THREE.Object3D();
@@ -260,10 +356,16 @@ var sun;
 var moon;
 var stars;
 var clouds;
+var rain;
 
 function createStars() {
   stars = new Stars();
   scene.add(stars.stars);
+}
+
+function createRain() {
+  rain = new Rain();
+  scene.add(rain.rainPointCloud);
 }
 
 function createSun() {
@@ -284,27 +386,14 @@ function createEarth() {
 
 function createClouds() {
   clouds = new Clouds();
+  clouds.mesh.position.y = game.defaultCamHeight * 3.4;
+  clouds.mesh.position.z = camera.position.z;
   scene.add(clouds.mesh);
+
+  // var box = new THREE.BoxHelper( clouds.mesh, 0xffff00 );
+  // scene.add(box);
 }
 
-
-function loop() {
-
-  newTime = new Date().getTime();
-  deltaTime = newTime-oldTime;
-  oldTime = newTime;
-
-  if ( earth.mesh.rotation.z > 2*Math.PI)  earth.mesh.rotation.z -= 2*Math.PI;
-
-  earth.moveSurface();
-
-  renderer.render(scene, camera);
-  requestAnimationFrame(loop);
-}
-
-function render() {
-  renderer.render(scene, camera);
-}
 
 function initSky(effectController) {
   // Add Sky Mesh
@@ -422,6 +511,8 @@ function init(event) {
       timeOfDay: 0.5,
       sun: false
     };
+    createLights();
+    createEarth();
     var sunrise = weather.weatherData.sys.sunrise;
     var sunset = weather.weatherData.sys.sunset;
     var now = Date.now() / 1000;
@@ -435,20 +526,54 @@ function init(event) {
     else if (now < sunrise) {
       effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
     }
-
+    weather.weatherData.clouds.all = 81;
     if (weather.weatherData.clouds.all < 80) {
       createMoon();
       createStars();
       createSun();
     }
     else {
-      createClouds();
+      createClouds(false);
+      createRain();
+      effectController.rayleigh = 0;
+      effectController.turbidity = 20;
+      effectController.luminance = 0.4;
+      effectController.mieDirectionalG = 0.087;
+      sunLight.intensity = 0.5;
     }
-    createLights();
-    createEarth();
+
+    // controls = new THREE.OrbitControls( camera, renderer.domElement );
+    // controls.addEventListener( 'change', render );
+    // //controls.maxPolarAngle = Math.PI / 2;
+    // controls.enableZoom = false;
+    // controls.enablePan = false;
+
     initSky(effectController);
+
     loop();
   });
 }
 
 window.addEventListener('load', init, false);
+
+function loop() {
+
+  newTime = new Date().getTime();
+  deltaTime = newTime-oldTime;
+  oldTime = newTime;
+
+  if (rain) {
+    rain.simulateRain();
+  }
+  earth.moveSurface();
+
+  if (clouds)
+    clouds.moveSurface();
+
+  renderer.render(scene, camera);
+  requestAnimationFrame(loop);
+}
+
+function render() {
+  renderer.render(scene, camera);
+}
