@@ -322,7 +322,8 @@ LightCloud.prototype.generateCloudMesh = function() {
     meshtoReturn.add(smallMeshRight);
 
     return meshtoReturn;
-  } else {
+  } 
+  else {
     var geomSmall = new THREE.OctahedronGeometry(5, 2);
     var geomBigLeft = new THREE.OctahedronGeometry(7, 2);
     var geomBigRight = new THREE.OctahedronGeometry(9, 2);
@@ -667,7 +668,8 @@ function initSky(effectController) {
       hemisphereLight.color = new THREE.Color(Colors.dawnDusk);
       if (stars)
         stars.stars.material.opacity = 0.2;
-    } else {
+    } 
+    else {
       sunLight.color = new THREE.Color(0xffffff);
       ambientLight.color = new THREE.Color(0x9fabce);
       hemisphereLight.color = new THREE.Color(0xaaaaaa);
@@ -757,7 +759,8 @@ function init(event) {
       createStars();
       createSun();
       createLightClouds(weather.weatherData.clouds.all / 100 * 220);
-    } else {
+    } 
+    else {
       createHeavyClouds(false);
       createRain();
       // createSnow();
@@ -825,7 +828,8 @@ function setTextColor(effectController) {
     weatherData.style.color = "#f1d7d0";
     header.style.color = "#f1d7d0";
     divider.style.borderTopColor = "#f1d7d0";
-  } else {
+  } 
+  else {
     weatherData.style.color = "#111710";
     header.style.color = "#515750";
     divider.style.borderTopColor = "#515750";
