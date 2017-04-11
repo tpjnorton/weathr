@@ -383,11 +383,10 @@ Sun = function() {
   var spriteMaterial = new THREE.SpriteMaterial( {
     map: spriteMap,
     color: Colors.yellow,
-    transparent: true,
-    blending: THREE.AdditiveBlending
+    transparent: true
   } );
   var sprite = new THREE.Sprite( spriteMaterial );
-  sprite.scale.set(100, 100, 1)
+  sprite.scale.set(120, 120, 1)
   this.mesh.add(sprite); // this centers the glow at the mesh
 
   this.mesh.position.x = 0;
