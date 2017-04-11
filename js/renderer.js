@@ -39,7 +39,7 @@ Weather = function() {
 
           descs[0].innerHTML = "Weather";
           descs[1].innerHTML = "Cloud&nbsp;Coverage";
-          descs[2].innerHTML = "Visibility";
+          descs[2].innerHTML = "Wind";
           descs[3].innerHTML = "Humidity";
           descs[4].innerHTML = "Sunrise";
           descs[5].innerHTML = "Sunset";
@@ -62,10 +62,13 @@ Weather = function() {
 
           vals[0].innerHTML = that.weatherData.weather[0].main;
           vals[1].innerHTML = that.weatherData.clouds.all+"%";
-          vals[2].innerHTML = that.weatherData.visibility / 1000.0 + "km";
+          vals[2].innerHTML = that.weatherData.wind.speed+"km/h";
           vals[3].innerHTML = that.weatherData.main.humidity+"%";
           vals[4].innerHTML = formattedTime(sunriseTime);
           vals[5].innerHTML = formattedTime(sunsetTime);
+ 
+          if (that.weatherData.wind.angle) 
+            vals[2].innerHTML += ",&nbsp;" + weather.wind.angle + "&#176;"
 
           for (var i = 0; i < 6; i++) {
             values.appendChild(vals[i]);
