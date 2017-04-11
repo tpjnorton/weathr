@@ -668,7 +668,7 @@ function setTextColor(effectController) {
   var weatherData = document.querySelector(".weatherData");
   var header = document.querySelector(".header");
   var divider = document.querySelector(".divider");
-  console.log(divider.style);
+  
   if(effectController.timeOfDay <= 0.30 || effectController.timeOfDay >= 0.72) {
     weatherData.style.color = "#f1d7d0";
     header.style.color = "#f1d7d0";
