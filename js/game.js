@@ -1,5 +1,6 @@
 //COLORS
 var THREE = require('three')
+var weather;
 var Colors = {
     red:0xf25346,
     white:0xd8d0d1,
@@ -254,28 +255,29 @@ Stars = function() {
 }
 
 Rain = function() {
-    this.particleCount = 9000;
-     
-    this.particles = new THREE.Geometry();
- 
-    for (var p = 0; p < this.particleCount; p++) {
-        var x = Math.random() *  4000 - 2000;
-        var y = Math.random() *  250;
-        var z = Math.random() *  200 - 400;
-               
-        var particle = new THREE.Vector3(x, y, z);
-        particle.velocity = new THREE.Vector3(0, -3.5, 0);
-        this.particles.vertices.push(particle);
-    }
+  this.particleCount = 9000;
+   
+  this.particles = new THREE.Geometry();
 
-    this.particleMaterial = new THREE.PointsMaterial({
-      color: 0x1155ff, 
-      size: 2,
-      blending: THREE.AdditiveBlending,
-      transparent: true,
-    });
-      
-    this.rainPointCloud = new THREE.Points(this.particles, this.particleMaterial);
+  for (var p = 0; p < this.particleCount; p++) {
+      var x = Math.random() *  4000 - 2000;
+      var y = Math.random() *  250;
+      var z = Math.random() *  200 - 400;
+             
+      var particle = new THREE.Vector3(x, y, z);
+      particle.velocity = new THREE.Vector3(0, -3.5, 0);
+      particle.maxXvel = weather.weatherData.wind.speed / 3.6;
+      this.particles.vertices.push(particle);
+  }
+
+  this.particleMaterial = new THREE.PointsMaterial({
+    color: 0x1155ff, 
+    size: 2,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+  });
+    
+  this.rainPointCloud = new THREE.Points(this.particles, this.particleMaterial);
 }
 
 Rain.prototype.simulateRain = function() {
@@ -285,13 +287,89 @@ Rain.prototype.simulateRain = function() {
 
     if (particle.y < 0) {
       particle.y = 250;
+      particle.x = Math.random() *  4000 - 2000;
+      particle.velocity.x /= 2;
     }
 
     if (particle.velocity.y < -3.5)
       particle.velocity.y = -3.5;
 
-    particle.velocity.y -= Math.random() * .02;
+    if (Math.abs(particle.velocity.x) >= particle.maxXvel) { 
+      if (particle.velocity.x < 0)
+        particle.velocity.x = -particle.maxXvel;
+      else
+        particle.velocity.x = particle.maxXvel;
+    }
 
+
+    particle.velocity.y -= Math.random() * .02;
+    particle.velocity.x += Math.random() * .02;
+
+    // console.log(particle.velocity.x)
+
+
+    particle.x += particle.velocity.x;
+    particle.y += particle.velocity.y;
+}
+
+  this.particles.verticesNeedUpdate = true;
+};
+
+Snow = function() {
+  this.particleCount = 9000;
+   
+  this.particles = new THREE.Geometry();
+
+  for (var p = 0; p < this.particleCount; p++) {
+      var x = Math.random() *  4000 - 2000;
+      var y = Math.random() *  250;
+      var z = Math.random() *  200 - 400;
+             
+      var particle = new THREE.Vector3(x, y, z);
+      particle.velocity = new THREE.Vector3(0, -3.5, 0);
+      particle.maxXvel = weather.weatherData.wind.speed / 3.6;
+      this.particles.vertices.push(particle);
+  }
+
+  this.particleMaterial = new THREE.PointsMaterial({
+    color: 0xffffff, 
+    size: 2,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+  });
+    
+  this.rainPointCloud = new THREE.Points(this.particles, this.particleMaterial);
+}
+
+Snow.prototype.simulateSnow = function() {
+  var pCount = this.particleCount;
+  while (pCount--) {
+    var particle = this.particles.vertices[pCount];
+
+    if (particle.y < 0) {
+      particle.y = 250;
+      particle.x = Math.random() *  4000 - 2000;
+      particle.velocity.x /= 2;
+    }
+
+    if (particle.velocity.y < -2)
+      particle.velocity.y = -2;
+
+    if (Math.abs(particle.velocity.x) >= particle.maxXvel) { 
+      if (particle.velocity.x < 0)
+        particle.velocity.x = -particle.maxXvel;
+      else
+        particle.velocity.x = particle.maxXvel;
+    }
+
+
+    particle.velocity.y -= Math.random() * .02;
+    particle.velocity.x += Math.random()  -0.2;
+
+    // console.log(particle.velocity.x)
+
+
+    particle.x += particle.velocity.x;
     particle.y += particle.velocity.y;
 }
 
@@ -500,7 +578,7 @@ function init(event) {
   resetGame();
   createScene();
 
-  var weather = new Weather();
+  weather = new Weather();
   window.addEventListener('weatherLoaded', function() {
     var effectController  = {
       turbidity: 10,
