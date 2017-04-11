@@ -9,7 +9,7 @@ var Colors = {
     pink:0xF5986E,
     yellow:0xf4ce93,
     blue:0x68c3c0,
-    green:0x47c149,
+    green:0x379129,
     grey:0xeeeeee,
     greyDark:0x878787
 };
@@ -102,9 +102,9 @@ var ambientLight, hemisphereLight, sunLight, moonLight;
 
 function createLights() {
 
-  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, .9)
+  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, .8)
 
-  ambientLight = new THREE.AmbientLight(0xdc8874, .5);
+  ambientLight = new THREE.AmbientLight(0x1f1b4e, .1);
 
   sunLight = new THREE.DirectionalLight(0xffffff, .9);
   sunLight.position.set(150, 350, 350);
@@ -485,7 +485,7 @@ function initSky(effectController) {
   scene.add( sunSphere );
 
   function updateLightColors() {
-    if (effectController.timeOfDay < 0.25 || effectController.timeOfDay > 0.75 ) {      
+    if (effectController.timeOfDay < 0.25 || effectController.timeOfDay >= 0.75 ) {      
       sunLight.color = new THREE.Color(0x010321);
       ambientLight.color = new THREE.Color(0x010321);
       hemisphereLight.color = new THREE.Color(0x010321);
@@ -522,7 +522,7 @@ function initSky(effectController) {
     }
     else {
       sunLight.color = new THREE.Color(0xffffff);
-      ambientLight.color = new THREE.Color(0xdc8874);
+      ambientLight.color = new THREE.Color(0x9fabce);
       hemisphereLight.color = new THREE.Color(0xaaaaaa);
       if (stars)
         stars.stars.material.opacity = 0;
@@ -593,7 +593,6 @@ function init(event) {
     var sunrise = weather.weatherData.sys.sunrise;
     var sunset = weather.weatherData.sys.sunset;
     var now = Date.now() / 1000;
-    console.log(sunrise, sunset, now);
     if (now >= sunrise && now <= sunset) {
       effectController.timeOfDay = 0.25 + (now - sunrise) / (2 * (sunset - sunrise));
     }
@@ -603,7 +602,7 @@ function init(event) {
     else if (now < sunrise) {
       effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
     }
-    weather.weatherData.clouds.all = 81;
+    weather.weatherData.clouds.all = 70;
     if (weather.weatherData.clouds.all < 80) {
       createMoon();
       createStars();
@@ -613,11 +612,14 @@ function init(event) {
       createClouds(false);
       createRain();
       // createSnow();
+      ambientLight.color = new THREE.Color(0xcecece);
+      ambientLight.intensity = 0.7;
       effectController.rayleigh = 0;
       effectController.turbidity = 20;
       effectController.luminance = 0.4;
       effectController.mieDirectionalG = 0.087;
       sunLight.intensity = 0.5;
+      earth.mesh.material.color = new THREE.Color(0x296013);
     }
 
     // controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -640,18 +642,16 @@ function loop() {
   deltaTime = newTime-oldTime;
   oldTime = newTime;
 
-  if (rain) {
+  if (rain)
     rain.simulateRain();
-  }
 
-  if (snow) {
+  if (snow)
     snow.simulateSnow();
-  }
-
-  earth.moveSurface();
 
   if (clouds)
     clouds.moveSurface();
+  
+  earth.moveSurface();
 
   renderer.render(scene, camera);
   requestAnimationFrame(loop);
