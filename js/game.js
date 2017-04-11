@@ -746,12 +746,11 @@ function init(event) {
     else if (now < sunrise) {
       effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
     }
-    // weather.weatherData.clouds.all = 80;
     if (weather.weatherData.clouds.all < 80) {
       createMoon();
       createStars();
       createSun();
-      createLightClouds(50);
+      createLightClouds(weather.weatherData.clouds.all * 200);
     }
     else {
       createHeavyClouds(false);
