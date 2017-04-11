@@ -261,7 +261,7 @@ Rain = function() {
 
   for (var p = 0; p < this.particleCount; p++) {
       var x = Math.random() *  4000 - 2000;
-      var y = Math.random() *  250;
+      var y = Math.random() *  350 - 100;
       var z = Math.random() *  200 - 400;
              
       var particle = new THREE.Vector3(x, y, z);
@@ -270,9 +270,11 @@ Rain = function() {
       this.particles.vertices.push(particle);
   }
 
+  var rainTexture = new THREE.TextureLoader().load( "resources/images/raindrop.png" );
   this.particleMaterial = new THREE.PointsMaterial({
-    color: 0x1155ff, 
-    size: 2,
+    color: 0x1155ff,
+    map: rainTexture,
+    size: 25,
     blending: THREE.AdditiveBlending,
     transparent: true,
   });
@@ -285,7 +287,7 @@ Rain.prototype.simulateRain = function() {
   while (pCount--) {
     var particle = this.particles.vertices[pCount];
 
-    if (particle.y < 0) {
+    if (particle.y < -100) {
       particle.y = 250;
       particle.x = Math.random() *  4000 - 2000;
       particle.velocity.x /= 2;
@@ -293,7 +295,6 @@ Rain.prototype.simulateRain = function() {
 
     if (particle.velocity.y < -3.5)
       particle.velocity.y = -3.5;
-
     if (Math.abs(particle.velocity.x) >= particle.maxXvel) { 
       if (particle.velocity.x < 0)
         particle.velocity.x = -particle.maxXvel;
