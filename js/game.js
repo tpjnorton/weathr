@@ -249,7 +249,7 @@ LightCloud = function() {
   this.mesh = this.generateCloudMesh();
   this.mesh.name = "LightCloud";
   this.mesh.castShadow = false;
-  this.mesh.position.y = game.defaultCamHeight * 2.1;
+  this.mesh.position.y = game.defaultCamHeight * 2.2;
   this.mesh.position.z = Math.random() * 200 - 100;
   this.mesh.position.x = Math.random() * 1000 - 500;
   var otherScale = Math.random() * 0.2 + 1;
@@ -633,6 +633,9 @@ function initSky(effectController) {
   sunSphere.visible = true;
   scene.add(sunSphere);
 
+  window.setInterval(updateTimeOfDay, 20000, effectController);
+  updateTimeOfDay(effectController);
+
   function updateLightColors() {
     if (effectController.timeOfDay <= 0.25 || effectController.timeOfDay >= 0.75) {
       sunLight.color = new THREE.Color(Colors.nightTime);
@@ -676,6 +679,23 @@ function initSky(effectController) {
       if (stars)
         stars.stars.material.opacity = 0;
     }
+  }
+
+  function updateTimeOfDay(effectController) {
+    var sunrise = weather.weatherData.sys.sunrise;
+    var sunset = weather.weatherData.sys.sunset;
+    var now = Date.now() / 1000;
+    if (now >= sunrise && now <= sunset) {
+      effectController.timeOfDay = 0.25 + (now - sunrise) / (2 * (sunset - sunrise));
+    }
+    else if (now > sunset) {
+      effectController.timeOfDay = 0.75 + (now - sunset) / (2 * ((sunrise + 86400) - sunset));
+    }
+    else if (now < sunrise) {
+      effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
+    }
+    guiChanged();
+    console.log("hej")
   }
 
   function guiChanged() {
@@ -741,19 +761,8 @@ function init(event) {
   window.addEventListener('weatherLoaded', function() {
     createLights();
     createEarth();
-    var sunrise = weather.weatherData.sys.sunrise;
-    var sunset = weather.weatherData.sys.sunset;
-    var now = Date.now() / 1000;
-    if (now >= sunrise && now <= sunset) {
-      effectController.timeOfDay = 0.25 + (now - sunrise) / (2 * (sunset - sunrise));
-    }
-    else if (now > sunset) {
-      effectController.timeOfDay = 0.75 + (now - sunset) / (2 * ((sunrise + 86400) - sunset));
-    }
-    else if (now < sunrise) {
-      effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
-    }
-    weather.weatherData.clouds.all = 79;
+
+    weather.weatherData.clouds.all = 100;
     if (weather.weatherData.clouds.all < 80) {
       createMoon();
       createStars();
@@ -765,13 +774,14 @@ function init(event) {
       createRain();
       // createSnow();
       ambientLight.color = new THREE.Color(0xcecece);
-      ambientLight.intensity = 0.7;
+      ambientLight.intensity = 1.0;
       effectController.rayleigh = 0;
       effectController.turbidity = 20;
       effectController.luminance = 0.4;
       effectController.mieDirectionalG = 0.087;
       sunLight.intensity = 0.5;
-      earth.mesh.material.color = new THREE.Color(0x296013);
+
+      earth.mesh.material.color = new THREE.Color(0x599043);
     }
 
     // controls = new THREE.OrbitControls( camera, renderer.domElement );
