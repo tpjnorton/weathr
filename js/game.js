@@ -174,8 +174,8 @@ Earth = function() {
   this.mesh.name = "Earth";
   this.mesh.receiveShadow = true;
 
-  for (var i = 0; i < 150; i++)
-    this.moveSurface();
+  // for (var i = 0; i < 150; i++)
+  //   this.moveSurface();
 }
 
 Earth.prototype.moveSurface = function() {
@@ -226,8 +226,8 @@ HeavyClouds = function(dark) {
   this.mesh.castShadow = false;
   this.mesh.rotation.x = 0.2;
 
-  for (var i = 0; i < 150; i++)
-    this.moveSurface();
+  // for (var i = 0; i < 150; i++)
+  //   this.moveSurface();
 }
 
 HeavyClouds.prototype.moveSurface = function() {
@@ -834,7 +834,5 @@ function setTextColor(effectController) {
     header.style.color = "#515750";
     divider.style.borderTopColor = "#515750";
   }
-
-
 }
 
