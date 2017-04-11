@@ -37,7 +37,7 @@ navigator.geolocation.getCurrentPosition(
 
         descs[0].innerHTML = "Weather";
         descs[1].innerHTML = "Cloud&nbsp;Coverage";
-        descs[2].innerHTML = "Visibility";
+        descs[2].innerHTML = "Wind";
         descs[3].innerHTML = "Humidity";
         descs[4].innerHTML = "Sunrise";
         descs[5].innerHTML = "Sunset";
@@ -60,11 +60,14 @@ navigator.geolocation.getCurrentPosition(
 
         vals[0].innerHTML = weather.weather[0].main;
         vals[1].innerHTML = weather.clouds.all+"%";
-        vals[2].innerHTML = weather.visibility / 1000.0 + "km";
+        vals[2].innerHTML = weather.wind.speed+"km/h";
         vals[3].innerHTML = weather.main.humidity+"%";
         vals[4].innerHTML = formattedTime(sunriseTime);
         vals[5].innerHTML = formattedTime(sunsetTime);
-        console.log(formattedTime(new Date(weather.dt)));
+
+        if (weather.wind.angle) {
+            vals[2].innerHTML += ",&nbsp;" + weather.wind.angle + "&#176;"
+        }
 
         for (var i = 0; i < 6; i++) {
           values.appendChild(vals[i]);
