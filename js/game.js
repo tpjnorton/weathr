@@ -260,11 +260,11 @@ Rain = function() {
  
     for (var p = 0; p < this.particleCount; p++) {
         var x = Math.random() *  4000 - 2000;
-        var y = Math.random() *  1000 + 500;
+        var y = Math.random() *  250;
         var z = Math.random() *  200 - 400;
                
         var particle = new THREE.Vector3(x, y, z);
-        particle.velocity = new THREE.Vector3(0, 0, 0);
+        particle.velocity = new THREE.Vector3(0, -3.5, 0);
         this.particles.vertices.push(particle);
     }
 
@@ -284,11 +284,11 @@ Rain.prototype.simulateRain = function() {
     var particle = this.particles.vertices[pCount];
 
     if (particle.y < 0) {
-      particle.y = 500;
+      particle.y = 250;
     }
 
-    if (particle.velocity.y < -3)
-      particle.velocity.y = -3;
+    if (particle.velocity.y < -3.5)
+      particle.velocity.y = -3.5;
 
     particle.velocity.y -= Math.random() * .02;
 
