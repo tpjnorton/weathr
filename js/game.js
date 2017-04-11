@@ -184,7 +184,7 @@ Earth.prototype.moveSurface = function () {
   }
 }
 
-Clouds = function(dark) {
+HeavyClouds = function(dark) {
   var geom = new THREE.BoxGeometry(300,300,game.earthLength/2,40,10);
   geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
   geom.mergeVertices();
@@ -214,12 +214,12 @@ Clouds = function(dark) {
   });
 
   this.mesh = new THREE.Mesh(geom, mat);
-  this.mesh.name = "Clouds";
+  this.mesh.name = "HeavyClouds";
   this.mesh.castShadow = false;
   this.mesh.rotation.x = 0.2;
 }
 
-Clouds.prototype.moveSurface = function () {
+HeavyClouds.prototype.moveSurface = function () {
   var verts = this.mesh.geometry.vertices;
   var l = verts.length;
   for (var i=0; i<l; i++) {
@@ -229,6 +229,144 @@ Clouds.prototype.moveSurface = function () {
     v.y = vprops.y + Math.sin(vprops.ang/10)*vprops.amp;
     vprops.ang += vprops.speed*deltaTime;
     this.mesh.geometry.verticesNeedUpdate=true;
+  }
+}
+
+
+LightCloud = function() {
+  this.velocity = new THREE.Vector3(0, 0, 0);
+
+  this.mesh = this.generateCloudMesh();
+  this.mesh.name = "LightCloud";
+  this.mesh.castShadow = false;
+  this.mesh.position.y = game.defaultCamHeight * 2.1;
+  this.mesh.position.z = Math.random() * 200 - 100;
+  this.mesh.position.x = Math.random() * 1000 -500;
+  var otherScale = Math.random() * 0.2 + 1;
+  var xScale = otherScale * 1.5;
+  this.mesh.scale.set(xScale, otherScale, otherScale);
+  this.velocity.x = Math.random() * 0.2 - 0.1;
+}
+
+LightCloud.prototype.generateCloudMesh = function() {
+  var cloudType = Math.random() * 3;
+  // cloudType = 1.0
+  var cloudColor = Colors.white;
+  var mat = new THREE.MeshPhongMaterial({
+    color: cloudColor,
+    shading:THREE.FlatShading,
+    transparent: true,
+    opacity: 1,
+    shininess: 1
+  });
+
+  if (cloudType >= 2.0) { 
+    var geomSmall = new THREE.OctahedronGeometry(5, 2);
+    var geomBig = new THREE.OctahedronGeometry(7, 2);
+
+    var smallMeshLeft = new THREE.Mesh(geomSmall, mat);
+    var smallMeshRight = new THREE.Mesh(geomSmall, mat);
+    var bigMesh = new THREE.Mesh(geomBig, mat);
+
+    smallMeshLeft.position.x = -6.5;
+    smallMeshRight.position.x = 6;
+    bigMesh.position.y = 3;
+
+    var meshtoReturn = new THREE.Object3D();
+
+    meshtoReturn.add(smallMeshLeft);
+    meshtoReturn.add(bigMesh);
+    meshtoReturn.add(smallMeshRight);
+
+    return meshtoReturn;
+  }
+  else if (cloudType >= 1.0) {
+    var geomSmall = new THREE.OctahedronGeometry(5, 2);
+    var geomMedium = new THREE.OctahedronGeometry(7, 2);
+    var geomBig = new THREE.OctahedronGeometry(9, 2);
+
+    var smallMeshLeft   = new THREE.Mesh(geomSmall, mat);
+    var smallMeshRight  = new THREE.Mesh(geomSmall, mat);
+    var mediumMeshLeft  = new THREE.Mesh(geomMedium, mat);
+    var mediumMeshRight = new THREE.Mesh(geomMedium, mat);
+    var bigMesh         = new THREE.Mesh(geomBig, mat);
+
+    smallMeshLeft.position.x = -12;
+    smallMeshRight.position.x = 15;
+
+    mediumMeshLeft.position.y = 2;
+    mediumMeshRight.position.y = 4;
+
+    mediumMeshLeft.position.x = -6;
+    mediumMeshRight.position.x = 11;
+
+    bigMesh.position.x = 1;
+    bigMesh.position.y = 5;
+
+    var meshtoReturn = new THREE.Object3D();
+
+    meshtoReturn.add(smallMeshLeft);
+    meshtoReturn.add(mediumMeshLeft);
+    meshtoReturn.add(mediumMeshRight);
+    meshtoReturn.add(bigMesh);
+    meshtoReturn.add(smallMeshRight);
+
+    return meshtoReturn;
+  }
+
+  else {
+    var geomSmall = new THREE.OctahedronGeometry(5, 2);
+    var geomBigLeft = new THREE.OctahedronGeometry(7, 2);
+    var geomBigRight = new THREE.OctahedronGeometry(9, 2);
+
+    var smallMeshLeft  = new THREE.Mesh(geomSmall, mat);
+    var smallMeshRight = new THREE.Mesh(geomSmall, mat);
+    var bigMeshLeft  = new THREE.Mesh(geomBigLeft, mat);
+    var bigMeshRight = new THREE.Mesh(geomBigRight, mat);
+
+    smallMeshLeft.position.x = -8;
+    smallMeshRight.position.x = 13;
+
+    bigMeshLeft.position.y = 2;
+    bigMeshRight.position.y = 4;
+
+    bigMeshLeft.position.x = -3;
+    bigMeshRight.position.x = 7;
+
+    var meshtoReturn = new THREE.Object3D();
+
+    meshtoReturn.add(smallMeshLeft);
+    meshtoReturn.add(bigMeshLeft);
+    meshtoReturn.add(bigMeshRight)
+    meshtoReturn.add(smallMeshRight);
+
+    return meshtoReturn;
+  }
+}
+
+LightCloud.prototype.drift = function () {
+  this.mesh.position.x += this.velocity.x;
+  if (this.mesh.position.x < -600)
+    this.mesh.position.x = 600;
+  else if (this.mesh.position.x > 600)
+    this.mesh.position.x = -600;
+  // console.log(this.mesh.position);
+}
+
+LightClouds = function(cloudNum) {
+  this.clouds = []
+  this.cloudNum = cloudNum;
+
+  for (var i = 0; i < this.cloudNum; i++) {
+    this.clouds.push(new LightCloud());
+    // var box = new THREE.BoxHelper( this.clouds[i].mesh, 0xffff00 );
+    // scene.add(box);
+  }
+}
+
+LightClouds.prototype.driftClouds = function() {
+  for (var i = 0; i < this.cloudNum; i++) {
+    this.clouds[i].drift();
   }
 }
 
@@ -425,7 +563,8 @@ var earth;
 var sun;
 var moon;
 var stars;
-var clouds;
+var heavyClouds;
+var lightClouds
 var rain;
 var snow;
 
@@ -460,16 +599,20 @@ function createEarth() {
   scene.add(earth.mesh);
 }
 
-function createClouds() {
-  clouds = new Clouds();
-  clouds.mesh.position.y = game.defaultCamHeight * 3.4;
-  clouds.mesh.position.z = camera.position.z;
-  scene.add(clouds.mesh);
-
-  // var box = new THREE.BoxHelper( clouds.mesh, 0xffff00 );
-  // scene.add(box);
+function createHeavyClouds() {
+  heavyClouds = new HeavyClouds();
+  heavyClouds.mesh.position.y = game.defaultCamHeight * 3.4;
+  heavyClouds.mesh.position.z = camera.position.z;
+  scene.add(heavyClouds.mesh);
 }
 
+function createLightClouds(cloudNum) {
+  lightClouds = new LightClouds(cloudNum);
+  for (var i = 0; i < lightClouds.cloudNum; i++) {
+    scene.add(lightClouds.clouds[i].mesh);
+    console.log("adding mesh");
+  }
+}
 
 function initSky(effectController) {
   // Add Sky Mesh
@@ -577,17 +720,18 @@ function init(event) {
   resetGame();
   createScene();
 
+  var effectController  = {
+    turbidity: 10,
+    rayleigh: 2,
+    mieCoefficient: 0.005,
+    mieDirectionalG: 0.261,
+    luminance: 1,
+    timeOfDay: 0.5,
+    sun: false
+  };
+
   weather = new Weather();
   window.addEventListener('weatherLoaded', function() {
-    var effectController  = {
-      turbidity: 10,
-      rayleigh: 2,
-      mieCoefficient: 0.005,
-      mieDirectionalG: 0.261,
-      luminance: 1,
-      timeOfDay: 0.5,
-      sun: false
-    };
     createLights();
     createEarth();
     var sunrise = weather.weatherData.sys.sunrise;
@@ -602,14 +746,15 @@ function init(event) {
     else if (now < sunrise) {
       effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
     }
-    weather.weatherData.clouds.all = 70;
+    // weather.weatherData.clouds.all = 80;
     if (weather.weatherData.clouds.all < 80) {
       createMoon();
       createStars();
       createSun();
+      createLightClouds(50);
     }
     else {
-      createClouds(false);
+      createHeavyClouds(false);
       createRain();
       // createSnow();
       ambientLight.color = new THREE.Color(0xcecece);
@@ -644,14 +789,17 @@ function loop() {
   deltaTime = newTime-oldTime;
   oldTime = newTime;
 
+  if (lightClouds)
+    lightClouds.driftClouds();
+
   if (rain)
     rain.simulateRain();
 
   if (snow)
     snow.simulateSnow();
 
-  if (clouds)
-    clouds.moveSurface();
+  if (heavyClouds)
+    heavyClouds.moveSurface();
   
   earth.moveSurface();
 
