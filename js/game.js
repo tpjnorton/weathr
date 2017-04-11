@@ -750,7 +750,7 @@ function init(event) {
       createMoon();
       createStars();
       createSun();
-      createLightClouds(weather.weatherData.clouds.all * 200);
+      createLightClouds(weather.weatherData.clouds.all/100 * 200);
     }
     else {
       createHeavyClouds(false);
