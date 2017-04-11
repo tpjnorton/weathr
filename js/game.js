@@ -556,6 +556,7 @@ function initSky(effectController) {
     sunSphere.visible = effectController.sun;
     sky.uniforms.sunPosition.value.copy( sunSphere.position );
     renderer.render( scene, camera );
+    setTextColor(effectController);
   }
   var gui = new dat.GUI();
   gui.add( effectController, "turbidity", 1.0, 20.0, 0.1 ).onChange( guiChanged );
@@ -629,6 +630,8 @@ function init(event) {
 
     initSky(effectController);
 
+    setTextColor(effectController);
+
     loop();
   });
 }
@@ -658,4 +661,24 @@ function loop() {
 
 function render() {
   renderer.render(scene, camera);
+}
+
+function setTextColor(effectController) {
+
+  var weatherData = document.querySelector(".weatherData");
+  var header = document.querySelector(".header");
+  var divider = document.querySelector(".divider");
+  console.log(divider.style);
+  if(effectController.timeOfDay <= 0.30 || effectController.timeOfDay >= 0.72) {
+    weatherData.style.color = "#f1d7d0";
+    header.style.color = "#f1d7d0";
+    divider.style.borderTopColor = "#f1d7d0";
+  }
+  else {
+    weatherData.style.color = "#111710";
+    header.style.color = "#515750";
+    divider.style.borderTopColor = "#515750";
+  }
+
+
 }

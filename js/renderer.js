@@ -25,6 +25,7 @@ Weather = function() {
           var dataContainer = document.createElement("div");
           dataContainer.setAttribute("class", "detailedData");        
           var hr = document.createElement("hr");
+          hr.setAttribute("class","divider")
           locDOM.parentElement.appendChild(dataContainer);
           dataContainer.appendChild(hr);
 
