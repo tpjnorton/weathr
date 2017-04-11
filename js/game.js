@@ -10,7 +10,7 @@ var Colors = {
     yellow:0xf4ce93,
     blue:0x68c3c0,
     green:0x47c149,
-    grey:0xd1d1d1,
+    grey:0xeeeeee,
     greyDark:0x878787
 };
 
@@ -191,6 +191,10 @@ Clouds = function(dark) {
   var l = geom.vertices.length;
 
   this.waves = [];
+  if (dark) 
+    cloudColor = Colors.greyDark;
+  else
+    cloudColor = Colors.grey;
   var cloudColor = dark ? Colors.greyDark : Colors.grey;
   for (var i=0;i<l;i++) {
     var v = geom.vertices[i];
@@ -266,7 +270,7 @@ Rain = function() {
              
       var particle = new THREE.Vector3(x, y, z);
       particle.velocity = new THREE.Vector3(0, -4, 0);
-      particle.maxXvel = weather.weatherData.wind.speed / 3.6;
+      particle.maxXvel = weather.weatherData.wind.speed / 10;
       this.particles.vertices.push(particle);
   }
 
@@ -305,9 +309,6 @@ Rain.prototype.simulateRain = function() {
     particle.velocity.y -= Math.random() * .02;
     particle.velocity.x += Math.random() * .02;
 
-    // console.log(particle.velocity.x)
-
-
     particle.x += particle.velocity.x;
     particle.y += particle.velocity.y;
 }
@@ -322,12 +323,12 @@ Snow = function() {
 
   for (var p = 0; p < this.particleCount; p++) {
       var x = Math.random() *  4000 - 2000;
-      var y = Math.random() *  250;
+      var y = Math.random() *  350 - 100;
       var z = Math.random() *  200 - 400;
              
       var particle = new THREE.Vector3(x, y, z);
       particle.velocity = new THREE.Vector3(0, -3.5, 0);
-      particle.maxXvel = weather.weatherData.wind.speed / 3.6;
+      particle.maxXvel = weather.weatherData.wind.speed / 20;
       this.particles.vertices.push(particle);
   }
 
@@ -346,28 +347,20 @@ Snow.prototype.simulateSnow = function() {
   while (pCount--) {
     var particle = this.particles.vertices[pCount];
 
-    if (particle.y < 0) {
+    if (particle.y < -100) {
       particle.y = 250;
       particle.x = Math.random() *  4000 - 2000;
-      particle.velocity.x /= 2;
+      particle.velocity.x /= 10;
     }
 
-    if (particle.velocity.y < -2)
-      particle.velocity.y = -2;
+    if (particle.velocity.y < -1)
+      particle.velocity.y = -1;
 
-    if (Math.abs(particle.velocity.x) >= particle.maxXvel) { 
-      if (particle.velocity.x < 0)
-        particle.velocity.x = -particle.maxXvel;
-      else
-        particle.velocity.x = particle.maxXvel;
-    }
-
+    if (Math.abs(particle.velocity.x) >= particle.maxXvel) 
+      particle.velocity.x /= 1.1;
 
     particle.velocity.y -= Math.random() * .02;
-    particle.velocity.x += Math.random()  -0.2;
-
-    // console.log(particle.velocity.x)
-
+    particle.velocity.x += Math.random() - 0.4;
 
     particle.x += particle.velocity.x;
     particle.y += particle.velocity.y;
@@ -435,6 +428,7 @@ var moon;
 var stars;
 var clouds;
 var rain;
+var snow;
 
 function createStars() {
   stars = new Stars();
@@ -444,6 +438,11 @@ function createStars() {
 function createRain() {
   rain = new Rain();
   scene.add(rain.rainPointCloud);
+}
+
+function createSnow() {
+  snow = new Snow();
+  scene.add(snow.rainPointCloud);
 }
 
 function createSun() {
@@ -613,6 +612,7 @@ function init(event) {
     else {
       createClouds(false);
       createRain();
+      // createSnow();
       effectController.rayleigh = 0;
       effectController.turbidity = 20;
       effectController.luminance = 0.4;
@@ -643,6 +643,11 @@ function loop() {
   if (rain) {
     rain.simulateRain();
   }
+
+  if (snow) {
+    snow.simulateSnow();
+  }
+
   earth.moveSurface();
 
   if (clouds)
