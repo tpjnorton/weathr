@@ -67,8 +67,8 @@ Weather = function() {
           vals[4].innerHTML = formattedTime(sunriseTime);
           vals[5].innerHTML = formattedTime(sunsetTime);
  
-          if (that.weatherData.wind.angle) 
-            vals[2].innerHTML += ",&nbsp;" + weather.wind.angle + "&#176;"
+          if (that.weatherData.wind.deg) 
+            vals[2].innerHTML += ",&nbsp;" + that.weatherData.wind.deg + "&#176;"
 
           for (var i = 0; i < 6; i++) {
             values.appendChild(vals[i]);
