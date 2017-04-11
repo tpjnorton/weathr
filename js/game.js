@@ -11,7 +11,10 @@ var Colors = {
     blue:0x68c3c0,
     green:0x379129,
     grey:0xeeeeee,
-    greyDark:0x878787
+    greyDark:0x878787,
+    dawnDusk: 0x351304,
+    morningEvening: 0xd1a287,
+    nightTime: 0x010321
 };
 
 ///////////////
@@ -169,6 +172,9 @@ Earth = function() {
   this.mesh = new THREE.Mesh(geom, mat);
   this.mesh.name = "Earth";
   this.mesh.receiveShadow = true;
+
+  for (var i = 0; i < 150; i++)
+    this.moveSurface();
 }
 
 Earth.prototype.moveSurface = function () {
@@ -177,7 +183,7 @@ Earth.prototype.moveSurface = function () {
   for (var i=0; i<l; i++) {
     var v = verts[i];
     var vprops = this.waves[i];
-    v.x =  vprops.x + Math.cos(vprops.ang/10)*vprops.amp;
+    v.x = vprops.x + Math.cos(vprops.ang/10)*vprops.amp;
     v.y = vprops.y + Math.sin(vprops.ang/10)*vprops.amp;
     vprops.ang += vprops.speed*deltaTime;
     this.mesh.geometry.verticesNeedUpdate=true;
@@ -217,6 +223,9 @@ HeavyClouds = function(dark) {
   this.mesh.name = "HeavyClouds";
   this.mesh.castShadow = false;
   this.mesh.rotation.x = 0.2;
+
+  for (var i = 0; i < 150; i++)
+    this.moveSurface();
 }
 
 HeavyClouds.prototype.moveSurface = function () {
@@ -232,7 +241,6 @@ HeavyClouds.prototype.moveSurface = function () {
   }
 }
 
-
 LightCloud = function() {
   this.velocity = new THREE.Vector3(0, 0, 0);
 
@@ -245,7 +253,7 @@ LightCloud = function() {
   var otherScale = Math.random() * 0.2 + 1;
   var xScale = otherScale * 1.5;
   this.mesh.scale.set(xScale, otherScale, otherScale);
-  this.velocity.x = Math.random() * 0.2 - 0.1;
+  this.velocity.x = Math.random() * 0.18 - 0.09;
 }
 
 LightCloud.prototype.generateCloudMesh = function() {
@@ -350,7 +358,6 @@ LightCloud.prototype.drift = function () {
     this.mesh.position.x = 600;
   else if (this.mesh.position.x > 600)
     this.mesh.position.x = -600;
-  // console.log(this.mesh.position);
 }
 
 LightClouds = function(cloudNum) {
@@ -359,8 +366,6 @@ LightClouds = function(cloudNum) {
 
   for (var i = 0; i < this.cloudNum; i++) {
     this.clouds.push(new LightCloud());
-    // var box = new THREE.BoxHelper( this.clouds[i].mesh, 0xffff00 );
-    // scene.add(box);
   }
 }
 
@@ -627,38 +632,38 @@ function initSky(effectController) {
   scene.add( sunSphere );
 
   function updateLightColors() {
-    if (effectController.timeOfDay < 0.25 || effectController.timeOfDay >= 0.75 ) {      
-      sunLight.color = new THREE.Color(0x010321);
-      ambientLight.color = new THREE.Color(0x010321);
-      hemisphereLight.color = new THREE.Color(0x010321);
+    if (effectController.timeOfDay <= 0.25 || effectController.timeOfDay >= 0.75 ) {      
+      sunLight.color = new THREE.Color(Colors.nightTime);
+      ambientLight.color = new THREE.Color(Colors.nightTime);
+      hemisphereLight.color = new THREE.Color(Colors.nightTime);
       if (stars)
         stars.stars.material.opacity = 0.8;
     }
-    else if (effectController.timeOfDay < 0.28 && effectController.timeOfDay > 0.2 ) {
-      sunLight.color = new THREE.Color(0x351304);
-      ambientLight.color = new THREE.Color(0x351304);
-      hemisphereLight.color = new THREE.Color(0x351304);
+    else if (effectController.timeOfDay < 0.25 && effectController.timeOfDay > 0.23 ) {
+      sunLight.color = new THREE.Color(Colors.dawnDusk);
+      ambientLight.color = new THREE.Color(Colors.dawnDusk);
+      hemisphereLight.color = new THREE.Color(Colors.dawnDusk);
       if (stars)
         stars.stars.material.opacity = 0.2;
     }
     else if (effectController.timeOfDay < 0.31 && effectController.timeOfDay >= 0.28 ) {
-      sunLight.color = new THREE.Color(0xd1a287);
-      ambientLight.color = new THREE.Color(0xd1a287);
-      hemisphereLight.color = new THREE.Color(0xd1a287);
+      sunLight.color = new THREE.Color(Colors.morningEvening);
+      ambientLight.color = new THREE.Color(Colors.morningEvening);
+      hemisphereLight.color = new THREE.Color(Colors.morningEvening);
       if (stars)
         stars.stars.material.opacity = 0;
     }
     else if (effectController.timeOfDay < 0.72 && effectController.timeOfDay >= 0.68 ) {
-      sunLight.color = new THREE.Color(0xd1a287);
-      ambientLight.color = new THREE.Color(0xd1a287);
-      hemisphereLight.color = new THREE.Color(0xd1a287);
+      sunLight.color = new THREE.Color(Colors.morningEvening);
+      ambientLight.color = new THREE.Color(Colors.morningEvening);
+      hemisphereLight.color = new THREE.Color(Colors.morningEvening);
       if (stars)
         stars.stars.material.opacity = 0;
     }
     else if (effectController.timeOfDay < 0.75 && effectController.timeOfDay >= 0.72 ) {
-      sunLight.color = new THREE.Color(0x351304);
-      ambientLight.color = new THREE.Color(0x351304);
-      hemisphereLight.color = new THREE.Color(0x351304);
+      sunLight.color = new THREE.Color(Colors.dawnDusk);
+      ambientLight.color = new THREE.Color(Colors.dawnDusk);
+      hemisphereLight.color = new THREE.Color(Colors.dawnDusk);
       if (stars)
         stars.stars.material.opacity = 0.2;
     }
@@ -746,11 +751,12 @@ function init(event) {
     else if (now < sunrise) {
       effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
     }
+    weather.weatherData.clouds.all = 79;
     if (weather.weatherData.clouds.all < 80) {
       createMoon();
       createStars();
       createSun();
-      createLightClouds(weather.weatherData.clouds.all/100 * 200);
+      createLightClouds(weather.weatherData.clouds.all/100 * 220);
     }
     else {
       createHeavyClouds(false);
