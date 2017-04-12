@@ -304,7 +304,7 @@ function initSky(effectController) {
     sunLight.position.y = sunSphere.position.y;
     sunSphere.visible = effectController.sun;
     sky.uniforms.sunPosition.value.copy(sunSphere.position);
-    renderer.render(scene, camera);
+    renderOneFrame();
     setTextColor(effectController);
   }
   var gui = new dat.GUI();
@@ -369,7 +369,7 @@ function init(event) {
           }
 
           // controls = new THREE.OrbitControls( camera, renderer.domElement );
-          // controls.addEventListener( 'change', render );
+          // controls.addEventListener( 'change', renderOneFrame );
           // //controls.maxPolarAngle = Math.PI / 2;
           // controls.enableZoom = false;
           // controls.enablePan = false;
@@ -378,7 +378,7 @@ function init(event) {
 
           setTextColor(effectController);
 
-          loop();
+          startRenderLoop();
         });
       });
     });
@@ -387,7 +387,7 @@ function init(event) {
 
 window.addEventListener('load', init, false);
 
-function loop() {
+function startRenderLoop() {
 
   newTime = new Date().getTime();
   deltaTime = newTime - oldTime;
@@ -407,11 +407,11 @@ function loop() {
 
   earth.moveSurface();
 
-  renderer.render(scene, camera);
-  requestAnimationFrame(loop);
+  renderOneFrame();
+  requestAnimationFrame(startRenderLoop);
 }
 
-function render() {
+function renderOneFrame() {
   renderer.render(scene, camera);
 }
 
