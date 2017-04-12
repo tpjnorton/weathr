@@ -9,7 +9,7 @@ var Colors = {
   pink: 0xF5986E,
   yellow: 0xf4ce93,
   blue: 0x68c3c0,
-  green: 0x379129,
+  green: 0x579149,
   grey: 0xeeeeee,
   greyDark: 0x878787,
   dawnDusk: 0x351304,
