@@ -385,7 +385,6 @@ function init(event) {
   });
 }
 
-window.addEventListener('load', init, false);
 
 function startRenderLoop() {
 
@@ -393,14 +392,14 @@ function startRenderLoop() {
   deltaTime = newTime - oldTime;
   oldTime = newTime;
 
-  if (lightClouds)
-    lightClouds.driftClouds();
-
   if (rain)
     rain.simulateRain();
 
   if (snow)
     snow.simulateSnow();
+
+  if (lightClouds)
+    lightClouds.driftClouds();
 
   if (heavyClouds)
     heavyClouds.moveSurface();
@@ -432,3 +431,5 @@ function setTextColor(effectController) {
     divider.style.borderTopColor = "#515750";
   }
 }
+
+window.addEventListener('load', init, false);
