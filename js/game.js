@@ -17,6 +17,8 @@ var Colors = {
   nightTime: 0x010321
 };
 
+var lightCloudMeshes = [];
+
 ///////////////
 
 // GAME VARIABLES
@@ -246,111 +248,38 @@ HeavyClouds.prototype.moveSurface = function() {
 LightCloud = function() {
   this.velocity = new THREE.Vector3(0, 0, 0);
 
-  this.mesh = this.generateCloudMesh();
+  var cloudType = Math.random() * 3;
+
+  if (cloudType >= 2.0)
+    cloudType = 2;
+  else if (cloudType >= 1.0)
+    cloudType = 1;
+  else
+    cloudType = 0;
+  
+  this.mesh = lightCloudMeshes[cloudType].clone();
+  console.log(this.mesh);
   this.mesh.name = "LightCloud";
   this.mesh.castShadow = false;
-  this.mesh.position.y = game.defaultCamHeight * 2.2;
-  this.mesh.position.z = Math.random() * 200 - 100;
+  this.mesh.position.y = game.defaultCamHeight * 2.1;
+  this.mesh.position.z = Math.random() * 200 - 150;
   this.mesh.position.x = Math.random() * 1000 - 500;
-  var otherScale = Math.random() * 0.2 + 1;
-  var xScale = otherScale * 1.5;
-  this.mesh.scale.set(xScale, otherScale, otherScale);
-  this.velocity.x = Math.random() * 0.18 - 0.09;
-}
 
-LightCloud.prototype.generateCloudMesh = function() {
-  var cloudType = Math.random() * 3;
-  // cloudType = 1.0
-  var cloudColor = Colors.white;
-  var mat = new THREE.MeshPhongMaterial({
-    color: cloudColor,
-    shading: THREE.FlatShading,
-    transparent: true,
-    opacity: 1,
-    shininess: 1
-  });
 
-  if (cloudType >= 2.0) {
-    var geomSmall = new THREE.OctahedronGeometry(5, 2);
-    var geomBig = new THREE.OctahedronGeometry(7, 2);
+  var heightScale = Math.random() * 4 + 5;
+  var widthDepthScale = 15;
+  this.mesh.scale.set(widthDepthScale, heightScale, widthDepthScale);
+  this.velocity.x = Math.random() * 0.1 - 0.05;
 
-    var smallMeshLeft = new THREE.Mesh(geomSmall, mat);
-    var smallMeshRight = new THREE.Mesh(geomSmall, mat);
-    var bigMesh = new THREE.Mesh(geomBig, mat);
+  var verticalFlip = Math.random() < 0.5 ? true : false;
+  var horizontalFlip = Math.random() < 0.5 ? true : false;
 
-    smallMeshLeft.position.x = -6.5;
-    smallMeshRight.position.x = 6;
-    bigMesh.position.y = 3;
+  if (verticalFlip)
+    this.mesh.rotation.x = Math.PI;
+  if (horizontalFlip)
+    this.mesh.rotation.y = Math.PI;
 
-    var meshtoReturn = new THREE.Object3D();
-
-    meshtoReturn.add(smallMeshLeft);
-    meshtoReturn.add(bigMesh);
-    meshtoReturn.add(smallMeshRight);
-
-    return meshtoReturn;
-  }
-  else if (cloudType >= 1.0) {
-    var geomSmall = new THREE.OctahedronGeometry(5, 2);
-    var geomMedium = new THREE.OctahedronGeometry(7, 2);
-    var geomBig = new THREE.OctahedronGeometry(9, 2);
-
-    var smallMeshLeft = new THREE.Mesh(geomSmall, mat);
-    var smallMeshRight = new THREE.Mesh(geomSmall, mat);
-    var mediumMeshLeft = new THREE.Mesh(geomMedium, mat);
-    var mediumMeshRight = new THREE.Mesh(geomMedium, mat);
-    var bigMesh = new THREE.Mesh(geomBig, mat);
-
-    smallMeshLeft.position.x = -12;
-    smallMeshRight.position.x = 15;
-
-    mediumMeshLeft.position.y = 2;
-    mediumMeshRight.position.y = 4;
-
-    mediumMeshLeft.position.x = -6;
-    mediumMeshRight.position.x = 11;
-
-    bigMesh.position.x = 1;
-    bigMesh.position.y = 5;
-
-    var meshtoReturn = new THREE.Object3D();
-
-    meshtoReturn.add(smallMeshLeft);
-    meshtoReturn.add(mediumMeshLeft);
-    meshtoReturn.add(mediumMeshRight);
-    meshtoReturn.add(bigMesh);
-    meshtoReturn.add(smallMeshRight);
-
-    return meshtoReturn;
-  } 
-  else {
-    var geomSmall = new THREE.OctahedronGeometry(5, 2);
-    var geomBigLeft = new THREE.OctahedronGeometry(7, 2);
-    var geomBigRight = new THREE.OctahedronGeometry(9, 2);
-
-    var smallMeshLeft = new THREE.Mesh(geomSmall, mat);
-    var smallMeshRight = new THREE.Mesh(geomSmall, mat);
-    var bigMeshLeft = new THREE.Mesh(geomBigLeft, mat);
-    var bigMeshRight = new THREE.Mesh(geomBigRight, mat);
-
-    smallMeshLeft.position.x = -8;
-    smallMeshRight.position.x = 13;
-
-    bigMeshLeft.position.y = 2;
-    bigMeshRight.position.y = 4;
-
-    bigMeshLeft.position.x = -3;
-    bigMeshRight.position.x = 7;
-
-    var meshtoReturn = new THREE.Object3D();
-
-    meshtoReturn.add(smallMeshLeft);
-    meshtoReturn.add(bigMeshLeft);
-    meshtoReturn.add(bigMeshRight)
-    meshtoReturn.add(smallMeshRight);
-
-    return meshtoReturn;
-  }
+  this.mesh.material.opacity = 0.6;
 }
 
 LightCloud.prototype.drift = function() {
@@ -617,7 +546,6 @@ function createLightClouds(cloudNum) {
   lightClouds = new LightClouds(cloudNum);
   for (var i = 0; i < lightClouds.cloudNum; i++) {
     scene.add(lightClouds.clouds[i].mesh);
-    console.log("adding mesh");
   }
 }
 
@@ -644,7 +572,7 @@ function initSky(effectController) {
       if (stars)
         stars.stars.material.opacity = 0.8;
     }
-    else if (effectController.timeOfDay < 0.25 && effectController.timeOfDay > 0.23) {
+    else if (effectController.timeOfDay < 0.28 && effectController.timeOfDay > 0.25) {
       sunLight.color = new THREE.Color(Colors.dawnDusk);
       ambientLight.color = new THREE.Color(Colors.dawnDusk);
       hemisphereLight.color = new THREE.Color(Colors.dawnDusk);
@@ -756,45 +684,53 @@ function init(event) {
     timeOfDay: 0.5,
     sun: false
   };
+  var objLoader = new THREE.OBJLoader();
+  objLoader.load("resources/obj/cloud1.obj", function(object) {
+    lightCloudMeshes.push(object.children[0]);
+    objLoader.load("resources/obj/cloud2.obj", function(object) {
+      lightCloudMeshes.push(object.children[0]);
+      objLoader.load("resources/obj/cloud3.obj", function(object) {
+        lightCloudMeshes.push(object.children[0]);
+        weather = new Weather();
+        window.addEventListener('weatherLoaded', function() {
+          createLights();
+          createEarth();
+          
+          if (weather.weatherData.clouds.all < 80) {
+            createMoon();
+            createStars();
+            createSun();
+            createLightClouds(weather.weatherData.clouds.all / 100 * 80);
+          } 
+          else {
+            createHeavyClouds(false);
+            createRain();
+            // createSnow();
+            ambientLight.color = new THREE.Color(0xcecece);
+            ambientLight.intensity = 1.0;
+            effectController.rayleigh = 0;
+            effectController.turbidity = 20;
+            effectController.luminance = 0.4;
+            effectController.mieDirectionalG = 0.087;
+            sunLight.intensity = 0.5;
 
-  weather = new Weather();
-  window.addEventListener('weatherLoaded', function() {
-    createLights();
-    createEarth();
+            earth.mesh.material.color = new THREE.Color(0x599043);
+          }
 
-    weather.weatherData.clouds.all = 100;
-    if (weather.weatherData.clouds.all < 80) {
-      createMoon();
-      createStars();
-      createSun();
-      createLightClouds(weather.weatherData.clouds.all / 100 * 220);
-    } 
-    else {
-      createHeavyClouds(false);
-      createRain();
-      // createSnow();
-      ambientLight.color = new THREE.Color(0xcecece);
-      ambientLight.intensity = 1.0;
-      effectController.rayleigh = 0;
-      effectController.turbidity = 20;
-      effectController.luminance = 0.4;
-      effectController.mieDirectionalG = 0.087;
-      sunLight.intensity = 0.5;
+          // controls = new THREE.OrbitControls( camera, renderer.domElement );
+          // controls.addEventListener( 'change', render );
+          // //controls.maxPolarAngle = Math.PI / 2;
+          // controls.enableZoom = false;
+          // controls.enablePan = false;
 
-      earth.mesh.material.color = new THREE.Color(0x599043);
-    }
+          initSky(effectController);
 
-    // controls = new THREE.OrbitControls( camera, renderer.domElement );
-    // controls.addEventListener( 'change', render );
-    // //controls.maxPolarAngle = Math.PI / 2;
-    // controls.enableZoom = false;
-    // controls.enablePan = false;
+          setTextColor(effectController);
 
-    initSky(effectController);
-
-    setTextColor(effectController);
-
-    loop();
+          loop();
+        });
+      });
+    });
   });
 }
 

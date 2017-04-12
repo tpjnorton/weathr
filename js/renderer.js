@@ -63,13 +63,13 @@ Weather = function() {
 
           vals[0].innerHTML = that.weatherData.weather[0].main;
           vals[1].innerHTML = that.weatherData.clouds.all+"%";
-          vals[2].innerHTML = that.weatherData.wind.speed+"km/h";
+          vals[2].innerHTML = (that.weatherData.wind.speed*3.6).toFixed(1)+"km/h";
           vals[3].innerHTML = that.weatherData.main.humidity+"%";
           vals[4].innerHTML = formattedTime(sunriseTime);
           vals[5].innerHTML = formattedTime(sunsetTime);
  
-          if (that.weatherData.wind.deg) 
-            vals[2].innerHTML += ",&nbsp;" + that.weatherData.wind.deg + "&#176;"
+          // if (that.weatherData.wind.deg) 
+          //   vals[2].innerHTML += ",&nbsp;" + that.weatherData.wind.deg + "&#176;"
 
           for (var i = 0; i < 6; i++) {
             values.appendChild(vals[i]);
