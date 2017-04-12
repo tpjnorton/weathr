@@ -1,25 +1,24 @@
 Earth = function() {
-  var geom = new THREE.CylinderGeometry(game.earthRadius, game.earthRadius, game.earthLength, 40, 10);
+  var geom = new THREE.CylinderGeometry(params.earthRadius, params.earthRadius, params.earthLength, 40, 10);
   geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
   geom.mergeVertices();
   var l = geom.vertices.length;
 
-  this.waves = [];
+  this.displacements = [];
 
   for (var i = 0; i < l; i++) {
     var v = geom.vertices[i];
-    this.waves.push({
+    this.displacements.push({
       y: v.y,
       x: v.x,
       z: v.z,
       ang: Math.random() * Math.PI * 2,
-      amp: game.wavesMinAmp + Math.random() * (game.wavesMaxAmp - game.wavesMinAmp),
-      speed: game.wavesMinSpeed + Math.random() * (game.wavesMaxSpeed - game.wavesMinSpeed)
+      amp: params.displacementMinAmp + Math.random() * (params.displacementMaxAmp - params.displacementMinAmp),
+      speed: params.displacementMinSpeed + Math.random() * (params.displacementMaxSpeed - params.displacementMinSpeed)
     });
   };
   var mat = new THREE.MeshPhongMaterial({
     color: Colors.green,
-    transparent: true,
     opacity: 1,
     shading: THREE.FlatShading,
 
@@ -38,7 +37,7 @@ Earth.prototype.moveSurface = function() {
   var l = verts.length;
   for (var i = 0; i < l; i++) {
     var v = verts[i];
-    var vprops = this.waves[i];
+    var vprops = this.displacements[i];
     v.x = vprops.x + Math.cos(vprops.ang / 10) * vprops.amp;
     v.y = vprops.y + Math.sin(vprops.ang / 10) * vprops.amp;
     vprops.ang += vprops.speed * deltaTime;
@@ -47,12 +46,12 @@ Earth.prototype.moveSurface = function() {
 }
 
 HeavyClouds = function(dark) {
-  var geom = new THREE.BoxGeometry(300, 300, game.earthLength / 2, 40, 10);
+  var geom = new THREE.BoxGeometry(300, 300, params.earthLength / 2, 40, 10);
   geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
   geom.mergeVertices();
   var l = geom.vertices.length;
 
-  this.waves = [];
+  this.displacements = [];
   if (dark)
     cloudColor = Colors.greyDark;
   else
@@ -60,13 +59,13 @@ HeavyClouds = function(dark) {
   var cloudColor = dark ? Colors.greyDark : Colors.grey;
   for (var i = 0; i < l; i++) {
     var v = geom.vertices[i];
-    this.waves.push({
+    this.displacements.push({
       y: v.y,
       x: v.x,
       z: v.z,
       ang: Math.random() * Math.PI * 2,
-      amp: game.cloudWavesMinAmp + Math.random() * (game.cloudWavesMaxAmp - game.cloudWavesMinAmp),
-      speed: game.cloudWavesMinSpeed + Math.random() * (game.cloudWavesMaxSpeed - game.cloudWavesMinSpeed)
+      amp: params.cloudDisplacementMinAmp + Math.random() * (params.cloudDisplacementMaxAmp - params.cloudDisplacementMinAmp),
+      speed: params.cloudDisplacementMinSpeed + Math.random() * (params.cloudDisplacementMaxSpeed - params.cloudDisplacementMinSpeed)
     });
   };
   var mat = new THREE.MeshPhongMaterial({
@@ -90,7 +89,7 @@ HeavyClouds.prototype.moveSurface = function() {
   var l = verts.length;
   for (var i = 0; i < l; i++) {
     var v = verts[i];
-    var vprops = this.waves[i];
+    var vprops = this.displacements[i];
     v.x = vprops.x + Math.cos(vprops.ang / 10) * vprops.amp;
     v.y = vprops.y + Math.sin(vprops.ang / 10) * vprops.amp;
     vprops.ang += vprops.speed * deltaTime;
@@ -98,7 +97,7 @@ HeavyClouds.prototype.moveSurface = function() {
   }
 }
 
-LightCloud = function() {
+LightCloud = function(lightCloudMeshes) {
   this.velocity = new THREE.Vector3(0, 0, 0);
 
   var cloudType = Math.random() * 3;
@@ -111,10 +110,9 @@ LightCloud = function() {
     cloudType = 0;
   
   this.mesh = lightCloudMeshes[cloudType].clone();
-  console.log(this.mesh);
   this.mesh.name = "LightCloud";
   this.mesh.castShadow = false;
-  this.mesh.position.y = game.defaultCamHeight * 2.1;
+  this.mesh.position.y = params.defaultCamHeight * 2.1;
   this.mesh.position.z = Math.random() * 200 - 150;
   this.mesh.position.x = Math.random() * 1000 - 500;
 
@@ -144,18 +142,25 @@ LightCloud.prototype.drift = function() {
     this.mesh.position.x = -600;
 }
 
-LightClouds = function(cloudNum) {
+LightClouds = function(cloudNum, lightCloudMeshes) {
   this.clouds = []
   this.cloudNum = cloudNum;
 
   for (var i = 0; i < this.cloudNum; i++) {
-    this.clouds.push(new LightCloud());
+    this.clouds.push(new LightCloud(lightCloudMeshes));
   }
 }
 
 LightClouds.prototype.driftClouds = function() {
   for (var i = 0; i < this.cloudNum; i++) {
     this.clouds[i].drift();
+  }
+}
+
+LightClouds.prototype.setVisibility = function(visible) {
+
+  for (var i = 0; i < this.cloudNum; i++) {
+    this.clouds[i].mesh.visible = visible;
   }
 }
 
@@ -182,10 +187,14 @@ Stars = function() {
   });
 
   this.particleSystem = new THREE.Points(this.particles, this.particleMaterial);
-  this.stars = this.particleSystem;
+  this.mesh = this.particleSystem;
 }
 
-Rain = function() {
+Stars.prototype.updateOpacity = function(opacity) {
+  this.mesh.material.opacity = opacity;
+}
+
+Rain = function(weatherData) {
   this.particleCount = 9000;
 
   this.particles = new THREE.Geometry();
@@ -197,7 +206,7 @@ Rain = function() {
 
     var particle = new THREE.Vector3(x, y, z);
     particle.velocity = new THREE.Vector3(0, -4, 0);
-    particle.maxXvel = weather.weatherData.wind.speed / 10;
+    particle.maxXvel = weatherData.wind.speed / 10;
     this.particles.vertices.push(particle);
   }
 
@@ -226,15 +235,15 @@ Rain.prototype.simulateRain = function() {
     if (particle.velocity.y < -4.5)
       particle.velocity.y = -4.5;
     if (Math.abs(particle.velocity.x) >= particle.maxXvel) {
-      if (particle.velocity.x < 0)
-        particle.velocity.x = -particle.maxXvel;
-      else
-        particle.velocity.x = particle.maxXvel;
+      particle.velocity.x /= 2;
     }
-
 
     particle.velocity.y -= Math.random() * .02;
     particle.velocity.x += Math.random() * .02;
+
+    var gustProb = Math.random();
+    if (gustProb <= 0.5)
+      particle.velocity.x *= 2.5;
 
     particle.x += particle.velocity.x;
     particle.y += particle.velocity.y;
@@ -243,7 +252,7 @@ Rain.prototype.simulateRain = function() {
   this.particles.verticesNeedUpdate = true;
 };
 
-Snow = function() {
+Snow = function(weatherData) {
   this.particleCount = 9000;
 
   this.particles = new THREE.Geometry();
@@ -255,7 +264,7 @@ Snow = function() {
 
     var particle = new THREE.Vector3(x, y, z);
     particle.velocity = new THREE.Vector3(0, -3.5, 0);
-    particle.maxXvel = weather.weatherData.wind.speed / 20;
+    particle.maxXvel = weatherData.wind.speed / 20;
     this.particles.vertices.push(particle);
   }
 
@@ -266,7 +275,7 @@ Snow = function() {
     transparent: true,
   });
 
-  this.rainPointCloud = new THREE.Points(this.particles, this.particleMaterial);
+  this.snowPointCloud = new THREE.Points(this.particles, this.particleMaterial);
 }
 
 Snow.prototype.simulateSnow = function() {
@@ -318,7 +327,7 @@ Sun = function() {
 
   this.mesh.position.x = 0;
   this.mesh.position.z = -500;
-  this.mesh.position.y = game.defaultCamHeight * 2.5;
+  this.mesh.position.y = params.defaultCamHeight * 2.5;
 
   this.mesh.add(new THREE.Mesh(geom, mat));
 }
