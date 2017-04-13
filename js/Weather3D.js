@@ -10,7 +10,7 @@ var Colors = {
   blue: 0x68c3c0,
   green: 0x579149,
   grey: 0xeeeeee,
-  greyDark: 0x878787,
+  greyDark: 0x777757,
   dawnDusk: 0x351304,
   morningEvening: 0xd1a287,
   nightTime: 0x010321
@@ -72,7 +72,7 @@ Weather3D.prototype.createSceneObjects = function() {
   this.createMoon();
   this.createStars();
   this.createHeavyClouds();
-  this.createLightClouds(this.weather.clouds.all);
+  this.createLightClouds(80);
   this.createRain(this.weather);
   this.createSnow(this.weather);
   this.createEarth();
@@ -331,7 +331,7 @@ Weather3D.prototype.updateWeather = function() {
     this.effectController.mieDirectionalG = 0.087;
     this.sunLight.intensity = 0.5;
     this.earth.mesh.material.color = new THREE.Color(0x599043);
-
+    this.heavyClouds.mesh.material.color = new THREE.Color(Colors.grey);
     if (this.weather.weather.main == "Rain" || this.weather.weather.main == "Drizzle") 
       this.rain.rainPointCloud.visible = true;
 
@@ -340,9 +340,12 @@ Weather3D.prototype.updateWeather = function() {
       this.earth.mesh.material.color = new THREE.Color(0xaaaaaa);
     }
 
-    else if (this.weather.weather.main == "Thunderstorm")
+    else if (this.weather.weather.main == "Thunderstorm") {
       this.rain.rainPointCloud.visible = true;
       this.stormEventsPossible = true;
+      this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
+      this.effectController.mieDirectionalG = 0.087;
+    }
   }
 
   this.updateTimeOfDay();
