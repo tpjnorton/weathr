@@ -77,6 +77,28 @@ function createUI(weatherData) {
     vals[i] = document.createElement("p");
   }
 
+  for (var i = 0; i < 6; i++) {
+    values.appendChild(vals[i]);
+  }
+
+  var updateTime = document.createElement("p");
+  updateTime.setAttribute("class", "updateTime");
+
+  dataContainer.appendChild(descriptors);
+  dataContainer.appendChild(values);
+  dataContainer.appendChild(updateTime);
+
+  updateUI(weatherData);
+}
+
+function updateUI(weatherData) {
+  var tempDOM = document.getElementById("temp");
+  tempDOM.innerHTML = parseInt(weatherData.main.temp) + "&#176;";
+
+  var values = document.querySelector(".values");
+
+  var vals = values.children;
+
   var sunriseTime = new Date(weatherData.sys.sunrise * 1000);
   var sunsetTime = new Date(weatherData.sys.sunset * 1000);
 
@@ -87,15 +109,7 @@ function createUI(weatherData) {
   vals[4].innerHTML = formattedTime(sunriseTime);
   vals[5].innerHTML = formattedTime(sunsetTime);
 
-  for (var i = 0; i < 6; i++) {
-    values.appendChild(vals[i]);
-  }
 
-  dataContainer.appendChild(descriptors);
-  dataContainer.appendChild(values);
-
-  var updateTime = document.createElement("p");
-  updateTime.setAttribute("class", "updateTime");
+  var updateTime = document.querySelector(".updateTime");
   updateTime.innerHTML="Data Last Updated at: " + formattedTime(new Date(weatherData.dt*1000));
-  dataContainer.appendChild(updateTime);
 }
