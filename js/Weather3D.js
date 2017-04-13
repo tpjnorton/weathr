@@ -55,6 +55,7 @@ Weather3D = function(weather) {
   this.weather = weather;
   that = this;
   this.stormEventsPossible = false;
+  this.stormEvents = [];
 }
 
 Weather3D.prototype.handleWindowResize = function() {
@@ -77,6 +78,7 @@ Weather3D.prototype.createSceneObjects = function() {
   this.createSnow(this.weather);
   this.createEarth();
   this.createSky();
+  this.createStormEvents();
 }
 
 Weather3D.prototype.createSceneBasics = function() {
@@ -273,6 +275,12 @@ Weather3D.prototype.createSky = function() {
   this.updateSky();
 }
 
+Weather3D.prototype.createStormEvents = function() {
+  for (var i = 0; i < 5; i++) {
+    this.stormEvents.push(new StormEvent(this.scene));
+  }
+}
+
 Weather3D.prototype.updateSky = function() {
   var uniforms = that.sky.uniforms;
   uniforms.turbidity.value = that.effectController.turbidity;
@@ -313,7 +321,8 @@ Weather3D.prototype.updateWeather = function() {
   this.moon.mesh.visible = false;
   this.stars.mesh.visible = false;
   this.stormEventsPossible = false;
-
+  this.weather.clouds.all = 80;
+  this.weather.weather.main = "Thunderstorm";
   // show objects based on weather type
   if (this.weather.clouds.all < 80) {
     this.lightClouds.setCoverage(this.weather.clouds.all);
@@ -373,6 +382,25 @@ Weather3D.prototype.startRenderLoop = function() {
 
   that.earth.moveSurface();
 
+  if (that.stormEventsPossible) {
+    var lightningProbability = 0.01;
+    var roll = Math.random();
+    if (roll <= lightningProbability) {
+      console.log("flash!");
+      for (var i = 0; i < that.stormEvents.length; i++) {
+        if (!that.stormEvents[i].active) {
+          that.stormEvents[i].active = true;
+          break;
+        }
+      }
+    }
+
+  }
+
+  for (var i = 0; i < that.stormEvents.length; i++) {
+    if(that.stormEvents[i].active)
+      that.stormEvents[i].step();
+  }
   that.renderOneFrame();
   requestAnimationFrame(that.startRenderLoop);
 }
