@@ -16,6 +16,7 @@ navigator.geolocation.getCurrentPosition(
     fetch(weatherReqUrl)
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(weatherData) {
+        console.log(weatherData);
         createUI(weatherData);
         weather3D = new Weather3D(weatherData);
         weather3D.init();
@@ -92,4 +93,9 @@ function createUI(weatherData) {
 
   dataContainer.appendChild(descriptors);
   dataContainer.appendChild(values);
+
+  var updateTime = document.createElement("p");
+  updateTime.setAttribute("class", "updateTime");
+  updateTime.innerHTML="Data Last Updated at: " + formattedTime(new Date(weatherData.dt*1000));
+  dataContainer.appendChild(updateTime);
 }

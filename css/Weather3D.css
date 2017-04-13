@@ -58,7 +58,7 @@
 
 @media screen and (max-width: 40em) {
     .header {
-        font-size: 0.75em;
+        font-size: 0.8em;
         top: 6.5em;
     }
     .header h2 {
@@ -138,4 +138,13 @@
     line-height: 2.0em;
     text-align: right;
     display: block;
+}
+
+.updateTime {
+    font-family: "Roboto Mono";
+    position: absolute;
+    margin: 0 auto;
+    width: 50%;
+    bottom: -20px;
+    font-size: 0.75em;
 }
