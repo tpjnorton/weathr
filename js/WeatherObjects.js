@@ -157,10 +157,14 @@ LightClouds.prototype.driftClouds = function() {
   }
 }
 
-LightClouds.prototype.setVisibility = function(visible) {
+LightClouds.prototype.setCoverage = function(percentage) {
+  var numCloudsToShow = this.cloudNum * (percentage/100);
+  for (var i = 0; i < numCloudsToShow; i++) {
+    this.clouds[i].mesh.visible = true;
+  }
 
-  for (var i = 0; i < this.cloudNum; i++) {
-    this.clouds[i].mesh.visible = visible;
+  for (var i = this.cloudNum-1; i >= numCloudsToShow; i--) {
+    this.clouds[i].mesh.visible = false;
   }
 }
 

@@ -262,14 +262,14 @@ Weather3D.prototype.createSky = function() {
   );
   this.scene.add(this.sphereHelper);
 
-  var gui = new dat.GUI();
-  gui.add(this.effectController, "turbidity", 1.0, 20.0, 0.1).onChange(this.updateSky);
-  gui.add(this.effectController, "rayleigh", 0.0, 4, 0.001).onChange(this.updateSky);
-  gui.add(this.effectController, "mieCoefficient", 0.0, 0.1, 0.001).onChange(this.updateSky);
-  gui.add(this.effectController, "mieDirectionalG", 0.0, 1, 0.001).onChange(this.updateSky);
-  gui.add(this.effectController, "luminance", 0.0, 2).onChange(this.updateSky);
-  gui.add(this.effectController, "timeOfDay", 0, 1, 0.0001).onChange(this.updateSky);
-  gui.add(this.effectController, "sun").onChange(this.updateSky);
+  // var gui = new dat.GUI();
+  // gui.add(this.effectController, "turbidity", 1.0, 20.0, 0.1).onChange(this.updateSky);
+  // gui.add(this.effectController, "rayleigh", 0.0, 4, 0.001).onChange(this.updateSky);
+  // gui.add(this.effectController, "mieCoefficient", 0.0, 0.1, 0.001).onChange(this.updateSky);
+  // gui.add(this.effectController, "mieDirectionalG", 0.0, 1, 0.001).onChange(this.updateSky);
+  // gui.add(this.effectController, "luminance", 0.0, 2).onChange(this.updateSky);
+  // gui.add(this.effectController, "timeOfDay", 0, 1, 0.0001).onChange(this.updateSky);
+  // gui.add(this.effectController, "sun").onChange(this.updateSky);
   this.updateSky();
 }
 
@@ -305,7 +305,7 @@ Weather3D.prototype.updateSky = function() {
 
 Weather3D.prototype.updateWeather = function() {
   // hide all objects, we can selectively show them afterwards
-  this.lightClouds.setVisibility(false);
+  this.lightClouds.setCoverage(0);
   this.heavyClouds.mesh.visible = false;
   this.rain.rainPointCloud.visible = false;
   this.snow.snowPointCloud.visible = false;
@@ -316,7 +316,7 @@ Weather3D.prototype.updateWeather = function() {
 
   // show objects based on weather type
   if (this.weather.clouds.all < 80) {
-    this.lightClouds.setVisibility(true);
+    this.lightClouds.setCoverage(this.weather.clouds.all);
     this.stars.mesh.visible = true;
     this.sun.mesh.visible = true;
     this.moon.mesh.visible = true;
@@ -332,8 +332,11 @@ Weather3D.prototype.updateWeather = function() {
     this.sunLight.intensity = 0.5;
     this.earth.mesh.material.color = new THREE.Color(0x599043);
     this.heavyClouds.mesh.material.color = new THREE.Color(Colors.grey);
-    if (this.weather.weather.main == "Rain" || this.weather.weather.main == "Drizzle") 
+
+    if (this.weather.weather.main == "Rain" || this.weather.weather.main == "Drizzle") {
       this.rain.rainPointCloud.visible = true;
+      this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
+    }
 
     else if (this.weather.weather.main == "Snow") {
       this.snow.snowPointCloud.visible = true;
