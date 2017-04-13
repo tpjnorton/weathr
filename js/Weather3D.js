@@ -307,7 +307,7 @@ Weather3D.prototype.updateWeather = function() {
   // hide all objects, we can selectively show them afterwards
   this.lightClouds.setVisibility(false);
   this.heavyClouds.mesh.visible = false;
-  // this.rain.rainPointCloud.visible = false;
+  this.rain.rainPointCloud.visible = false;
   this.snow.snowPointCloud.visible = false;
   this.sun.mesh.visible = false;
   this.moon.mesh.visible = false;
