@@ -264,14 +264,14 @@ Weather3D.prototype.createSky = function() {
   );
   this.scene.add(this.sphereHelper);
 
-  // var gui = new dat.GUI();
-  // gui.add(this.effectController, "turbidity", 1.0, 20.0, 0.1).onChange(this.updateSky);
-  // gui.add(this.effectController, "rayleigh", 0.0, 4, 0.001).onChange(this.updateSky);
-  // gui.add(this.effectController, "mieCoefficient", 0.0, 0.1, 0.001).onChange(this.updateSky);
-  // gui.add(this.effectController, "mieDirectionalG", 0.0, 1, 0.001).onChange(this.updateSky);
-  // gui.add(this.effectController, "luminance", 0.0, 2).onChange(this.updateSky);
-  // gui.add(this.effectController, "timeOfDay", 0, 1, 0.0001).onChange(this.updateSky);
-  // gui.add(this.effectController, "sun").onChange(this.updateSky);
+  var gui = new dat.GUI();
+  gui.add(this.effectController, "turbidity", 1.0, 20.0, 0.1).onChange(this.updateSky);
+  gui.add(this.effectController, "rayleigh", 0.0, 4, 0.001).onChange(this.updateSky);
+  gui.add(this.effectController, "mieCoefficient", 0.0, 0.1, 0.001).onChange(this.updateSky);
+  gui.add(this.effectController, "mieDirectionalG", 0.0, 1, 0.001).onChange(this.updateSky);
+  gui.add(this.effectController, "luminance", 0.0, 2).onChange(this.updateSky);
+  gui.add(this.effectController, "timeOfDay", 0, 1, 0.0001).onChange(this.updateSky);
+  gui.add(this.effectController, "sun").onChange(this.updateSky);
   this.updateSky();
 }
 
@@ -383,7 +383,7 @@ Weather3D.prototype.startRenderLoop = function() {
   that.earth.moveSurface();
 
   if (that.stormEventsPossible) {
-    var lightningProbability = 0.01;
+    var lightningProbability = 0.005;
     var roll = Math.random();
     if (roll <= lightningProbability) {
       console.log("flash!");
@@ -394,7 +394,6 @@ Weather3D.prototype.startRenderLoop = function() {
         }
       }
     }
-
   }
 
   for (var i = 0; i < that.stormEvents.length; i++) {

@@ -1,19 +1,15 @@
 StormEvent = function(scene) {
   this.keyFrames = [];
   this.currentKeyFrame = 0;
-  this.finished = false;
   this.position = new THREE.Vector3(0, 0, 0);
   this.position.x = Math.random() * 1000 - 500;
-  this.position.y = params.defaultCamHeight;
+  this.position.y = params.defaultCamHeight * 2;
   this.position.z = Math.random() * 200 - 200;
   this.loadTextures();
   this.generateKeyFrames();
-  this.pointLight = new THREE.PointLight(0xdfdfff, 0, 1000, 2);
+  this.pointLight = new THREE.PointLight(0xdfdfff, 0, 1000, 1);
   this.pointLight.position.set(this.position.x, this.position.y, this.position.z);
   scene.add(this.pointLight);
-  var sphereSize = 10;
-  this.pointLightHelper = new THREE.PointLightHelper( this.pointLight, sphereSize );
-  scene.add( this.pointLightHelper );
   this.active = false; 
 }
 
@@ -62,19 +58,15 @@ StormEvent.prototype.loadTextures = function() {
 
 StormEvent.prototype.step = function() {
   this.active = true;
-  console.log(this.pointLight);
   this.pointLight.intensity = this.keyFrames[this.currentKeyFrame].pointLightIntensity;
   this.lightningBolt.visible = this.keyFrames[this.currentKeyFrame].lightningBolt;
-
   this.currentKeyFrame++;
-  if (this.currentKeyFrame > this.keyFrames.length)
-    this.finished = true;
+  if (this.currentKeyFrame >= this.keyFrames.length)
     this.reset();
 };
 
 StormEvent.prototype.reset = function() {
   this.currentKeyFrame = 0;
-  this.finished = false;
   this.active = false;
 
   this.position.x = Math.random() * 1000 - 500;
@@ -83,7 +75,6 @@ StormEvent.prototype.reset = function() {
 
   this.pointLight.position.set(this.position.x, this.position.y, this.position.z);
   this.particles.vertices[0] = new THREE.Vector3(this.position.x, this.position.y, this.position.z);
-  this.pointLightHelper.update();
 };
 
 KeyFrame = function() {
