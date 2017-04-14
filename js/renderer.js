@@ -42,5 +42,4 @@ function error() {
 }
 
 window.addEventListener("load", retry);
-window.setInterval(retry, 1800000);window.setInterval(retry, 1800000);
-
+window.setInterval(retry, 1800000);
