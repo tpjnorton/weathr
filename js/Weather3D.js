@@ -276,7 +276,7 @@ Weather3D.prototype.createSky = function() {
 }
 
 Weather3D.prototype.createStormEvents = function() {
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 3; i++) {
     this.stormEvents.push(new StormEvent(this.scene));
   }
 }
@@ -321,8 +321,8 @@ Weather3D.prototype.updateWeather = function() {
   this.moon.mesh.visible = false;
   this.stars.mesh.visible = false;
   this.stormEventsPossible = false;
-  this.weather.clouds.all = 80;
-  this.weather.weather.main = "Thunderstorm";
+  //this.weather.clouds.all = 80;
+  //this.weather.weather.main = "Thunderstorm";
   // show objects based on weather type
   if (this.weather.clouds.all < 80) {
     this.lightClouds.setCoverage(this.weather.clouds.all);
@@ -353,10 +353,11 @@ Weather3D.prototype.updateWeather = function() {
     }
 
     else if (this.weather.weather.main == "Thunderstorm") {
-      this.rain.rainPointCloud.visible = true;
       this.stormEventsPossible = true;
+      this.rain.rainPointCloud.visible = true;
       this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
       this.effectController.mieDirectionalG = 0.087;
+      this.effectController.mieCoefficient = 0.025;
     }
   }
 
