@@ -7,7 +7,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(#8ab4b4, #82cfbb);
+    background: linear-gradient(#7a7474, #123f1b);
     overflow: hidden;
 }
 
@@ -25,6 +25,7 @@
     width: 100%;
     text-align: center;
     pointer-events: none;
+    color: #f1d7d0;
     z-index: 20;
 }
 
@@ -34,7 +35,7 @@
     line-height: 1;
     margin: 0;
     letter-spacing: -0.025em;
-    color: #f1d7d0;
+    color: inherit;
 }
 
 .header h1 span {
@@ -55,9 +56,9 @@
     color: #d6483b;
 }
 
-@media screen and (max-width: 40em) {
+@media screen and (max-width: 35em) {
     .header {
-        font-size: 0.75em;
+        font-size: 0.8em;
         top: 6.5em;
     }
     .header h2 {
@@ -80,16 +81,50 @@
 .weatherData #location {
     font-family: 'Poiret One', cursive;
     font-size: 2.5em;
-    color: #f1d7d0;
+    color: inherit;
 }
 
 .weatherData #temp {
     font-family: 'Poiret One', sans-serif;
-    color: #f1d7d0;
+    color: inherit;
     font-size: 5.0em;
 }
 
-hr {
+.weatherData #error {
+    margin-top: 20px;
+    font-family: 'Roboto Mono', sans-serif;
+    color: inherit;
+    font-size: 0.8em;
+}
+
+.weatherData button {
+    font-family: 'Roboto Mono', sans-serif;
+    padding: 10px 30px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: rgba(11,11,11,11);
+    border: none;
+    margin-top: 40px;
+    border-radius: 5px;
+    box-shadow: 0 0px #999;
+    z-index: 20;
+    pointer-events: all;
+    display: none;
+}
+
+.weatherData button:hover {
+    background-color: #1e4e11}
+
+.weatherData button:active {
+    /*background-color: #3e8e41;*/
+    box-shadow: 0 0px #666;
+    transform: translateY(1px);
+}
+
+.weatherData hr {
     display: block;
     height: 1px;
     border: 0;
@@ -110,7 +145,7 @@ hr {
     text-align: left;
     display: block;
     font-size: 0.9em;
-    color: #f1d7d0;
+    color: inherit;
 }
 
 .detailedData .descriptors p {
@@ -123,12 +158,12 @@ hr {
 
 .detailedData .values {
     float: right;
-    width: 15%;
+    width: 20%;
     line-height: 2.0em;
     text-align: right;
     display: block;
     font-size: 0.9em;
-    color: #f1d7d0;
+    color: inherit;
 }
 
 .detailedData .values p {
@@ -137,4 +172,13 @@ hr {
     line-height: 2.0em;
     text-align: right;
     display: block;
+}
+
+.updateTime {
+    font-family: "Roboto Mono";
+    position: absolute;
+    margin: 0 auto;
+    width: 50%;
+    bottom: -20px;
+    font-size: 0.75em;
 }
