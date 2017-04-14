@@ -108,7 +108,7 @@ LightCloud = function(lightCloudMeshes) {
     cloudType = 1;
   else
     cloudType = 0;
-  
+
   this.mesh = lightCloudMeshes[cloudType].clone();
   this.mesh.name = "LightCloud";
   this.mesh.castShadow = false;
@@ -137,8 +137,8 @@ LightCloud.prototype.drift = function() {
   this.mesh.position.x += this.velocity.x;
   if (this.mesh.position.x < -600)
     this.mesh.position.x = 600;
- 
- else if (this.mesh.position.x > 600)
+
+  else if (this.mesh.position.x > 600)
     this.mesh.position.x = -600;
 }
 
@@ -158,12 +158,12 @@ LightClouds.prototype.driftClouds = function() {
 }
 
 LightClouds.prototype.setCoverage = function(percentage) {
-  var numCloudsToShow = this.cloudNum * (percentage/100);
+  var numCloudsToShow = this.cloudNum * (percentage / 100);
   for (var i = 0; i < numCloudsToShow; i++) {
     this.clouds[i].mesh.visible = true;
   }
 
-  for (var i = this.cloudNum-1; i >= numCloudsToShow; i--) {
+  for (var i = this.cloudNum - 1; i >= numCloudsToShow; i--) {
     this.clouds[i].mesh.visible = false;
   }
 }
@@ -356,3 +356,4 @@ Moon = function() {
 
   this.mesh.add(new THREE.Mesh(geom, mat));
 }
+

@@ -7,8 +7,8 @@ weatherData = {};
 var weather3D = null;
 var coords = { lat: "", lon: "" };
 document.querySelector("#retryButton").addEventListener("click", retry);
-document.querySelector("#error").innerHTML = "Weather data could not be loaded." + "<br>" + 
-    "Please check your internet connection and try again.";
+document.querySelector("#error").innerHTML = "Weather data could not be loaded." + "<br>" +
+  "Please check your internet connection and try again.";
 
 function retry() {
   document.querySelector("#retryButton").style.display = "none";
@@ -42,4 +42,5 @@ function error() {
 }
 
 window.addEventListener("load", retry);
-window.setInterval(retry, 1800000);
+window.setInterval(retry, 1800000);window.setInterval(retry, 1800000);
+

@@ -9,7 +9,7 @@ StormEvent = function(scene) {
   this.pointLight = new THREE.PointLight(0xdfdfff, 0, 10000, 1);
   this.pointLight.position.set(this.position.x, this.position.y, this.position.z);
   scene.add(this.pointLight);
-  this.active = false; 
+  this.active = false;
 }
 
 StormEvent.prototype.generateKeyFrames = function() {
@@ -54,3 +54,4 @@ StormEvent.prototype.reset = function() {
 KeyFrame = function() {
   this.pointLightIntensity = 0;
 }
+

@@ -67,11 +67,12 @@
 }
 
 .weatherData {
-    position:absolute;
+    position: absolute;
     top: 16vh;
     width: 100%;
     text-align: center;
 }
+
 .weatherData p {
     margin: 0 auto;
     text-align: center;
@@ -105,7 +106,7 @@
     cursor: pointer;
     outline: none;
     color: #fff;
-    background-color: rgba(11,11,11,11);
+    background-color: rgba(11, 11, 11, 11);
     border: none;
     margin-top: 40px;
     border-radius: 5px;
@@ -116,7 +117,8 @@
 }
 
 .weatherData button:hover {
-    background-color: #1e4e11}
+    background-color: #1e4e11
+}
 
 .weatherData button:active {
     /*background-color: #3e8e41;*/
@@ -182,3 +184,4 @@
     bottom: -20px;
     font-size: 0.75em;
 }
+

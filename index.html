@@ -1,49 +1,59 @@
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>3D Weather</title>
-        <link rel="shortcut icon" href="favicon.ico">
-        <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700,700italic' rel='stylesheet' type='text/css'>
-        <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="css/demo.css" />
-        <link rel="stylesheet" type="text/css" href="css/Weather3D.css" />
-        <link rel="stylesheet" href="css/titlebar.css">
 
-        <script type="text/javascript" src="node_modules/dat.gui/build/dat.gui.min.js"></script>
-    </head>
-    <body>
-        <div class="game-holder" id="gameHolder">
-            <div class="title-bar">
-                <div class="title-bar-btns">
-                  <button id="min-btn">-</i></button>
-                  <button id="max-btn">+</i></button>
-                  <button id="close-btn">x</i></button>
-                </div>
-            </div>
-            <div class="header" id="onScreenText">
-                <h1><span>3D</span>Weather</h1>
-                <h2>What's it like outside?</h2>
-                <div class="weatherData"> 
-                    <p id="location"> Loading..</p>
-                    <p id="temp"></p>
-                    <p id="error"></p>
-                    <button id="retryButton">Retry</button>
-                </div>
-            </div>
-            <div class="world" id="world"></div>
-        </div>
-        <!-- Demo links -->
-    </body>
-    <script> require('./js/titlebar.js') </script>
-    <script> require('./js/renderer.js') </script>
-    <script type="text/javascript" src="js/TweenMax.min.js"></script>
-    <script type="text/javascript" src="js/three.min.js"></script>
-    <script type="text/javascript" src="js/StormEvent.js"></script>
-    <script type="text/javascript" src="js/Weather3D.js"></script>
-    <script type="text/javascript" src="js/SkyShader.js"></script>
-    <script type="text/javascript" src="js/OrbitControls.js"></script>
-    <script type="text/javascript" src="js/OBJLoader.js"></script>
-    <script> require('./js/WeatherObjects.js') </script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3D Weather</title>
+  <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700,700italic' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <link rel="stylesheet" href="css/demo.css" />
+  <link rel="stylesheet" href="css/Weather3D.css" />
+  <link rel="stylesheet" href="css/titlebar.css" />
+  <script type="text/javascript" src="node_modules/dat.gui/build/dat.gui.min.js"></script>
+</head>
+
+<body>
+  <div class="game-holder" id="gameHolder">
+    <div class="title-bar">
+      <div class="title-bar-btns">
+        <button id="min-btn">-</i>
+        </button>
+        <button id="max-btn">+</i>
+        </button>
+        <button id="close-btn">x</i>
+        </button>
+      </div>
+    </div>
+    <div class="header" id="onScreenText">
+      <h1><span>3D</span>Weather</h1>
+      <h2>What's it like outside?</h2>
+      <div class="weatherData">
+        <p id="location">Loading..</p>
+        <p id="temp"></p>
+        <p id="error"></p>
+        <button id="retryButton">Retry</button>
+      </div>
+    </div>
+    <div class="world" id="world"></div>
+  </div>
+  <!-- Demo links -->
+</body>
+<script>
+require('./js/titlebar.js')
+</script>
+<script>
+require('./js/renderer.js')
+</script>
+<script type="text/javascript" src="js/TweenMax.min.js"></script>
+<script type="text/javascript" src="js/three.min.js"></script>
+<script type="text/javascript" src="js/StormEvent.js"></script>
+<script type="text/javascript" src="js/Weather3D.js"></script>
+<script type="text/javascript" src="js/SkyShader.js"></script>
+<script type="text/javascript" src="js/OrbitControls.js"></script>
+<script type="text/javascript" src="js/OBJLoader.js"></script>
+<script>
+require('./js/WeatherObjects.js')
+</script>
+
 </html>
