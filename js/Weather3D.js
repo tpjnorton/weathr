@@ -278,7 +278,7 @@ Weather3D.prototype.createSky = function() {
 }
 
 Weather3D.prototype.createStormEvents = function() {
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < 2; i++) {
     this.stormEvents.push(new StormEvent(this.scene));
   }
 }
