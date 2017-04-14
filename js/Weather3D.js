@@ -369,16 +369,16 @@ Weather3D.prototype.startRenderLoop = function() {
   deltaTime = that.newTime - that.oldTime;
   that.oldTime = that.newTime;
 
-  // if (that.rain.enabled)
+  if (that.rain.rainPointCloud.visible)
     that.rain.simulateRain();
 
-  // if (that.snow.enabled)
+  if (that.snow.snowPointCloud.visible)
     that.snow.simulateSnow();
 
   // if (that.lightClouds.enabled)
     that.lightClouds.driftClouds();
 
-  // if (that.heavyClouds.enabled)
+  if (that.heavyClouds.mesh.visible)
     that.heavyClouds.moveSurface();
 
   that.earth.moveSurface();
