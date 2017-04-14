@@ -242,12 +242,9 @@ Rain.prototype.simulateRain = function() {
       particle.velocity.x /= 2;
     }
 
-    particle.velocity.y -= Math.random() * .02;
-    particle.velocity.x += Math.random() * .02;
-
-    var gustProb = Math.random();
-    if (gustProb <= 0.5)
-      particle.velocity.x *= 2.5;
+    var adjustmentAmount = Math.random() * .02
+    particle.velocity.y -= adjustmentAmount;
+    particle.velocity.x += adjustmentAmount;
 
     particle.x += particle.velocity.x;
     particle.y += particle.velocity.y;

@@ -68,17 +68,19 @@ Weather3D.prototype.handleWindowResize = function() {
 
 Weather3D.prototype.createSceneObjects = function() {
   this.createSceneBasics();
-  this.createLights();
   this.createSun();
   this.createMoon();
+  this.createLights();
   this.createStars();
   this.createHeavyClouds();
   this.createLightClouds(80);
   this.createRain(this.weather);
   this.createSnow(this.weather);
   this.createEarth();
-  this.createSky();
   this.createStormEvents();
+  createUI(this.weather);
+  this.createSky();
+  
 }
 
 Weather3D.prototype.createSceneBasics = function() {
@@ -264,14 +266,14 @@ Weather3D.prototype.createSky = function() {
   );
   this.scene.add(this.sphereHelper);
 
-  var gui = new dat.GUI();
-  gui.add(this.effectController, "turbidity", 1.0, 20.0, 0.1).onChange(this.updateSky);
-  gui.add(this.effectController, "rayleigh", 0.0, 4, 0.001).onChange(this.updateSky);
-  gui.add(this.effectController, "mieCoefficient", 0.0, 0.1, 0.001).onChange(this.updateSky);
-  gui.add(this.effectController, "mieDirectionalG", 0.0, 1, 0.001).onChange(this.updateSky);
-  gui.add(this.effectController, "luminance", 0.0, 2).onChange(this.updateSky);
-  gui.add(this.effectController, "timeOfDay", 0, 1, 0.0001).onChange(this.updateSky);
-  gui.add(this.effectController, "sun").onChange(this.updateSky);
+  // var gui = new dat.GUI();
+  // gui.add(this.effectController, "turbidity", 1.0, 20.0, 0.1).onChange(this.updateSky);
+  // gui.add(this.effectController, "rayleigh", 0.0, 4, 0.001).onChange(this.updateSky);
+  // gui.add(this.effectController, "mieCoefficient", 0.0, 0.1, 0.001).onChange(this.updateSky);
+  // gui.add(this.effectController, "mieDirectionalG", 0.0, 1, 0.001).onChange(this.updateSky);
+  // gui.add(this.effectController, "luminance", 0.0, 2).onChange(this.updateSky);
+  // gui.add(this.effectController, "timeOfDay", 0, 1, 0.0001).onChange(this.updateSky);
+  // gui.add(this.effectController, "sun").onChange(this.updateSky);
   this.updateSky();
 }
 
@@ -290,7 +292,7 @@ Weather3D.prototype.updateSky = function() {
   uniforms.mieDirectionalG.value = that.effectController.mieDirectionalG;
 
   that.sphereHelper.position.x = Math.sin((that.effectController.timeOfDay * 2 * Math.PI) - (Math.PI)) * 250;
-  that.sphereHelper.position.y = -50 + Math.cos((that.effectController.timeOfDay * 2 * Math.PI) - (Math.PI)) * 500;
+  that.sphereHelper.position.y = Math.cos((that.effectController.timeOfDay * 2 * Math.PI) - (Math.PI)) * 500;
   that.sphereHelper.position.z = -600;
   that.sphereHelper.visible = that.effectController.sun;
   that.sky.uniforms.sunPosition.value.copy(that.sphereHelper.position);
@@ -300,7 +302,7 @@ Weather3D.prototype.updateSky = function() {
   that.moon.mesh.position.z = -600;
 
   that.sun.mesh.position.x = that.sphereHelper.position.x * 1.2;
-  that.sun.mesh.position.y = that.sphereHelper.position.y * 1.1 - 100;
+  that.sun.mesh.position.y = that.sphereHelper.position.y * 1.1 - 100 - (50 * 1.2);
 
   that.updateLightColors();
   that.sunLight.position.x = that.sphereHelper.position.x;
@@ -321,8 +323,8 @@ Weather3D.prototype.updateWeather = function() {
   this.moon.mesh.visible = false;
   this.stars.mesh.visible = false;
   this.stormEventsPossible = false;
-  //this.weather.clouds.all = 80;
-  //this.weather.weather.main = "Thunderstorm";
+  // this.weather.clouds.all = 80;
+  // this.weather.weather.main = "Thunderstorm";
   // show objects based on weather type
   if (this.weather.clouds.all < 80) {
     this.lightClouds.setCoverage(this.weather.clouds.all);
@@ -358,9 +360,10 @@ Weather3D.prototype.updateWeather = function() {
       this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
       this.effectController.mieDirectionalG = 0.087;
       this.effectController.mieCoefficient = 0.025;
+      this.earth.mesh.material.color = new THREE.Color(0x396023);
     }
   }
-
+  updateUI(this.weather);
   this.updateTimeOfDay();
 }
 
@@ -395,12 +398,13 @@ Weather3D.prototype.startRenderLoop = function() {
         }
       }
     }
+
+    for (var i = 0; i < that.stormEvents.length; i++) {
+      if(that.stormEvents[i].active)
+        that.stormEvents[i].step();
+    }
   }
 
-  for (var i = 0; i < that.stormEvents.length; i++) {
-    if(that.stormEvents[i].active)
-      that.stormEvents[i].step();
-  }
   that.renderOneFrame();
   requestAnimationFrame(that.startRenderLoop);
 }
@@ -459,4 +463,94 @@ Weather3D.prototype.createWeatherScene = function() {
 
 Weather3D.prototype.init = function() {
   this.preLoadCloudModels();
+}
+
+function createUI(weatherData) {
+  var locDOM = document.getElementById("location");
+  var tempDOM = document.getElementById("temp");
+  tempDOM.innerHTML = parseInt(weatherData.main.temp) + "&#176;";
+  locDOM.innerHTML = weatherData.name + ", " + weatherData.sys.country;
+  var dataContainer = document.createElement("div");
+  dataContainer.setAttribute("class", "detailedData");        
+  var hr = document.createElement("hr");
+  hr.setAttribute("class","divider")
+  locDOM.parentElement.appendChild(dataContainer);
+  dataContainer.appendChild(hr);
+
+  var descriptors = document.createElement("div");
+  descriptors.setAttribute("class", "descriptors");
+
+  var descs = [];
+
+  for (var i = 0; i < 6; i++) {
+    descs[i] = document.createElement("p");
+  }
+
+  descs[0].innerHTML = "Weather";
+  descs[1].innerHTML = "Cloud&nbsp;Coverage";
+  descs[2].innerHTML = "Wind";
+  descs[3].innerHTML = "Humidity";
+  descs[4].innerHTML = "Sunrise";
+  descs[5].innerHTML = "Sunset";
+
+  for (var i = 0; i < 6; i++) {
+    descriptors.appendChild(descs[i]);
+  }
+  
+  var values = document.createElement("div");
+  values.setAttribute("class", "values");
+
+  var vals = [];
+
+  for (var i = 0; i < 6; i++) {
+    vals[i] = document.createElement("p");
+  }
+
+  for (var i = 0; i < 6; i++) {
+    values.appendChild(vals[i]);
+  }
+
+  var updateTime = document.createElement("p");
+  updateTime.setAttribute("class", "updateTime");
+
+  dataContainer.appendChild(descriptors);
+  dataContainer.appendChild(values);
+  dataContainer.appendChild(updateTime);
+
+  console.log(weatherData);
+  updateUI(weatherData);
+}
+
+function updateUI(weatherData) {
+  var tempDOM = document.getElementById("temp");
+  tempDOM.innerHTML = parseInt(weatherData.main.temp) + "&#176;";
+
+  var values = document.querySelector(".values");
+
+  var vals = values.children;
+
+  var sunriseTime = new Date(weatherData.sys.sunrise * 1000);
+  var sunsetTime = new Date(weatherData.sys.sunset * 1000);
+
+  vals[0].innerHTML = weatherData.weather[0].main;
+  vals[1].innerHTML = weatherData.clouds.all+"%";
+  vals[2].innerHTML = (weatherData.wind.speed*3.6).toFixed(1)+"km/h";
+  vals[3].innerHTML = weatherData.main.humidity+"%";
+  vals[4].innerHTML = formattedTime(sunriseTime);
+  vals[5].innerHTML = formattedTime(sunsetTime);
+
+
+  var updateTime = document.querySelector(".updateTime");
+  updateTime.innerHTML="Data Last Updated at: " + formattedTime(new Date(weatherData.dt*1000));
+}
+
+function formattedTime(time) {
+  var hours = time.getHours();
+  var minutes = time.getMinutes();
+  if (hours < 10)
+    hours = "0" + hours;
+  if (minutes < 10)
+    minutes = "0" + minutes;
+
+  return hours + ":" + minutes;
 }
