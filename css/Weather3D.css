@@ -138,6 +138,7 @@
 .detailedData {
     width: 50%;
     margin: 0 auto;
+    font-family: "Roboto Mono";
 }
 
 .detailedData .descriptors {
@@ -151,7 +152,7 @@
 }
 
 .detailedData .descriptors p {
-    font-family: "Roboto Mono";
+    font-family: inherit;
     width: 100%;
     line-height: 2.0em;
     text-align: left;
@@ -169,7 +170,7 @@
 }
 
 .detailedData .values p {
-    font-family: "Roboto Mono";
+    font-family: inherit;
     width: 100%;
     line-height: 2.0em;
     text-align: right;
@@ -177,7 +178,7 @@
 }
 
 .updateTime {
-    font-family: "Roboto Mono";
+    font-family: inherit;
     position: absolute;
     margin: 0 auto;
     width: 50%;
@@ -206,8 +207,9 @@
     margin: -40px 0 0 -40px;
     border-radius: 50%;
     border: 2px solid transparent;
-    border-top-color: #3498db;
-    animation: spin 1s linear infinite;
+    /*border-top-color: #3498db;*/
+    border-top-color: #f9c922;
+    animation: spin 1.5s ease-in-out infinite;
 }
  
 #loader:before {
@@ -219,8 +221,8 @@
     bottom: 5px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #178c1c;
-    animation: spin 1.5s linear infinite;
+    border-top-color: #a95922;
+    animation: spin 1.5s ease-in-out infinite;
 }
  
 #loader:after {
@@ -232,8 +234,8 @@
     bottom: 15px;
     border-radius: 50%;
     border: 1px solid transparent;
-    border-top-color: #f9c922;
-    animation: spin 0.75s linear infinite;
+    border-top-color: #3498db;
+    animation: spin 0.75s ease-in-out infinite;
 }
 
 @keyframes spin {
@@ -251,7 +253,7 @@
     width: 50%;
     height: 100%;
     background: #222222;
-    background: linear-gradient(#7a7474, #123f1b);
+    background: linear-gradient(#242434, #345434);
     z-index: 1000;
 }
  
