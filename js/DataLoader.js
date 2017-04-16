@@ -27,7 +27,6 @@ function loadWeatherData(position) {
       if (!weather3D) {
         weather3D = new Weather3D(weatherData);
         weather3D.init();
-        document.querySelector(".world").style.display = "block";
       }
       else {
         weather3D.weather = weatherData;

@@ -9,7 +9,7 @@ var Colors = {
   yellow: 0xf4ce93,
   blue: 0x68c3c0,
   green: 0x579149,
-  grey: 0xeeeeee,
+  grey: 0xaaaaaa,
   greyDark: 0x777757,
   dawnDusk: 0x351304,
   morningEvening: 0xd1a287,
@@ -203,7 +203,7 @@ Weather3D.prototype.updateLightColors = function() {
   var newColor;
   var dayTime = this.effectController.timeOfDay;
   var starOpacity;
-  if (dayTime < 0.68 && dayTime >= 0.31) {  
+  if (dayTime < 0.74 && dayTime >= 0.26) {  
     this.sunLight.color = new THREE.Color(0xffffff);
     this.ambientLight.color = new THREE.Color(0x9fabce);
     this.hemisphereLight.color = new THREE.Color(0xaaaaaa);
@@ -326,9 +326,9 @@ Weather3D.prototype.updateWeather = function() {
   this.stars.mesh.visible = false;
   this.stormEventsPossible = false;
   // this.weather.clouds.all = 0;
-  // this.weather.weather.main = "Thunderstorm";
+  // this.weather.weather[0].main = "Thunderstorm";
   // show objects based on weather type
-  if (this.weather.clouds.all < 80) {
+  if (this.weather.clouds.all < 75) {
     this.lightClouds.setCoverage(this.weather.clouds.all);
     this.stars.mesh.visible = true;
     this.sun.mesh.visible = true;
@@ -338,25 +338,24 @@ Weather3D.prototype.updateWeather = function() {
     this.heavyClouds.mesh.visible = true;
     this.ambientLight.color = new THREE.Color(0xcecece);
     this.ambientLight.intensity = 1.0;
-    this.effectController.rayleigh = 0;
-    this.effectController.turbidity = 20;
+    this.effectController.rayleigh = 1;
+    this.effectController.turbidity = 11;
     this.effectController.luminance = 0.4;
     this.effectController.mieDirectionalG = 0.087;
     this.sunLight.intensity = 0.5;
     this.earth.mesh.material.color = new THREE.Color(0x599043);
     this.heavyClouds.mesh.material.color = new THREE.Color(Colors.grey);
-
-    if (this.weather.weather.main == "Rain" || this.weather.weather.main == "Drizzle") {
+    if (this.weather.weather[0].main === "Rain" || this.weather.weather[0].main === "Drizzle") {
       this.rain.rainPointCloud.visible = true;
       this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
     }
 
-    else if (this.weather.weather.main == "Snow") {
+    else if (this.weather.weather[0].main == "Snow") {
       this.snow.snowPointCloud.visible = true;
       this.earth.mesh.material.color = new THREE.Color(0xaaaaaa);
     }
 
-    else if (this.weather.weather.main == "Thunderstorm") {
+    else if (this.weather.weather[0].main == "Thunderstorm") {
       this.stormEventsPossible = true;
       this.rain.rainPointCloud.visible = true;
       this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
@@ -542,6 +541,7 @@ function updateUI(weatherData) {
 
   var updateTime = document.querySelector(".updateTime");
   updateTime.innerHTML="Data Last Updated at: " + formattedTime(new Date(weatherData.dt*1000));
+  document.querySelector("#load").setAttribute("class", "loaded");
 }
 
 function formattedTime(time) {

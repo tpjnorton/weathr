@@ -13,7 +13,7 @@
   <script type="text/javascript" src="node_modules/dat.gui/build/dat.gui.min.js"></script>
 </head>
 
-<body>
+<body id="load">
   <div class="game-holder" id="gameHolder">
     <div class="title-bar">
       <div class="title-bar-btns">
@@ -34,6 +34,12 @@
         <p id="error"></p>
         <button id="retryButton">Retry</button>
       </div>
+    </div>
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+   
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
     </div>
     <div class="world" id="world"></div>
   </div>
