@@ -100,8 +100,8 @@
 
 .weatherData button {
     font-family: 'Roboto Mono', sans-serif;
-    padding: 10px 30px;
-    font-size: 14px;
+    padding: 8px 30px;
+    font-size: 13px;
     text-align: center;
     cursor: pointer;
     outline: none;
@@ -111,8 +111,8 @@
     margin-top: 40px;
     border-radius: 5px;
     box-shadow: 0 0px #999;
-    z-index: 20;
     pointer-events: all;
+    z-index:1502;
     display: none;
 }
 
@@ -200,13 +200,14 @@
     position: relative;
     left: 50%;
     top: 50%;
+    transform: translate(-50%, -50%);
     width: 80px;
     height: 80px;
     margin: -40px 0 0 -40px;
     border-radius: 50%;
     border: 2px solid transparent;
     border-top-color: #3498db;
-    animation: spin 2s linear infinite;
+    animation: spin 1s linear infinite;
 }
  
 #loader:before {
@@ -219,7 +220,7 @@
     border-radius: 50%;
     border: 3px solid transparent;
     border-top-color: #178c1c;
-    animation: spin 3s linear infinite;
+    animation: spin 1.5s linear infinite;
 }
  
 #loader:after {
@@ -232,7 +233,7 @@
     border-radius: 50%;
     border: 1px solid transparent;
     border-top-color: #f9c922;
-    animation: spin 1.5s linear infinite;
+    animation: spin 0.75s linear infinite;
 }
 
 @keyframes spin {
@@ -280,23 +281,16 @@ h1 {
 
 .loaded #loader-wrapper .loader-section.section-right,
 .loaded #loader-wrapper .loader-section.section-left {
-    -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000); 
-    /*transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);*/
     transition: all 0.3s ease-out;
 }
 
 .loaded #loader {
     opacity: 0;
-    -webkit-transition: all 0.3s ease-out; 
-            transition: all 0.3s ease-out;
+    transition: all 0.5s ease-out;
 }
 
 .loaded #loader-wrapper {
-        -webkit-transform: translateY(-100%);
-            -ms-transform: translateY(-100%);
-                transform: translateY(-100%);
- 
-        -webkit-transition: all 0.3s 1s ease-out; 
-                transition: all 0.3s 1s ease-out;
+    transform: translateY(-100%);
+    transition: all 0.3s 0.5s ease-out;
 }
 

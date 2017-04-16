@@ -15,6 +15,7 @@ function retry() {
   document.querySelector("#error").style.display = "none";
   document.querySelector("#location").innerHTML = "Loading...";
   navigator.geolocation.getCurrentPosition(loadWeatherData, error);
+  document.querySelector("#load").setAttribute("class", "");
 }
 
 function loadWeatherData(position) {
@@ -39,6 +40,7 @@ function error() {
   document.querySelector("#location").innerHTML = "Oh No!";
   document.querySelector("#error").style.display = "block";
   document.querySelector("#retryButton").style.display = "inline-block";
+  document.querySelector("#load").setAttribute("class", "loaded");
 }
 
 window.addEventListener("load", retry);
