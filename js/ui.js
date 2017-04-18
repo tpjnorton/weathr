@@ -16,6 +16,8 @@
       }	 
     });
 
+    document.querySelector("#max-btn").style.display = "none";
+
     document.querySelector("#close-btn").addEventListener("click", function (e) {
       const window = remote.getCurrentWindow();
       window.close();
