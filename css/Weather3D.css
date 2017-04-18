@@ -296,3 +296,37 @@ h1 {
     transition: all 0.3s 0.5s ease-out;
 }
 
+#modeSelector {
+
+}
+
+#modeSelector {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.8em;
+    font-family: "Quicksand";
+    pointer-events: all;
+    -webkit-user-select: none;
+    padding: 3px 12px;
+    font-size: 10px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: rgba(90, 90, 90, 90);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0px #999;
+    z-index:1502;
+}
+
+#modeSelector:hover {
+    background-color: #1e4e11;
+}
+
+#modeSelector:active {
+    background-color: #3e8e41;
+    box-shadow: 0 0px #666;
+    transform: translateY(1px);
+}

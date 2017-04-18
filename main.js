@@ -23,6 +23,7 @@ function createWindow () {
     minHeight: 600,
     frame: false,
     show: false
+    // resizable: false
   });
 
   mainWindow.once('ready-to-show', () => {
@@ -43,8 +44,6 @@ function createWindow () {
     mainWindow = null
   })
 }
-
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
