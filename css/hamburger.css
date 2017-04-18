@@ -1,0 +1,103 @@
+#hamburgerMenu {
+  width: 60px;
+  height: 45px;
+  position: absolute;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+  transform: scale(0.3);
+  -webkit-app-region: no-drag;
+  opacity: 1;
+  z-index: 23;
+}
+
+/* Icon 2 */
+
+#hamburgerMenu span {
+  display: block;
+  position: absolute;
+  height: 7px;
+  width: 50%;
+  background: #CCCCCC;
+  opacity: 1;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+}
+
+#hamburgerMenu span:nth-child(even) {
+  left: 50%;
+  border-radius: 0 9px 9px 0;
+}
+
+#hamburgerMenu span:nth-child(odd) {
+  left:0px;
+  border-radius: 9px 0 0 9px;
+}
+
+#hamburgerMenu span:nth-child(1), #hamburgerMenu span:nth-child(2) {
+  top: 0px;
+}
+
+#hamburgerMenu span:nth-child(3), #hamburgerMenu span:nth-child(4) {
+  top: 18px;
+}
+
+#hamburgerMenu span:nth-child(5), #hamburgerMenu span:nth-child(6) {
+  top: 36px;
+}
+
+#hamburgerMenu.open span:nth-child(1), #hamburgerMenu.open span:nth-child(6) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#hamburgerMenu.open span:nth-child(2), #hamburgerMenu.open span:nth-child(5) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+#hamburgerMenu.open span:nth-child(1) {
+  left: 5px;
+  top: 7px;
+}
+
+#hamburgerMenu.open span:nth-child(2) {
+  left: calc(50% - 5px);
+  top: 7px;
+}
+
+#hamburgerMenu.open span:nth-child(3) {
+  left: -50%;
+  opacity: 0;
+}
+
+#hamburgerMenu.open span:nth-child(4) {
+  left: 100%;
+  opacity: 0;
+}
+
+#hamburgerMenu.open span:nth-child(5) {
+  left: 5px;
+  top: 29px;
+}
+
+#hamburgerMenu.open span:nth-child(6) {
+  left: calc(50% - 5px);
+  top: 29px;
+}

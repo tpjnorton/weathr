@@ -38,7 +38,7 @@ var params = {
   cloudDisplacementMaxSpeed: 0.003,
 };
 
-Weather3D = function(weather) {
+Weather3D = function(weather, metricUnits) {
   this.lightCloudMeshes = [];
   this.params = params;
   this.newTime = new Date().getTime();
@@ -56,6 +56,7 @@ Weather3D = function(weather) {
   that = this;
   this.stormEventsPossible = false;
   this.stormEvents = [];
+  this.metricUnits = metricUnits;
 }
 
 Weather3D.prototype.handleWindowResize = function() {
@@ -254,7 +255,7 @@ Weather3D.prototype.updateTimeOfDay = function() {
   else if (now < sunrise) {
     targetTime = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
   }
-  TweenMax.to(that.effectController, 2.5, {timeOfDay: targetTime, onUpdate: that.updateSky, ease: Quad.easeInOut, delay: 0.2})
+  TweenMax.to(that.effectController, (targetTime - originalTime) * 6, {timeOfDay: targetTime, onUpdate: that.updateSky, ease: Quad.easeInOut, delay: 0.2})
   // that.updateSky();
 }
 
@@ -540,7 +541,10 @@ function updateUI(weatherData) {
 
   vals[0].innerHTML = computeDescription(weatherData.weather[0].main, weatherData.clouds.all);
   vals[1].innerHTML = weatherData.clouds.all + "%";
-  vals[2].innerHTML = (weatherData.wind.speed*3.6).toFixed() + " km/h";
+  if (that.metricUnits == true)
+    vals[2].innerHTML = (weatherData.wind.speed*3.6).toFixed() + " km/h";
+  else
+    vals[2].innerHTML = (weatherData.wind.speed).toFixed() + " mph";
   vals[3].innerHTML = weatherData.main.humidity + "%";
   vals[4].innerHTML = formattedTime(sunriseTime);
   vals[5].innerHTML = formattedTime(sunsetTime);

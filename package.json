@@ -17,7 +17,7 @@
   "author": "Tom Norton",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^1.4.1"
+    "electron": "^1.6.4"
   },
   "dependencies": {
     "dat.gui": "^0.6.1",

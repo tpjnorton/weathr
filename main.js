@@ -61,7 +61,7 @@ function createWindow () {
     slashes: true
   }))
 
-  mainWindow.on('close', function (e) {
+  mainWindow.on('close', function () {
     let [x, y] = mainWindow.getPosition();
     config.set('position-x', x);
     config.set('position-y', y);
