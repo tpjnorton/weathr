@@ -254,7 +254,7 @@ Weather3D.prototype.updateTimeOfDay = function() {
   else if (now < sunrise) {
     targetTime = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
   }
-  TweenMax.to(that.effectController, 2, {timeOfDay: targetTime, onUpdate: that.updateSky, ease: Quad.easeInOut, delay: 0.2})
+  TweenMax.to(that.effectController, 2.5, {timeOfDay: targetTime, onUpdate: that.updateSky, ease: Quad.easeInOut, delay: 0.2})
   // that.updateSky();
 }
 
@@ -357,7 +357,8 @@ Weather3D.prototype.updateWeather = function() {
 
     else if (this.weather.weather[0].main == "Snow") {
       this.snow.snowPointCloud.visible = true;
-      this.earth.mesh.material.color = new THREE.Color(0xaaaaaa);
+      this.earth.mesh.material.color = new THREE.Color(0x999999);
+      this.effectController.rayleigh = 0.1;
     }
 
     else if (this.weather.weather[0].main == "Thunderstorm") {
@@ -565,7 +566,7 @@ function computeDescription(shortDesc, cloudPercentage) {
     if (cloudPercentage < 30)
       return "Scattered&nbsp;Clouds";
 
-    else if (cloudPercentage < 40)
+    else if (cloudPercentage < 50)
       return "Partly&nbsp;Cloudy";
 
     else if (cloudPercentage < 75)
