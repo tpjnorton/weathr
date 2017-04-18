@@ -533,14 +533,14 @@ function updateUI(weatherData) {
   var sunsetTime = new Date(weatherData.sys.sunset * 1000);
 
   vals[0].innerHTML = weatherData.weather[0].main;
-  vals[1].innerHTML = weatherData.clouds.all+"%";
-  vals[2].innerHTML = (weatherData.wind.speed*3.6).toFixed(1)+"km/h";
-  vals[3].innerHTML = weatherData.main.humidity+"%";
+  vals[1].innerHTML = weatherData.clouds.all + "%";
+  vals[2].innerHTML = (weatherData.wind.speed*3.6).toFixed() + " km/h";
+  vals[3].innerHTML = weatherData.main.humidity + "%";
   vals[4].innerHTML = formattedTime(sunriseTime);
   vals[5].innerHTML = formattedTime(sunsetTime);
 
   var updateTime = document.querySelector(".updateTime");
-  updateTime.innerHTML="Data Last Updated at: " + formattedTime(new Date(weatherData.dt*1000));
+  updateTime.innerHTML="Data Last Updated at: " + formattedTime(new Date(weatherData.dt * 1000));
   document.querySelector("#load").setAttribute("class", "loaded");
 }
 
