@@ -1,5 +1,5 @@
 (function () {
-  const remote = require('electron').remote; 
+  const remote = require('electron').remote;
 
   function init() { 
     document.querySelector("#min-btn").addEventListener("click", function (e) {
@@ -24,7 +24,8 @@
     });
 
     document.querySelector("#modeSelector").addEventListener("click", function () {
-      this.innerHTML = toggleWindowSize();
+      toggleWindowSize();
+      this.innerHTML = updateButtonText();
     });
 
   };
@@ -34,17 +35,26 @@
     [x,y] = window.getSize();
     if (x == 400) {
       window.setSize(900, 600, true);
-      return "Skinny Mode";
     }
     else {
       window.setSize(400, 600, true);
+    }
+  }
+  function updateButtonText() {
+    const window = remote.getCurrentWindow();
+    [x,y] = window.getSize();
+    if (x == 400) {
       return "Wide Mode";
+    }
+    else {
+      return "Skinny Mode";
     }
   } 
 
   document.onreadystatechange = function () {
     if (document.readyState == "complete") {
       init();
+      document.querySelector("#modeSelector").innerHTML = updateButtonText();
     }
   };
 })();

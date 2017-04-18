@@ -3,6 +3,8 @@ const electron = require('electron')
 const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
+const Config = require('electron-config')
+const config = new Config()
 
 const path = require('path')
 const url = require('url')
@@ -15,8 +17,31 @@ var w = 900;
 var h = 600;
 
 function createWindow () {
-  // Create the browser window.
+
+  if (config.has('position-x') && config.has('position-y')) {
+    x = config.get('position-x')
+    y = config.get('position-y')
+  }
+  else {
+    let displaySize = electron.screen.getPrimaryDisplay().size
+    x = (displaySize.width - w) / 2
+    y = (displaySize.height - h) / 2
+  }
+  let winMode
+
+  if (config.has('winMode')) {
+    winMode = config.get('winMode')
+    if (winMode == "Skinny") {
+      w = 400
+    }
+  }
+  else {
+    w = 900
+  }
+
   mainWindow = new BrowserWindow({
+    x: x,
+    y: y,
     width: w,
     minWidth: 400,
     height: h,
@@ -35,6 +60,19 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
+
+  mainWindow.on('close', function (e) {
+    let [x, y] = mainWindow.getPosition();
+    config.set('position-x', x);
+    config.set('position-y', y);
+
+    [x,y] = mainWindow.getSize();
+    if (x == 400)
+      config.set('winMode', "Skinny")
+    else
+      config.set('winMode', "Wide")
+
+  })
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
