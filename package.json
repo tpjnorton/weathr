@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "dat.gui": "^0.6.1",
+    "electron-config": "^0.2.1",
     "three": "^0.84.0",
     "three-effectcomposer": "0.0.1"
   }
