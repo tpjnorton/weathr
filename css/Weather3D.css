@@ -181,7 +181,7 @@
     font-family: inherit;
     position: absolute;
     margin: 0 auto;
-    width: 50%;
+    width: 60%;
     bottom: -20px;
     font-size: 0.75em;
 }
@@ -294,10 +294,6 @@ h1 {
 .loaded #loader-wrapper {
     transform: translateY(-100%);
     transition: all 0.3s 0.5s ease-out;
-}
-
-#modeSelector {
-
 }
 
 #modeSelector {
