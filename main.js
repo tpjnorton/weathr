@@ -22,8 +22,8 @@ function createWindow () {
     height: h,
     minHeight: 600,
     frame: false,
-    show: false
-    // resizable: false
+    show: false,
+    resizable: false
   });
 
   mainWindow.once('ready-to-show', () => {
