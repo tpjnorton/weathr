@@ -255,7 +255,7 @@ Weather3D.prototype.updateTimeOfDay = function() {
     targetTime = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
   }
   TweenMax.to(that.effectController, 2, {timeOfDay: targetTime, onUpdate: that.updateSky, ease: Quad.easeInOut})
-  that.updateSky();
+  // that.updateSky();
 }
 
 Weather3D.prototype.createSky = function() {
