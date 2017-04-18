@@ -11,7 +11,7 @@ process.env.GOOGLE_API_KEY = 'AIzaSyCqSSjwgqpY4EMwtLgvlFF4tf0KH5yMx2M'
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-var w = 800;
+var w = 900;
 var h = 600;
 
 function createWindow () {
@@ -21,9 +21,13 @@ function createWindow () {
     minWidth: 400,
     height: h,
     minHeight: 600,
-    frame: false
+    frame: false,
+    show: false
   });
 
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -39,6 +43,8 @@ function createWindow () {
     mainWindow = null
   })
 }
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
