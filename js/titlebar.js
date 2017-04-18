@@ -22,13 +22,7 @@
     });
 
     document.querySelector("#modeSelector").addEventListener("click", function () {
-      if (this.innerHTML == "Skinny Mode") {
-        this.innerHTML = "Wide Mode";
-      }
-      else {
-        this.innerHTML = "Skinny Mode";
-      }
-      toggleWindowSize();
+      this.innerHTML = toggleWindowSize();
     });
   };
 
@@ -38,15 +32,18 @@
     console.log(x,y);
     if (x == 400) {
       window.setSize(900, 600, true);
+      return "Skinny Mode";
     }
     else {
       window.setSize(400, 600, true);
+      return "Wide Mode";
     }
   } 
 
   document.onreadystatechange = function () {
     if (document.readyState == "complete") {
-      init(); 
+      init();
+      document.querySelector("#modeSelector").innherHTML = toggleWindowSize(); 
     }
   };
 })();
