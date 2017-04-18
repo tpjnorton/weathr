@@ -49,7 +49,7 @@ Weather3D = function(weather) {
     mieCoefficient: 0.005,
     mieDirectionalG: 0.261,
     luminance: 1,
-    timeOfDay: 0.5,
+    timeOfDay: 0.26,
     sun: false
   };
   this.weather = weather;
@@ -243,15 +243,18 @@ Weather3D.prototype.updateTimeOfDay = function() {
   var sunrise = that.weather.sys.sunrise;
   var sunset = that.weather.sys.sunset;
   var now = Date.now() / 1000;
+  var originalTime = that.effectController.timeOfDay;
+  var targetTime;
   if (now >= sunrise && now <= sunset) {
-    that.effectController.timeOfDay = 0.25 + (now - sunrise) / (2 * (sunset - sunrise));
+    targetTime = 0.25 + (now - sunrise) / (2 * (sunset - sunrise));
   }
   else if (now > sunset) {
-    that.effectController.timeOfDay = 0.75 + (now - sunset) / (2 * ((sunrise + 86400) - sunset));
+    targetTime = 0.75 + (now - sunset) / (2 * ((sunrise + 86400) - sunset));
   }
   else if (now < sunrise) {
-    that.effectController.timeOfDay = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
+    targetTime = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
   }
+  TweenMax.to(that.effectController, 2, {timeOfDay: targetTime, onUpdate: that.updateSky, ease: Quad.easeInOut})
   that.updateSky();
 }
 
