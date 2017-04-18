@@ -331,7 +331,9 @@ Weather3D.prototype.updateWeather = function() {
   // this.weather.clouds.all = 0;
   // this.weather.weather[0].main = "Thunderstorm";
   // show objects based on weather type
-  if (this.weather.clouds.all < 75) {
+  if (this.weather.clouds.all < 75 && (this.weather.weather[0].main != "Rain" && 
+                                       this.weather.weather[0].main != "Snow" && 
+                                       this.weather.weather[0].main != "Thunderstorm" )) {
     this.lightClouds.setCoverage(this.weather.clouds.all);
     this.stars.mesh.visible = true;
     this.sun.mesh.visible = true;
@@ -535,7 +537,7 @@ function updateUI(weatherData) {
   var sunriseTime = new Date(weatherData.sys.sunrise * 1000);
   var sunsetTime = new Date(weatherData.sys.sunset * 1000);
 
-  vals[0].innerHTML = weatherData.weather[0].main;
+  vals[0].innerHTML = computeDescription(weatherData.weather[0].main, weatherData.clouds.all);
   vals[1].innerHTML = weatherData.clouds.all + "%";
   vals[2].innerHTML = (weatherData.wind.speed*3.6).toFixed() + " km/h";
   vals[3].innerHTML = weatherData.main.humidity + "%";
@@ -556,4 +558,25 @@ function formattedTime(time) {
     minutes = "0" + minutes;
 
   return hours + ":" + minutes;
+}
+
+function computeDescription(shortDesc, cloudPercentage) {
+  if (shortDesc == "Clouds") {
+    if (cloudPercentage < 30)
+      return "Scattered&nbsp;Clouds";
+
+    else if (cloudPercentage < 40)
+      return "Partly&nbsp;Cloudy";
+
+    else if (cloudPercentage < 75)
+      return "Mostly&nbsp;Cloudy";
+
+    else return "Overcast";
+  }
+
+  else if (shortDesc == "Clear") {
+    return "Clear Skies";
+  }
+
+  else return shortDesc;
 }
