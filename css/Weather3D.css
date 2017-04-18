@@ -161,7 +161,7 @@
 
 .detailedData .values {
     float: right;
-    width: 30%;
+    width: 100%;
     line-height: 2.0em;
     text-align: right;
     display: block;
@@ -322,11 +322,11 @@ h1 {
 }
 
 #modeSelector:hover {
-    background-color: #1e4e11;
+    background-color: #818280;
 }
 
 #modeSelector:active {
-    background-color: #3e8e41;
+    background-color: #adadad;
     box-shadow: 0 0px #666;
     transform: translateY(1px);
 }
