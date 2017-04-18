@@ -27,6 +27,7 @@
     pointer-events: none;
     color: #f1d7d0;
     z-index: 20;
+    -webkit-user-select: none;
 }
 
 .header h1 {
@@ -71,6 +72,7 @@
     top: 16vh;
     width: 100%;
     text-align: center;
+    -webkit-user-select: none;
 }
 
 .weatherData p {
@@ -304,7 +306,7 @@ h1 {
     font-family: "Quicksand";
     pointer-events: all;
     -webkit-user-select: none;
-    padding: 3px 12px;
+    padding: 4px 12px;
     font-size: 10px;
     text-align: center;
     cursor: pointer;
