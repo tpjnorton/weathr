@@ -24,12 +24,12 @@
     document.querySelector("#modeSelector").addEventListener("click", function () {
       this.innerHTML = toggleWindowSize();
     });
+
   };
 
   function toggleWindowSize() {
     const window = remote.getCurrentWindow();
     [x,y] = window.getSize();
-    console.log(x,y);
     if (x == 400) {
       window.setSize(900, 600, true);
       return "Skinny Mode";
@@ -43,7 +43,6 @@
   document.onreadystatechange = function () {
     if (document.readyState == "complete") {
       init();
-      document.querySelector("#modeSelector").innherHTML = toggleWindowSize(); 
     }
   };
 })();
