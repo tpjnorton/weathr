@@ -5,10 +5,21 @@ const tempUrl = "http://api.openweathermap.org/data/2.5/weather"
 const weatherApiKey = "d878ff95dda20eadb8502ada8fd89ecd";
 const Config = require('electron-config');
 const config = new Config();
-weatherData = {};
+const {
+  remote
+} = require('electron');
+const {
+  Menu,
+  MenuItem
+} = remote;
+
+var weatherData = {};
 var weather3D = null;
-var coords = { lat: "", lon: "" };
-document.querySelector("#retryButton").addEventListener("click", retry);
+var coords = {
+  lat: "",
+  lon: ""
+};
+
 document.querySelector("#error").innerHTML = "Weather data could not be loaded." + "<br>" +
   "Please check your internet connection and try again.";
 
@@ -19,16 +30,14 @@ reloadSettings();
 
 function reloadSettings() {
   if (config.has('units')) {
-  units = config.get('units');
-  if (units === "metric")
-    isMetric = true;
-  else
-    isMetric = false;
+    units = config.get('units');
+    if (units === "metric")
+      isMetric = true;
+    else
+      isMetric = false;
   }
 }
 
-const {remote} = require('electron')
-const {Menu, MenuItem} = remote
 
 function setUnits(e) {
   isMetric = e.isMetric;
@@ -47,16 +56,41 @@ function setUnits(e) {
 }
 
 const menu = new Menu()
-unitsMetric = new MenuItem({isMetric: true, label: 'Metric', type: 'radio', checked: isMetric, click: setUnits})
-unitsImperial = new MenuItem({isMetric: false, label: 'Imperial', type: 'radio', checked: !isMetric, click: setUnits})
-menu.append(new MenuItem({label: 'Settings', enabled: false}))
-menu.append(new MenuItem({type: 'separator'}))
-menu.append(new MenuItem({label: 'Units', submenu: [unitsMetric, unitsImperial]}))
-menu.append(new MenuItem({label: 'Refresh', role: 'reload'}))
+unitsMetric = new MenuItem({
+  isMetric: true,
+  label: 'Metric',
+  type: 'radio',
+  checked: isMetric,
+  click: setUnits
+})
+unitsImperial = new MenuItem({
+  isMetric: false,
+  label: 'Imperial',
+  type: 'radio',
+  checked: !isMetric,
+  click: setUnits
+})
+menu.append(new MenuItem({
+  label: 'Settings',
+  enabled: false
+}))
+menu.append(new MenuItem({
+  type: 'separator'
+}))
+menu.append(new MenuItem({
+  label: 'Units',
+  submenu: [unitsMetric, unitsImperial]
+}))
+menu.append(new MenuItem({
+  label: 'Refresh',
+  role: 'reload'
+}))
 
 document.querySelector("#hamburgerMenu").addEventListener('click', (e) => {
   e.preventDefault()
-  menu.popup(remote.getCurrentWindow(), { async: true });
+  menu.popup(remote.getCurrentWindow(), {
+    async: true
+  });
 }, false)
 
 function retry() {
@@ -96,5 +130,6 @@ function error() {
   document.querySelector("#load").setAttribute("class", "loaded");
 }
 
+document.querySelector("#retryButton").addEventListener("click", retry);
 window.addEventListener("load", retry);
 window.setInterval(retry, 1800000);

@@ -81,7 +81,7 @@ Weather3D.prototype.createSceneObjects = function() {
   this.createStormEvents();
   createUI(this.weather);
   this.createSky();
-  
+
 }
 
 Weather3D.prototype.createSceneBasics = function() {
@@ -93,7 +93,7 @@ Weather3D.prototype.createSceneBasics = function() {
   this.fieldOfView = 50;
   this.nearPlane = .1;
   this.farPlane = 1000000000;
-  this.camera = new THREE.PerspectiveCamera (
+  this.camera = new THREE.PerspectiveCamera(
     this.fieldOfView,
     this.aspectRatio,
     this.nearPlane,
@@ -105,7 +105,10 @@ Weather3D.prototype.createSceneBasics = function() {
   this.camera.position.z = 200;
   this.camera.position.y = params.defaultCamHeight * 1.3;
 
-  this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  this.renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true
+  });
   this.renderer.setSize(WIDTH, HEIGHT);
 
   this.renderer.shadowMap.enabled = true;
@@ -204,37 +207,37 @@ Weather3D.prototype.updateLightColors = function() {
   var newColor;
   var dayTime = this.effectController.timeOfDay;
   var starOpacity;
-  if (dayTime < 0.74 && dayTime >= 0.26) {  
+  if (dayTime < 0.74 && dayTime >= 0.26) {
     this.sunLight.color = new THREE.Color(0xffffff);
     this.ambientLight.color = new THREE.Color(0x9fabce);
     this.hemisphereLight.color = new THREE.Color(0xaaaaaa);
     this.stars.updateOpacity(0);
-    this.setTextColor(false); 
+    this.setTextColor(false);
     return;
   }
-  else if (dayTime < 0.28 && dayTime > 0.25) {  
+  else if (dayTime < 0.28 && dayTime > 0.25) {
     newColor = new THREE.Color(Colors.dawnDusk);
     starOpacity = 0.2;
   }
-  else if (dayTime < 0.31 && dayTime >= 0.28) {  
+  else if (dayTime < 0.31 && dayTime >= 0.28) {
     newColor = new THREE.Color(Colors.morningEvening);
     starOpacity = 0;
   }
-  else if (dayTime < 0.72 && dayTime >= 0.68) {  
+  else if (dayTime < 0.72 && dayTime >= 0.68) {
     newColor = new THREE.Color(Colors.morningEvening);
     starOpacity = 0;
   }
-  else if (dayTime < 0.75 && dayTime >= 0.72) {  
+  else if (dayTime < 0.75 && dayTime >= 0.72) {
     newColor = new THREE.Color(Colors.dawnDusk);
     starOpacity = 0.2;
-  } 
-  else {  
+  }
+  else {
     newColor = new THREE.Color(Colors.nightTime);
     starOpacity = 1;
   }
 
-  this.sunLight.color        = newColor;
-  this.ambientLight.color    = newColor;
+  this.sunLight.color = newColor;
+  this.ambientLight.color = newColor;
   this.hemisphereLight.color = newColor;
   this.stars.updateOpacity(starOpacity);
   this.setTextColor(true);
@@ -255,8 +258,13 @@ Weather3D.prototype.updateTimeOfDay = function() {
   else if (now < sunrise) {
     targetTime = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
   }
-  TweenMax.to(that.effectController, (targetTime - originalTime) * 6, {timeOfDay: targetTime, onUpdate: that.updateSky, ease: Quad.easeInOut, delay: 0.2})
-  // that.updateSky();
+  TweenMax.to(that.effectController, (targetTime - originalTime) * 6, {
+      timeOfDay: targetTime,
+      onUpdate: that.updateSky,
+      ease: Quad.easeInOut,
+      delay: 0.2
+    })
+    // that.updateSky();
 }
 
 Weather3D.prototype.createSky = function() {
@@ -266,7 +274,9 @@ Weather3D.prototype.createSky = function() {
   // Add Sun Helper
   this.sphereHelper = new THREE.Mesh(
     new THREE.SphereBufferGeometry(160, 16, 16),
-    new THREE.MeshBasicMaterial({ color: 0xff00ff })
+    new THREE.MeshBasicMaterial({
+      color: 0xff00ff
+    })
   );
   this.scene.add(this.sphereHelper);
 
@@ -315,7 +325,7 @@ Weather3D.prototype.updateSky = function() {
   that.sunLight.position.y = that.sphereHelper.position.y;
   that.moonLight.position.x = that.moon.mesh.position.x;
   that.moonLight.position.y = that.moon.mesh.position.y;
-  
+
   that.renderOneFrame();
 }
 
@@ -329,12 +339,12 @@ Weather3D.prototype.updateWeather = function() {
   this.moon.mesh.visible = false;
   this.stars.mesh.visible = false;
   this.stormEventsPossible = false;
-  // this.weather.clouds.all = 0;
-  // this.weather.weather[0].main = "Thunderstorm";
+  // this.weather.clouds.all = 30;
+  // this.weather.weather[0].main = "Clouds";
   // show objects based on weather type
-  if (this.weather.clouds.all < 75 && (this.weather.weather[0].main != "Rain" && 
-                                       this.weather.weather[0].main != "Snow" && 
-                                       this.weather.weather[0].main != "Thunderstorm" )) {
+  if (this.weather.clouds.all < 75 && (this.weather.weather[0].main != "Rain" &&
+      this.weather.weather[0].main != "Snow" &&
+      this.weather.weather[0].main != "Thunderstorm")) {
     this.lightClouds.setCoverage(this.weather.clouds.all);
     this.stars.mesh.visible = true;
     this.sun.mesh.visible = true;
@@ -388,7 +398,7 @@ Weather3D.prototype.startRenderLoop = function() {
     that.snow.simulateSnow();
 
   // if (that.lightClouds.enabled)
-    that.lightClouds.driftClouds();
+  that.lightClouds.driftClouds();
 
   if (that.heavyClouds.mesh.visible)
     that.heavyClouds.moveSurface();
@@ -409,7 +419,7 @@ Weather3D.prototype.startRenderLoop = function() {
     }
 
     for (var i = 0; i < that.stormEvents.length; i++) {
-      if(that.stormEvents[i].active)
+      if (that.stormEvents[i].active)
         that.stormEvents[i].step();
     }
   }
@@ -431,7 +441,7 @@ Weather3D.prototype.setTextColor = function(day) {
     weatherData.style.color = "#f1d7d0";
     header.style.color = "#f1d7d0";
     divider.style.borderTopColor = "#f1d7d0";
-  } 
+  }
   else {
     weatherData.style.color = "#111710";
     header.style.color = "#515750";
@@ -477,9 +487,9 @@ Weather3D.prototype.init = function() {
 function createUI(weatherData) {
   var locDOM = document.querySelector("#location");
   var dataContainer = document.createElement("div");
-  dataContainer.setAttribute("class", "detailedData");        
+  dataContainer.setAttribute("class", "detailedData");
   var hr = document.createElement("hr");
-  hr.setAttribute("class","divider")
+  hr.setAttribute("class", "divider")
   locDOM.parentElement.appendChild(dataContainer);
   dataContainer.appendChild(hr);
 
@@ -502,7 +512,7 @@ function createUI(weatherData) {
   for (var i = 0; i < 6; i++) {
     descriptors.appendChild(descs[i]);
   }
-  
+
   var values = document.createElement("div");
   values.setAttribute("class", "values");
 
@@ -544,16 +554,18 @@ function updateUI(weatherData) {
 
   vals[0].innerHTML = computeDescription(weatherData.weather[0].main, weatherData.clouds.all);
   vals[1].innerHTML = weatherData.clouds.all + "%";
+
   if (that.metricUnits)
     vals[2].innerHTML = (weatherData.wind.speed * 3.6).toFixed() + " km/h";
   else
     vals[2].innerHTML = (weatherData.wind.speed * 2.237).toFixed() + " mph";
+
   vals[3].innerHTML = weatherData.main.humidity + "%";
   vals[4].innerHTML = formattedTime(sunriseTime);
   vals[5].innerHTML = formattedTime(sunsetTime);
 
   var updateTime = document.querySelector(".updateTime");
-  updateTime.innerHTML="Data Last Updated at: " + formattedTime(new Date(weatherData.dt * 1000));
+  updateTime.innerHTML = "Data Last Updated at: " + formattedTime(new Date(weatherData.dt * 1000));
   document.querySelector("#load").setAttribute("class", "loaded");
 }
 
