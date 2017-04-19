@@ -257,7 +257,7 @@ Snow = function(weatherData) {
   this.particleCount = 9000;
 
   this.particles = new THREE.Geometry();
-
+  
   for (var p = 0; p < this.particleCount; p++) {
     var x = Math.random() * 4000 - 2000;
     var y = Math.random() * 350 - 100;
@@ -284,9 +284,10 @@ Snow.prototype.simulateSnow = function() {
   while (pCount--) {
     var particle = this.particles.vertices[pCount];
 
+    var random = Math.random()
     if (particle.y < -100) {
       particle.y = 250;
-      particle.x = Math.random() * 4000 - 2000;
+      particle.x = random * 4000 - 2000;
       particle.velocity.x /= 10;
     }
 
@@ -296,8 +297,8 @@ Snow.prototype.simulateSnow = function() {
     if (Math.abs(particle.velocity.x) >= particle.maxXvel)
       particle.velocity.x /= 1.1;
 
-    particle.velocity.y -= Math.random() * .02;
-    particle.velocity.x += Math.random() - 0.4;
+    particle.velocity.y -= random * .02;
+    particle.velocity.x += random - 0.4;
 
     particle.x += particle.velocity.x;
     particle.y += particle.velocity.y;
