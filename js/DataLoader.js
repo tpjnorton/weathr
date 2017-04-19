@@ -56,8 +56,7 @@ menu.append(new MenuItem({label: 'Refresh', role: 'reload'}))
 
 document.querySelector("#hamburgerMenu").addEventListener('click', (e) => {
   e.preventDefault()
-  // e.toElement.classList.toggle("open");
-  menu.popup(remote.getCurrentWindow(), true);
+  menu.popup(remote.getCurrentWindow(), { async: true });
 }, false)
 
 function retry() {
