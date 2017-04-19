@@ -40,7 +40,8 @@ function setUnits(e) {
 
   if (weather3D) {
     weather3D.metricUnits = isMetric;
-    weather3D.updateWeather();
+    console.log(weatherData);
+    updateUI(weatherData);
   }
 
   reloadSettings();
@@ -76,13 +77,14 @@ function loadWeatherData(position) {
     .then(updateWeatherScene, error)
 }
 
-function updateWeatherScene(weatherData) {
+function updateWeatherScene(weatherResp) {
+  weatherData = weatherResp;
   if (!weather3D) {
-    weather3D = new Weather3D(weatherData, isMetric);
+    weather3D = new Weather3D(weatherResp, isMetric);
     weather3D.init();
   }
   else {
-    weather3D.weather = weatherData;
+    weather3D.weather = weatherResp;
     weather3D.metricUnits = isMetric;
     weather3D.updateWeather();
   }
