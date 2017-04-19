@@ -530,7 +530,10 @@ function updateUI(weatherData) {
   var locDOM = document.querySelector("#location");
   locDOM.innerHTML = weatherData.name + ", " + weatherData.sys.country;
   var tempDOM = document.querySelector("#temp");
-  tempDOM.innerHTML = parseInt(weatherData.main.temp) + "&#176;";
+  if (that.metricUnits)
+    tempDOM.innerHTML = parseInt(weatherData.main.temp) + "&#176;";
+  else
+    tempDOM.innerHTML = parseInt(weatherData.main.temp * (9 / 5) + 32) + "&#176;";
 
   var values = document.querySelector(".values");
 
@@ -541,10 +544,10 @@ function updateUI(weatherData) {
 
   vals[0].innerHTML = computeDescription(weatherData.weather[0].main, weatherData.clouds.all);
   vals[1].innerHTML = weatherData.clouds.all + "%";
-  if (that.metricUnits == true)
-    vals[2].innerHTML = (weatherData.wind.speed*3.6).toFixed() + " km/h";
+  if (that.metricUnits)
+    vals[2].innerHTML = (weatherData.wind.speed * 3.6).toFixed() + " km/h";
   else
-    vals[2].innerHTML = (weatherData.wind.speed).toFixed() + " mph";
+    vals[2].innerHTML = (weatherData.wind.speed * 2.237).toFixed() + " mph";
   vals[3].innerHTML = weatherData.main.humidity + "%";
   vals[4].innerHTML = formattedTime(sunriseTime);
   vals[5].innerHTML = formattedTime(sunsetTime);
@@ -557,12 +560,16 @@ function updateUI(weatherData) {
 function formattedTime(time) {
   var hours = time.getHours();
   var minutes = time.getMinutes();
-  if (hours < 10)
-    hours = "0" + hours;
+  var usePM = false;
+  if (hours > 11)
+    usePM = true;
+  hours = hours % 12;
+  if (hours == 0)
+    hours = 12;
   if (minutes < 10)
     minutes = "0" + minutes;
 
-  return hours + ":" + minutes;
+  return hours + ":" + minutes + (usePM ? " PM" : " AM");
 }
 
 function computeDescription(shortDesc, cloudPercentage) {

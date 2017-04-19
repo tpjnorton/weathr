@@ -38,8 +38,12 @@ function setUnits(e) {
   else
     config.set('units', 'imperial');
 
+  if (weather3D) {
+    weather3D.metricUnits = isMetric;
+    weather3D.updateWeather();
+  }
+
   reloadSettings();
-  retry();
 }
 
 const menu = new Menu()
@@ -67,20 +71,22 @@ function retry() {
 function loadWeatherData(position) {
   coords.lat = position.coords.latitude;
   coords.lon = position.coords.longitude;
-  let weatherReqUrl = tempUrl + "?" + "lat=" + coords.lat + "&lon=" + coords.lon + "&" + "APPID=" + weatherApiKey + "&units=" + units;
+  let weatherReqUrl = tempUrl + "?" + "lat=" + coords.lat + "&lon=" + coords.lon + "&" + "APPID=" + weatherApiKey + "&units=metric";
   fetch(weatherReqUrl)
     .then((resp) => resp.json()) // Transform the data into json
-    .then(function(weatherData) {
-      if (!weather3D) {
-        weather3D = new Weather3D(weatherData, isMetric);
-        weather3D.init();
-      }
-      else {
-        weather3D.weather = weatherData;
-        weather3D.metricUnits = isMetric;
-        weather3D.updateWeather();
-      }
-    }, error)
+    .then(updateWeatherScene, error)
+}
+
+function updateWeatherScene(weatherData) {
+  if (!weather3D) {
+    weather3D = new Weather3D(weatherData, isMetric);
+    weather3D.init();
+  }
+  else {
+    weather3D.weather = weatherData;
+    weather3D.metricUnits = isMetric;
+    weather3D.updateWeather();
+  }
 }
 
 function error() {
