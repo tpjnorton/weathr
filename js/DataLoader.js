@@ -43,7 +43,6 @@ function setUnits(e) {
     console.log(weatherData);
     updateUI(weatherData);
   }
-
   reloadSettings();
 }
 
