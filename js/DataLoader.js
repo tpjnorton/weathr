@@ -124,10 +124,19 @@ function updateWeatherScene(weatherResp) {
 }
 
 function error() {
+  var dat = document.querySelector(".detailedData");
+  if (dat) {
+    dat.innerHTML = "";
+  }
+
+  document.querySelector("#temp").innerHTML = "";
   document.querySelector("#location").innerHTML = "Oh No!";
   document.querySelector("#error").style.display = "block";
   document.querySelector("#retryButton").style.display = "inline-block";
   document.querySelector("#load").setAttribute("class", "loaded");
+  document.querySelector("#world").innerHTML = "";
+  weather3D = null;
+
 }
 
 document.querySelector("#retryButton").addEventListener("click", retry);
