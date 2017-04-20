@@ -92,7 +92,7 @@ Weather3D.prototype.createSceneBasics = function() {
   this.aspectRatio = WIDTH / HEIGHT;
   this.fieldOfView = 50;
   this.nearPlane = .1;
-  this.farPlane = 1000000000;
+  this.farPlane = 10000;
   this.camera = new THREE.PerspectiveCamera(
     this.fieldOfView,
     this.aspectRatio,
@@ -110,6 +110,7 @@ Weather3D.prototype.createSceneBasics = function() {
     antialias: true
   });
   this.renderer.setSize(WIDTH, HEIGHT);
+  this.renderer.setPixelRatio(1);
 
   this.renderer.shadowMap.enabled = true;
 
@@ -127,29 +128,33 @@ Weather3D.prototype.createLights = function() {
 
   this.sunLight = new THREE.DirectionalLight(0xffffff, .9);
   this.sunLight.position.set(150, 350, 350);
-  this.sunLight.castShadow = true;
-  this.sunLight.shadow.camera.left = -400;
-  this.sunLight.shadow.camera.right = 400;
-  this.sunLight.shadow.camera.top = 400;
-  this.sunLight.shadow.camera.bottom = -400;
-  this.sunLight.shadow.camera.near = 1;
-  this.sunLight.shadow.camera.far = 1000;
-  this.sunLight.shadow.mapSize.width = 4096;
-  this.sunLight.shadow.mapSize.height = 4096;
+  this.sunLight.castShadow = false;
+
+  // this.sunLight.castShadow = true;
+  // this.sunLight.shadow.camera.left = -400;
+  // this.sunLight.shadow.camera.right = 400;
+  // this.sunLight.shadow.camera.top = 400;
+  // this.sunLight.shadow.camera.bottom = -400;
+  // this.sunLight.shadow.camera.near = 1;
+  // this.sunLight.shadow.camera.far = 1000;
+  // this.sunLight.shadow.mapSize.width = 4096;
+  // this.sunLight.shadow.mapSize.height = 4096;
 
   this.moonLight = new THREE.DirectionalLight(0xaaaaff, .6);
   this.moonLight.position.set(0, 0, 350);
-  this.moonLight.castShadow = true;
-  this.moonLight.shadow.camera.left = -400;
-  this.moonLight.shadow.camera.right = 400;
-  this.moonLight.shadow.camera.top = 400;
-  this.moonLight.shadow.camera.bottom = -400;
-  this.moonLight.shadow.camera.near = 1;
-  this.moonLight.shadow.camera.far = 1000;
-  this.moonLight.shadow.mapSize.width = 4096;
-  this.moonLight.shadow.mapSize.height = 4096;
+  this.moonLight.castShadow = false;
 
-  var ch = new THREE.CameraHelper(this.moonLight.shadow.camera);
+  // this.moonLight.castShadow = true;
+  // this.moonLight.shadow.camera.left = -400;
+  // this.moonLight.shadow.camera.right = 400;
+  // this.moonLight.shadow.camera.top = 400;
+  // this.moonLight.shadow.camera.bottom = -400;
+  // this.moonLight.shadow.camera.near = 1;
+  // this.moonLight.shadow.camera.far = 1000;
+  // this.moonLight.shadow.mapSize.width = 4096;
+  // this.moonLight.shadow.mapSize.height = 4096;
+
+  var ch = new THREE.CameraHelper(this.camera);
   // this.scene.add(ch);
   this.scene.add(this.hemisphereLight);
   this.scene.add(this.sunLight);
