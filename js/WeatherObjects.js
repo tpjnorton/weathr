@@ -199,12 +199,12 @@ Stars.prototype.updateOpacity = function(opacity) {
 }
 
 Rain = function(weatherData) {
-  this.particleCount = 9000;
+  this.particleCount = 1500;
 
   this.particles = new THREE.Geometry();
 
   for (var p = 0; p < this.particleCount; p++) {
-    var x = Math.random() * 4000 - 2000;
+    var x = Math.random() * 800 - 400;
     var y = Math.random() * 350 - 100;
     var z = Math.random() * 200 - 400;
 
@@ -232,7 +232,7 @@ Rain.prototype.simulateRain = function() {
 
     if (particle.y < -100) {
       particle.y = 250;
-      particle.x = Math.random() * 4000 - 2000;
+      particle.x = Math.random() * 800 - 400;
       particle.velocity.x /= 2;
     }
 
@@ -254,12 +254,12 @@ Rain.prototype.simulateRain = function() {
 };
 
 Snow = function(weatherData) {
-  this.particleCount = 9000;
+  this.particleCount = 1500;
 
   this.particles = new THREE.Geometry();
-  
+
   for (var p = 0; p < this.particleCount; p++) {
-    var x = Math.random() * 4000 - 2000;
+    var x = Math.random() * 800 - 400;
     var y = Math.random() * 350 - 100;
     var z = Math.random() * 200 - 400;
 
@@ -287,7 +287,7 @@ Snow.prototype.simulateSnow = function() {
     var random = Math.random()
     if (particle.y < -100) {
       particle.y = 250;
-      particle.x = random * 4000 - 2000;
+      particle.x = random * 800 - 400;
       particle.velocity.x /= 10;
     }
 
@@ -357,4 +357,3 @@ Moon = function() {
 
   this.mesh.add(new THREE.Mesh(geom, mat));
 }
-
