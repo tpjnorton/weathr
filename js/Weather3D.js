@@ -602,5 +602,9 @@ function computeDescription(shortDesc, cloudPercentage) {
     return "Clear Skies";
   }
 
+  else if (shortDesc == "Smoke") {
+    return "Foggy";
+  }
+
   else return shortDesc;
 }
