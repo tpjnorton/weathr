@@ -110,7 +110,6 @@ Weather3D.prototype.createSceneBasics = function() {
     antialias: true
   });
   this.renderer.setSize(WIDTH, HEIGHT);
-  this.renderer.setPixelRatio(1);
   this.renderer.toneMapping = THREE.Uncharted2ToneMapping;
 
   // this.renderer.shadowMap.enabled = true;
