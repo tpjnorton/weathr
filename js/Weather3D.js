@@ -111,8 +111,9 @@ Weather3D.prototype.createSceneBasics = function() {
   });
   this.renderer.setSize(WIDTH, HEIGHT);
   this.renderer.setPixelRatio(1);
+  this.renderer.toneMapping = THREE.Uncharted2ToneMapping;
 
-  this.renderer.shadowMap.enabled = true;
+  // this.renderer.shadowMap.enabled = true;
 
   this.container = document.getElementById('world');
   this.container.appendChild(this.renderer.domElement);
