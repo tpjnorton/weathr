@@ -263,7 +263,7 @@ Weather3D.prototype.updateTimeOfDay = function() {
   else if (now < sunrise) {
     targetTime = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
   }
-  TweenMax.to(that.effectController, (targetTime - originalTime) * 6, {
+  TweenMax.to(that.effectController, 2 - ((targetTime - originalTime) * 6), {
       timeOfDay: targetTime,
       onUpdate: that.updateSky,
       ease: Quad.easeInOut,
