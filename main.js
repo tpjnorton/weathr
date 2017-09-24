@@ -48,7 +48,8 @@ function createWindow () {
     minHeight: 600,
     frame: false,
     show: false,
-    resizable: false
+    resizable: false,
+    icon: path.join(__dirname, 'resources/icons/weather_logo.ico')
   });
 
   mainWindow.once('ready-to-show', () => {
