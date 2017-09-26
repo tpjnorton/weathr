@@ -32,15 +32,15 @@ Earth = function() {
   //   this.moveSurface();
 }
 
-Earth.prototype.moveSurface = function() {
+Earth.prototype.moveSurface = function(scale) {
   var verts = this.mesh.geometry.vertices;
   var l = verts.length;
   for (var i = 0; i < l; i++) {
     var v = verts[i];
     var vprops = this.displacements[i];
-    v.x = vprops.x + Math.cos(vprops.ang / 10) * vprops.amp;
-    v.y = vprops.y + Math.sin(vprops.ang / 10) * vprops.amp;
-    vprops.ang += vprops.speed * deltaTime;
+    v.x = vprops.x + Math.cos(vprops.ang / 10) * vprops.amp * scale;
+    v.y = vprops.y + Math.sin(vprops.ang / 10) * vprops.amp * scale;
+    vprops.ang += vprops.speed * deltaTime * scale;
     this.mesh.geometry.verticesNeedUpdate = true;
   }
 }

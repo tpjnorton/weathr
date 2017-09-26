@@ -25,7 +25,7 @@
   width: 100%;
   text-align: center;
   pointer-events: none;
-  color: #f1d7d0;
+  color: #fcfcfc;
   z-index: 20;
   -webkit-user-select: none;
 }
@@ -270,11 +270,12 @@
 }
 
 h1 {
-  color: #EEEEEE;
+  color: #fff;
 }
 
 .loaded #loader-wrapper .loader-section.section-left {
   opacity: 0;
+
 }
 
 .loaded #loader-wrapper .loader-section.section-right {
@@ -283,6 +284,7 @@ h1 {
 
 .loaded #loader-wrapper {
   visibility: hidden;
+  display: none;
 }
 
 .loaded #loader-wrapper .loader-section.section-right,

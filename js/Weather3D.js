@@ -1,5 +1,5 @@
 //COLORS
-// var THREE = require('three')
+
 var Colors = {
   red: 0xf25346,
   white: 0xd8d0d1,
@@ -8,7 +8,8 @@ var Colors = {
   pink: 0xF5986E,
   yellow: 0xf4ce93,
   blue: 0x68c3c0,
-  green: 0x579149,
+  green: 0x67b255,
+  greenDesaturated: 0x66915b,
   grey: 0xaaaaaa,
   greyDark: 0x777757,
   dawnDusk: 0x351304,
@@ -81,6 +82,8 @@ Weather3D.prototype.createSceneObjects = function() {
   this.createStormEvents();
   createUI(this.weather);
   this.createSky();
+
+  this.earth.moveSurface(100000000);
 
 }
 
@@ -263,11 +266,10 @@ Weather3D.prototype.updateTimeOfDay = function() {
   else if (now < sunrise) {
     targetTime = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
   }
-  TweenMax.to(that.effectController, 2 - ((targetTime - originalTime) * 6), {
+  TweenMax.to(that.effectController, 2, {
       timeOfDay: targetTime,
       onUpdate: that.updateSky,
       ease: Quad.easeInOut,
-      delay: 0.2
     })
     // that.updateSky();
 }
@@ -345,7 +347,7 @@ Weather3D.prototype.updateWeather = function() {
   this.stars.mesh.visible = false;
   this.stormEventsPossible = false;
   // this.weather.clouds.all = 30;
-  // this.weather.weather[0].main = "Clouds";
+  // this.weather.weather[0].main = "Clear";
   // show objects based on weather type
   if (this.weather.clouds.all < 75 && (this.weather.weather[0].main != "Rain" &&
       this.weather.weather[0].main != "Snow" &&
@@ -357,15 +359,16 @@ Weather3D.prototype.updateWeather = function() {
   }
   else {
     this.heavyClouds.mesh.visible = true;
-    this.ambientLight.color = new THREE.Color(0xcecece);
-    this.ambientLight.intensity = 1.0;
+    this.ambientLight.color = new THREE.Color(0xce3ece);
+    this.ambientLight.intensity = 0.3;
     this.effectController.rayleigh = 1;
     this.effectController.turbidity = 11;
-    this.effectController.luminance = 0.4;
+    this.effectController.luminance = 0.6;
     this.effectController.mieDirectionalG = 0.087;
-    this.sunLight.intensity = 0.5;
-    this.earth.mesh.material.color = new THREE.Color(0x599043);
+    this.sunLight.intensity = 0.8;
+    this.earth.mesh.material.color = new THREE.Color(Colors.greenDesaturated);
     this.heavyClouds.mesh.material.color = new THREE.Color(Colors.grey);
+    this.effectController.turbidity = 80;
     if (this.weather.weather[0].main === "Rain" || this.weather.weather[0].main === "Drizzle") {
       this.rain.rainPointCloud.visible = true;
       this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
@@ -408,7 +411,7 @@ Weather3D.prototype.startRenderLoop = function() {
   if (that.heavyClouds.mesh.visible)
     that.heavyClouds.moveSurface();
 
-  that.earth.moveSurface();
+  that.earth.moveSurface(1.0);
 
   if (that.stormEventsPossible) {
     var lightningProbability = 0.005;
