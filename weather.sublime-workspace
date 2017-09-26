@@ -4,6 +4,86 @@
 		"selected_items":
 		[
 			[
+				"new",
+				"newColor"
+			],
+			[
+				"weathe",
+				"weather3D"
+			],
+			[
+				"wea",
+				"weather3D"
+			],
+			[
+				"sho",
+				"shortDesc"
+			],
+			[
+				"updat",
+				"updateWeather"
+			],
+			[
+				"upda",
+				"updateWeather"
+			],
+			[
+				"weat",
+				"weather3D"
+			],
+			[
+				"metr",
+				"metricUnits"
+			],
+			[
+				"is",
+				"isMetric"
+			],
+			[
+				"update",
+				"updateWeatherScene"
+			],
+			[
+				"TRE",
+				"true"
+			],
+			[
+				"MAIN",
+				"mainWindow"
+			],
+			[
+				"win",
+				"winMode"
+			],
+			[
+				"cloud",
+				"cloudPercentage"
+			],
+			[
+				"clo",
+				"cloudPercentage"
+			],
+			[
+				"time",
+				"timeOfDay"
+			],
+			[
+				"po",
+				"pointer-events"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"min",
+				"minWidth"
+			],
+			[
+				"main",
+				"mainWindow"
+			],
+			[
 				"reset",
 				"resetNeeded"
 			],
@@ -434,91 +514,99 @@
 			[
 				"no",
 				"nao_demo_second_half"
-			],
-			[
-				"initia",
-				"initialPoseArray"
-			],
-			[
-				"initialPose",
-				"initialPoseArray"
-			],
-			[
-				"ofset",
-				"offsetArray"
-			],
-			[
-				"value",
-				"valueArray"
-			],
-			[
-				"va",
-				"valueArray"
-			],
-			[
-				"for",
-				"for\tfor (…) {…}"
-			],
-			[
-				"trac",
-				"trackedObject"
-			],
-			[
-				"transla",
-				"translation"
-			],
-			[
-				"set",
-				"setTrackedObject"
-			],
-			[
-				"tran",
-				"translation"
-			],
-			[
-				"proto",
-				"prototype"
-			],
-			[
-				"even",
-				"event"
-			],
-			[
-				"rel",
-				"reloadPromptExists"
-			],
-			[
-				"reload",
-				"reloadMessageBox"
-			],
-			[
-				"rever",
-				"revert"
-			],
-			[
-				"old",
-				"oldValue"
-			],
-			[
-				"las",
-				"lastPose"
-			],
-			[
-				"pose",
-				"poseKeys"
-			],
-			[
-				"anim",
-				"animationURLs"
-			],
-			[
-				"bas",
-				"basicTimeStep"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "main.js",
+			"settings":
+			{
+				"buffer_size": 2923,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/DataLoader.js",
+			"settings":
+			{
+				"buffer_size": 3605,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/tom/AppData/Roaming/Sublime Text 3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
+			"settings":
+			{
+				"buffer_size": 599,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "package.json",
+			"settings":
+			{
+				"buffer_size": 550,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/Weather3D.js",
+			"settings":
+			{
+				"buffer_size": 18841,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 2526,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/WeatherObjects.js",
+			"settings":
+			{
+				"buffer_size": 10127,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "css/Weather3D.css",
+			"settings":
+			{
+				"buffer_size": 5614,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/ui.js",
+			"settings":
+			{
+				"buffer_size": 1531,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/tom/Documents/GitHub/todo/renderer.js",
+			"settings":
+			{
+				"buffer_size": 4725,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -588,9 +676,13 @@
 	"command_palette":
 	{
 		"height": 357.0,
-		"last_filter": "insta",
+		"last_filter": "html",
 		"selected_items":
 		[
+			[
+				"html",
+				"HTMLPrettify: Set Plugin Options"
+			],
 			[
 				"insta",
 				"Package Control: Install Package"
@@ -620,7 +712,7 @@
 				"Install Package Control"
 			]
 		],
-		"width": 432.0
+		"width": 462.0
 	},
 	"console":
 	{
@@ -640,10 +732,22 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/tom/Desktop/weather"
+		"/C/Users/tom/Desktop/weather",
+		"/C/Users/tom/Desktop/weather/css",
+		"/C/Users/tom/Desktop/weather/js"
 	],
 	"file_history":
 	[
+		"/C/Users/tom/AppData/Roaming/Sublime Text 3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+		"/C/msys64/home/tom/develop/webots-develop/private_projects/intra/worlds/EROS_manipulation_objets.wbt",
+		"/C/Users/tom/Documents/GitHub/todo/main.js",
+		"/C/Users/tom/AppData/Roaming/Weather/Preferences",
+		"/C/Users/tom/AppData/Roaming/Weather/config.json",
+		"/C/Users/tom/Desktop/weather/js/ui.js",
+		"/C/Users/tom/Desktop/weather/index.html",
+		"/C/Users/tom/Desktop/weather/js/DataLoader.js",
+		"/C/Users/tom/Desktop/weather/js/resize.js",
+		"/C/Users/tom/Desktop/weather/css/titlebar.css",
 		"/C/msys64/home/tom/develop/webots/src/webots/editor/WbSyntaxHighlighter.cpp",
 		"/C/msys64/home/tom/develop/webots/src/webots/editor/WbTextEditor.cpp",
 		"/C/msys64/home/tom/develop/webots/src/webots/editor/README.TXT",
@@ -761,21 +865,11 @@
 		"/C/msys64/home/tom/develop/webots/include/controller/cpp/webots/Supervisor.hpp",
 		"/C/Users/tom/AppData/Local/Temp/scp20689/mnt/1TB/home/contest/repository/x3dom/linkedAnimations/correctDemoRotation60.html",
 		"/C/Users/tom/Documents/Animation Linking/correctDemoWalking.html",
-		"/C/Users/tom/Documents/Animation Linking/correctDemoRotation.html",
-		"/C/Users/tom/Documents/Animation Linking/correctDemoRotation60.html",
-		"/C/Users/tom/Documents/Animation Linking/linkedAnimations/nao_soccer.json",
-		"/C/Users/tom/Documents/Animation Linking/linkedAnimations/nao_demo_first_half.html",
-		"/C/Users/tom/Documents/Animation Linking/linkedAnimations/nao_demo_first_half.x3d",
-		"/C/msys64/home/tom/develop/webots/src/webots/maths/WbMatrix3.hpp",
-		"/C/msys64/home/tom/develop/webots/src/webots/maths/WbRotation.cpp",
-		"/C/msys64/home/tom/develop/webots/src/webots/maths/WbMatrix4.cpp",
-		"/C/msys64/home/tom/develop/webots/src/webots/maths/WbMatrix4.hpp",
-		"/C/msys64/home/tom/develop/webots/src/webots/maths/WbMatrix3.cpp",
-		"/C/users/tom/appdata/local/temp/sublime-sftp-browse-1488982533/cyberboticsftp.json/mnt/1TB/home/contest/repository/www/wwi/8.5/webots-robotlab.js"
+		"/C/Users/tom/Documents/Animation Linking/correctDemoRotation.html"
 	],
 	"find":
 	{
-		"height": 21.0
+		"height": 48.0
 	},
 	"find_in_files":
 	{
@@ -803,6 +897,57 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"5",
+			"0X000000",
+			"dawnDusk",
+			"morningEvening",
+			"dawnDusk",
+			"moonLight",
+			"false",
+			"true",
+			"Rain",
+			"4000 - 2000",
+			"Clouds",
+			"d",
+			"renderer",
+			"detailedData",
+			"null",
+			"none",
+			"weatherData",
+			"none",
+			"null",
+			"false",
+			"Thunderstorm",
+			"weatherData",
+			"updateUI",
+			"weatherData",
+			"Skinny",
+			"toggleWindowSize",
+			"getBounds",
+			"400",
+			"winMode",
+			"linear",
+			"config",
+			"titlebar",
+			" Cl",
+			" ",
+			"Overcast",
+			"Clouds",
+			"||",
+			"Rain",
+			"Clouds",
+			"effectController",
+			"that.effectController.timeOfDay",
+			"Value",
+			"11",
+			"weatherData",
+			"p",
+			"a",
+			"setSize",
+			"p",
+			"getElementById",
+			"toggleSizeMode",
+			"win",
 			"\n",
 			"entity.name.type",
 			"entity.name.type\n",
@@ -879,58 +1024,7 @@
 			"Appearance",
 			"appearance",
 			"Appearance",
-			"appearance",
-			"GenericBuilding",
-			"wallType",
-			"wallTexture",
-			"()\n",
-			"hlgVehicle",
-			"controller",
-			"hlgVehicle",
-			"controllerFielf",
-			"rotation",
-			"hlgVehicle",
-			"setSFVec3F",
-			"transField",
-			"initialTranslation",
-			"hlgVehicle",
-			"viewpoint",
-			"rotField",
-			"transField",
-			"initialRotation",
-			"initialTranslation",
-			"getField",
-			"initial",
-			"initialTranslation",
-			"viewpointPos",
-			"hlgPos",
-			"rootChildren",
-			"ResetManager",
-			"positionCache",
-			"PositionCache",
-			"positionCache",
-			"PositionCache",
-			"positionCache",
-			"PositionCache",
-			"rootChildren",
-			"rotation",
-			"sumoInterface",
-			"SumoInterface",
-			"cache_sumo_interface",
-			"SumoInterface",
-			"translation",
-			"sumoVehicles",
-			"rotation",
-			"ropotchi",
-			"SumoInter",
-			":\n",
-			"cache_sumo_interface",
-			"translation",
-			"sumoVehicles",
-			"vehicles",
-			"vehiclesLimit",
-			"sumoVehicles",
-			"emitter"
+			"appearance"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -951,8 +1045,339 @@
 	"groups":
 	[
 		{
+			"selected": 4,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2923,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1666,
+								1666
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 702.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/DataLoader.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3605,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3049,
+								3049
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 987.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/tom/AppData/Roaming/Sublime Text 3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 599,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								499,
+								499
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PackageDev/Syntax Definitions/Sublime Settings.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 550,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/zzz A File Icon zzz/aliases/JSON (NPM).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "js/Weather3D.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 18841,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7482,
+								7482
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3321.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2526,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2472,
+								2421
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 406.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "js/WeatherObjects.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10127,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7630,
+								7631
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "css/Weather3D.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5614,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3414,
+								3414
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2523.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "js/ui.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1531,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								782,
+								782
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/C/Users/tom/Documents/GitHub/todo/renderer.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4725,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1384,
+								1384
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 897.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1016,6 +1441,30 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"weat",
+				"css\\Weather3D.css"
+			],
+			[
+				"",
+				"js\\Weather3D.js"
+			],
+			[
+				"da",
+				"js\\DataLoader.js"
+			],
+			[
+				"ui",
+				"js\\ui.js"
+			],
+			[
+				"wea",
+				"js\\Weather3D.js"
+			],
+			[
+				"i",
+				"index.html"
+			],
 			[
 				"wbsuper",
 				"webots\\src\\webots\\nodes\\WbSupervisor.cpp"
