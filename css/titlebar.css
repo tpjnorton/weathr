@@ -10,7 +10,7 @@
   height: 32px;
   padding: 0px;
   margin: 0px;
-  color: #F1F1F1;
+  color: #fff;
   font-family: sans-serif;
   -webkit-user-select: none;
   overflow: hidden;
@@ -22,7 +22,7 @@
 .title {
   position: absolute;
   top: 0px;
-  left: 50%; 
+  left: 50%;
   line-height: 32px;
   transform: translate(-50%,0);
   font-size: 14px;
@@ -42,9 +42,9 @@
   width: 35px;
   background-color: transparent;
   border: none;
-  color: #F1F1F1;
+  color: #fff;
   font-size: 16px;
-  padding-top: 0px; 
+  padding-top: 0px;
   top: 1px;
 }
 

@@ -25,7 +25,6 @@
   width: 100%;
   text-align: center;
   pointer-events: none;
-  color: #fcfcfc;
   z-index: 20;
   -webkit-user-select: none;
 }

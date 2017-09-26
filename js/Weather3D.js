@@ -440,20 +440,24 @@ Weather3D.prototype.renderOneFrame = function() {
   this.renderer.render(this.scene, this.camera);
 }
 
-Weather3D.prototype.setTextColor = function(day) {
+Weather3D.prototype.setTextColor = function(night) {
   var weatherData = document.querySelector(".weatherData");
   var header = document.querySelector(".header");
   var divider = document.querySelector(".divider");
+  var hamburger = document.querySelector("#hamburgerMenu");
 
-  if (day) {
-    weatherData.style.color = "#f1d7d0";
-    header.style.color = "#f1d7d0";
-    divider.style.borderTopColor = "#f1d7d0";
+  if (night) {
+    weatherData.style.color = "#fff";
+    header.style.color = "#fff";
+    hamburger.style.color = "#fff";
+    divider.style.borderTopColor = "#fff";
   }
+
   else {
-    weatherData.style.color = "#111710";
-    header.style.color = "#515750";
-    divider.style.borderTopColor = "#515750";
+    weatherData.style.color = "#000";
+    header.style.color = "#3d423c";
+    divider.style.borderTopColor = "#000";
+    hamburger.style.border = "#000";
   }
 }
 
