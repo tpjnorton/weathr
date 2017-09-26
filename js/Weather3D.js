@@ -220,7 +220,7 @@ Weather3D.prototype.updateLightColors = function() {
     this.ambientLight.color = new THREE.Color(0x9fabce);
     this.hemisphereLight.color = new THREE.Color(0xaaaaaa);
     this.stars.updateOpacity(0);
-    this.setTextColor(false);
+    this.setTextColor(false,this.weather.weather[0].main == "Rain");
     return;
   }
   else if (dayTime < 0.28 && dayTime > 0.25) {
@@ -248,7 +248,7 @@ Weather3D.prototype.updateLightColors = function() {
   this.ambientLight.color = newColor;
   this.hemisphereLight.color = newColor;
   this.stars.updateOpacity(starOpacity);
-  this.setTextColor(true);
+  this.setTextColor(true, false);
 }
 
 Weather3D.prototype.updateTimeOfDay = function() {
@@ -440,7 +440,7 @@ Weather3D.prototype.renderOneFrame = function() {
   this.renderer.render(this.scene, this.camera);
 }
 
-Weather3D.prototype.setTextColor = function(night) {
+Weather3D.prototype.setTextColor = function(night, rain) {
   var weatherData = document.querySelector(".weatherData");
   var header = document.querySelector(".header");
   var divider = document.querySelector(".divider");
@@ -456,6 +456,10 @@ Weather3D.prototype.setTextColor = function(night) {
   else {
     weatherData.style.color = "#000";
     header.style.color = "#3d423c";
+    if (rain)
+      header.style.color = "#eee";
+    else
+      header.style.color = "#3d423c";
     divider.style.borderTopColor = "#000";
     hamburger.style.border = "#000";
   }
