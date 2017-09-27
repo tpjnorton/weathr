@@ -222,7 +222,7 @@ Weather3D.prototype.updateLightColors = function() {
     this.ambientLight.color = new THREE.Color(0x9fabce);
     this.hemisphereLight.color = new THREE.Color(0xaaaaaa);
     this.stars.updateOpacity(0);
-    this.setTextColor(false,this.weather.weather[0].main == "Rain");
+    this.setTextColor(false, this.weather.weather[0].main == "Rain");
     return;
   }
   else if (dayTime < 0.28 && dayTime > 0.25) {
@@ -454,6 +454,7 @@ Weather3D.prototype.setTextColor = function(night, rain) {
     header.style.color = "#fff";
     hamburger.style.color = "#fff";
     divider.style.borderTopColor = "#fff";
+    location.style.color = "#fff";
   }
 
   else {

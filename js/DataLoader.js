@@ -127,13 +127,13 @@ function enterLocationIfNeeded() {
     document.querySelector("#load").setAttribute("class", "loaded");
     document.querySelector("#locationAcceptButton").onclick = function() { fetchLocation(); };
     document.querySelector('#locationForm').onkeypress = function(e) {
-    var event = e || window.event;
-    var charCode = event.which || event.keyCode;
-    if ( charCode == '13' ) {
-      fetchLocation();
+      var event = e || window.event;
+      var charCode = event.which || event.keyCode;
+      if ( charCode == '13' ) {
+        fetchLocation();
+      }
     }
     document.querySelector("#locationForm").focus();
-}
     activatePlacesSearch();
   }
 }
@@ -200,7 +200,7 @@ function error() {
 
 document.querySelector("#retryButton").addEventListener("click", retry);
 window.addEventListener("load", enterLocationIfNeeded);
-window.setInterval(retry, 1800000);
+window.setInterval(enterLocationIfNeeded, 1800000);
 
 var isoCountries = {
   'AF' : 'Afghanistan',
