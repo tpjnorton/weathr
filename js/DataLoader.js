@@ -122,6 +122,10 @@ function enterLocationIfNeeded() {
   if (config.has('location'))
     retry();
   else {
+    if (!weather3D) {
+      weather3D = new Weather3D(defaultWeatherData, isMetric);
+      weather3D.init();
+    }
     document.querySelector(".weatherData").style.display = "none";
     document.querySelector(".locationArea").style.display = "block";
     document.querySelector("#load").setAttribute("class", "loaded");
@@ -148,6 +152,7 @@ function loadWeatherData() {
 
 function updateWeatherScene(weatherResp) {
   weatherData = weatherResp;
+  config.set("weatherData", weatherResp);
   weatherData.sys.country = getCountryName(weatherData.sys.country);
   if (!weather3D) {
     weather3D = new Weather3D(weatherResp, isMetric);
@@ -456,3 +461,46 @@ function getCountryName(countryCode) {
   else
     return countryCode;
 }
+
+defaultWeatherData =  {
+  "coord": {
+    "lon": 6.63,
+    "lat": 46.52
+  },
+  "weather": [
+    {
+      "id": 801,
+      "main": "Clouds",
+      "description": "few clouds",
+      "icon": "02d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 20.01,
+    "pressure": 1022,
+    "humidity": 53,
+    "temp_min": 16,
+    "temp_max": 22
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 2.1,
+    "deg": 90
+  },
+  "clouds": {
+    "all": 20
+  },
+  "dt": Date.now(),
+  "sys": {
+    "type": 1,
+    "id": 6002,
+    "message": 0.0065,
+    "country": "CH",
+    "sunrise": 1506490064,
+    "sunset": 1506532791
+  },
+  "id": 6458866,
+  "name": "District de Lausanne",
+  "cod": 200
+};
