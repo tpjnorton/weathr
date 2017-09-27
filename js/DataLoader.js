@@ -71,10 +71,6 @@ unitsImperial = new MenuItem({
   checked: !isMetric,
   click: setUnits
 })
-changeLocation = new MenuItem({
-  label: 'Change Location',
-  click: enterLocationIfNeeded
-})
 menu.append(new MenuItem({
   label: 'Settings',
   enabled: false
@@ -118,7 +114,7 @@ function activatePlacesSearch() {
 }
 
 function changeLocation() {
-  config.delete("location")
+  config.delete("location");
   enterLocationIfNeeded();
 }
 
@@ -130,6 +126,14 @@ function enterLocationIfNeeded() {
     document.querySelector(".locationArea").style.display = "block";
     document.querySelector("#load").setAttribute("class", "loaded");
     document.querySelector("#locationAcceptButton").onclick = function() { fetchLocation(); };
+    document.querySelector('#locationForm').onkeypress = function(e) {
+    var event = e || window.event;
+    var charCode = event.which || event.keyCode;
+    if ( charCode == '13' ) {
+      fetchLocation();
+    }
+    document.querySelector("#locationForm").focus();
+}
     activatePlacesSearch();
   }
 }
@@ -162,7 +166,7 @@ function retreiveCoords(data) {
     return;
   }
   coords = data.results[0].geometry.location;
-  console.log(coords);
+  console.log(data);
   config.set("location", coords);
   retry()
 }
@@ -183,12 +187,14 @@ function error() {
     dat.innerHTML = "";
   }
   document.querySelector(".locationArea").style.display = "none";
+  document.querySelector("#country").style.display = "none";
   document.querySelector("#temp").innerHTML = "";
   document.querySelector("#location").innerHTML = "Oh No!";
   document.querySelector("#error").style.display = "block";
   document.querySelector("#retryButton").style.display = "inline-block";
   document.querySelector("#load").setAttribute("class", "loaded");
   document.querySelector("#world").innerHTML = "";
+  document.querySelector(".weatherData").style.color = "fff";
   weather3D = null;
 }
 

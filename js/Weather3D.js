@@ -17,6 +17,16 @@ var Colors = {
   nightTime: 0x010321
 };
 
+EffectController = function(){
+  this.turbidity = 10;
+  this.rayleigh = 2;
+  this.mieCoefficient = 0.005;
+  this.mieDirectionalG = 0.261;
+  this.luminance = 1;
+  this.timeOfDay = 0.26;
+  this.sun = false;
+};
+
 var that;
 var deltaTime = 0.01;
 
@@ -44,15 +54,7 @@ Weather3D = function(weather, metricUnits) {
   this.params = params;
   this.newTime = new Date().getTime();
   this.oldTime = new Date().getTime();
-  this.effectController = {
-    turbidity: 10,
-    rayleigh: 2,
-    mieCoefficient: 0.005,
-    mieDirectionalG: 0.261,
-    luminance: 1,
-    timeOfDay: 0.26,
-    sun: false
-  };
+  this.effectController = new EffectController();
   this.weather = weather;
   that = this;
   this.stormEventsPossible = false;
@@ -338,6 +340,7 @@ Weather3D.prototype.updateSky = function() {
 
 Weather3D.prototype.updateWeather = function() {
   // hide all objects, we can selectively show them afterwards
+  this.effectController = new EffectController();
   this.lightClouds.setCoverage(0);
   this.heavyClouds.mesh.visible = false;
   this.rain.rainPointCloud.visible = false;
@@ -356,6 +359,7 @@ Weather3D.prototype.updateWeather = function() {
     this.stars.mesh.visible = true;
     this.sun.mesh.visible = true;
     this.moon.mesh.visible = true;
+    this.earth.mesh.material.color = new THREE.Color(Colors.green);
   }
   else {
     this.heavyClouds.mesh.visible = true;
@@ -443,6 +447,7 @@ Weather3D.prototype.setTextColor = function(night, rain) {
   var header = document.querySelector(".header");
   var divider = document.querySelector(".divider");
   var hamburger = document.querySelector("#hamburgerMenu");
+  var location = document.querySelector("#location");
 
   if (night) {
     weatherData.style.color = "#fff";
@@ -453,11 +458,11 @@ Weather3D.prototype.setTextColor = function(night, rain) {
 
   else {
     weatherData.style.color = "#000";
-    header.style.color = "#3d423c";
+    header.style.color = "#000";
     if (rain)
-      header.style.color = "#eee";
+      location.style.color = "#eee";
     else
-      header.style.color = "#3d423c";
+      location.style.color = "#000";
     divider.style.borderTopColor = "#000";
     hamburger.style.border = "#000";
   }

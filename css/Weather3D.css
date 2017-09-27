@@ -56,19 +56,28 @@
   color: #d6483b;
 }
 
-@media screen and (max-width: 35em) {
-  .header {
-    font-size: 0.8em;
-    top: 6.5em;
+@media screen and (max-width: 400px) {
+  .weatherData {
+    position: absolute;
+    top: 1vh;
+    width: 100%;
+    text-align: center;
+    -webkit-user-select: none;
   }
-  .header h2 {
-    letter-spacing: 0.65em;
+
+  .weatherData #error {
+    margin-top: 20px;
+    font-family: 'Roboto Mono', sans-serif;
+    color: inherit;
+    font-size: 0.8em;
+    color: #fff;
+    width: 70%;
   }
 }
 
 .weatherData {
   position: absolute;
-  top: 4vh;
+  top: 3vh;
   width: 100%;
   text-align: center;
   -webkit-user-select: none;
