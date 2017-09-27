@@ -7,12 +7,11 @@
   <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700,700italic' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto" rel="stylesheet">
   <link rel="stylesheet" href="css/demo.css" />
   <link rel="stylesheet" href="css/Weather3D.css" />
   <link rel="stylesheet" href="css/titlebar.css" />
   <link rel="stylesheet" href="css/hamburger.css" />
-  <script type="text/javascript" src="node_modules/dat.gui/build/dat.gui.min.js"></script>
 </head>
 
 <body id="load">
@@ -36,13 +35,20 @@
       <span></span>
     </div>
     <div class="header" id="onScreenText">
-      <h1><span>3D</span>Weather</h1>
-      <h2>What's it like outside?</h2>
+<!--       <h1><span>3D</span>Weather</h1>
+      <h2>What's it like outside?</h2> -->
+      <!-- <img class="icon" src="resources/icons/48x48.png"> -->
       <div class="weatherData">
         <p id="location">Loading..</p>
+        <p id="country">Loading..</p>
         <p id="temp"></p>
         <p id="error"></p>
-        <button id="retryButton">Retry</button>
+        <button id="retryButton" class="appButton">Retry</button>
+      </div>
+      <div class="locationArea">
+        <p>Where are you?</p>
+        <input id="locationForm" class="locationBar" type="text" name="location"/>
+        <input type="button" name="location" value="I'm here" id="locationAcceptButton">
       </div>
       <button id="modeSelector">Skinny Mode</button>
     </div>
@@ -56,10 +62,6 @@
   </div>
   <!-- Demo links -->
 </body>
-<script>
-</script>
-<script>
-</script>
 <script type="text/javascript" src="js/TweenMax.min.js"></script>
 <script type="text/javascript" src="js/three.min.js"></script>
 <script type="text/javascript" src="js/StormEvent.js"></script>
@@ -67,6 +69,8 @@
 <script type="text/javascript" src="js/SkyShader.js"></script>
 <script type="text/javascript" src="js/OrbitControls.js"></script>
 <script type="text/javascript" src="js/OBJLoader.js"></script>
+<script type="text/javascript" src="node_modules/dat.gui/build/dat.gui.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9u9lyhhSKoxU0OMVhonpe40U_FE4eg60&libraries=places"></script>
 <script>
 require('./js/ui.js')
 require('./js/DataLoader.js')
