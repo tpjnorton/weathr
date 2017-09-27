@@ -311,7 +311,7 @@ Sun = function() {
   this.mesh = new THREE.Object3D();
   this.mesh.name = "sun";
   var geom = new THREE.OctahedronGeometry(24, 3);
-  var sunTexture = new THREE.TextureLoader().load("resources/images/sunbig.jpg");
+  var sunTexture = new THREE.TextureLoader().load("resources/images/sunbig.png");
   var mat = new THREE.MeshBasicMaterial({
     map: sunTexture,
     shading: THREE.FlatShading
