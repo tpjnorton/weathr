@@ -68,7 +68,7 @@
 
 .weatherData {
   position: absolute;
-  top: 16vh;
+  top: 4vh;
   width: 100%;
   text-align: center;
   -webkit-user-select: none;
@@ -82,14 +82,20 @@
 
 .weatherData #location {
   font-family: 'Poiret One', cursive;
-  font-size: 2.5em;
+  font-size: 4em;
+  color: inherit;
+}
+
+.weatherData #country {
+  font-family: 'Poiret One', cursive;
+  font-size: 1.4em;
   color: inherit;
 }
 
 .weatherData #temp {
   font-family: 'Poiret One', sans-serif;
   color: inherit;
-  font-size: 5.0em;
+  font-size: 6.0em;
 }
 
 .weatherData #error {
@@ -99,7 +105,7 @@
   font-size: 0.8em;
 }
 
-.weatherData button {
+.appButton {
   font-family: 'Roboto Mono', sans-serif;
   padding: 8px 30px;
   font-size: 13px;
@@ -117,11 +123,11 @@
   display: none;
 }
 
-.weatherData button:hover {
+.appButton:hover {
   background-color: #1e4e11
 }
 
-.weatherData button:active {
+.appButton:active {
   /*background-color: #3e8e41;*/
   box-shadow: 0 0px #666;
   transform: translateY(1px);
@@ -140,6 +146,7 @@
   width: 60%;
   margin: 0 auto;
   font-family: "Roboto Mono";
+  font-size: 14px;
 }
 
 .detailedData .descriptors {
@@ -148,7 +155,6 @@
   line-height: 2.0em;
   text-align: left;
   display: block;
-  font-size: 0.9em;
   color: inherit;
 }
 
@@ -166,7 +172,6 @@
   line-height: 2.0em;
   text-align: right;
   display: block;
-  font-size: 0.9em;
   color: inherit;
 }
 
@@ -327,6 +332,61 @@ h1 {
 }
 
 #modeSelector:active {
+  background-color: #adadad;
+  box-shadow: 0 0px #666;
+  transform: translateY(1px);
+}
+
+.locationArea {
+  font-size: 2.5em;
+  font-family: "Roboto Mono";
+  margin: 0;
+  padding: 0;
+  z-index: 1502;
+  display: block;
+  margin: 0 auto;
+}
+
+.locationBar {
+  padding: 12px 20px;
+  box-sizing: border-box;
+  pointer-events: all;
+  -webkit-user-select: none;
+  z-index: 1502;
+  font-size: 14px;
+  border-radius: 5px;
+  border-style: none;
+  margin: 10 auto;
+  display: block;
+  width: 60%;
+  max-width: 500px;
+  box-shadow: 0px 3px 28px 2px rgba(61,61,61,0.44);
+}
+
+input[type=button] {
+  background-color: #4CAF50;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-decoration: none;
+  margin: 20px 2px;
+  cursor: pointer;
+  z-index: 1502;
+  pointer-events: all;
+  -webkit-user-select: none;
+  font-size: 15px;
+  color: #fff;
+  background-color: rgba(80, 80, 80, 80);
+  border: none;
+  border-radius: 4px;
+}
+
+input[type=button]:hover {
+  background-color: #818280;
+}
+
+input[type=button]:active {
   background-color: #adadad;
   box-shadow: 0 0px #666;
   transform: translateY(1px);
