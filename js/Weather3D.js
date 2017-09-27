@@ -384,8 +384,6 @@ Weather3D.prototype.updateWeather = function() {
       this.stormEventsPossible = true;
       this.rain.rainPointCloud.visible = true;
       this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
-      this.effectController.mieDirectionalG = 0.087;
-      this.effectController.mieCoefficient = 0.025;
       this.earth.mesh.material.color = new THREE.Color(0x396023);
     }
   }
@@ -554,7 +552,9 @@ function createUI(weatherData) {
 
 function updateUI(weatherData) {
   var locDOM = document.querySelector("#location");
-  locDOM.innerHTML = weatherData.name + ", " + weatherData.sys.country;
+  var counrty = document.querySelector("#country");
+  locDOM.innerHTML = weatherData.name;
+  country.innerHTML = weatherData.sys.country;
   var tempDOM = document.querySelector("#temp");
   if (that.metricUnits)
     tempDOM.innerHTML = parseInt(weatherData.main.temp) + "&#176;";
