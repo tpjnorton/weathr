@@ -317,7 +317,9 @@ Weather3D.prototype.updateSky = function() {
 
 Weather3D.prototype.updateWeather = function() {
   // hide all objects, we can selectively show them afterwards
+  oldTime = this.effectController.timeOfDay;
   this.effectController = new EffectController();
+  this.effectController.timeOfDay = oldTime;
   this.lightClouds.setCoverage(0);
   this.heavyClouds.mesh.visible = false;
   this.rain.rainPointCloud.visible = false;

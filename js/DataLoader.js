@@ -103,7 +103,6 @@ function retry(showLoadingScreen) {
   document.querySelector(".locationArea").style.display = "none";
   document.querySelector("#retryButton").style.display = "none";
   document.querySelector("#error").style.display = "none";
-  document.querySelector("#location").innerHTML = "Loading...";
   loadWeatherData();
   if (showLoadingScreen)
     document.querySelector("#load").setAttribute("class", "");
