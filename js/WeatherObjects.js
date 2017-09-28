@@ -314,14 +314,16 @@ Sun = function() {
   var sunTexture = new THREE.TextureLoader().load("resources/images/sunbig.png");
   var mat = new THREE.MeshBasicMaterial({
     map: sunTexture,
-    shading: THREE.FlatShading
+    shading: THREE.FlatShading,
+    fog: false
   });
 
   var spriteMap = new THREE.TextureLoader().load("resources/images/glow.png");
   var spriteMaterial = new THREE.SpriteMaterial({
     map: spriteMap,
     color: Colors.yellow,
-    transparent: true
+    transparent: true,
+    fog: false
   });
   var sprite = new THREE.Sprite(spriteMaterial);
   sprite.scale.set(120, 120, 1)
@@ -341,7 +343,8 @@ Moon = function() {
   var sunTexture = new THREE.TextureLoader().load("resources/images/moon.jpg");
   var mat = new THREE.MeshBasicMaterial({
     map: sunTexture,
-    shading: THREE.FlatShading
+    shading: THREE.FlatShading,
+    fog: false
   });
 
   var spriteMap = new THREE.TextureLoader().load("resources/images/glow.png");
@@ -349,7 +352,8 @@ Moon = function() {
     map: spriteMap,
     color: Colors.white,
     transparent: true,
-    blending: THREE.AdditiveBlending
+    blending: THREE.AdditiveBlending,
+    fog: false
   });
   var sprite = new THREE.Sprite(spriteMaterial);
   sprite.scale.set(80, 80, 1)
