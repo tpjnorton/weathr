@@ -98,14 +98,15 @@ document.querySelector("#hamburgerMenu").addEventListener('click', (e) => {
   });
 }, false)
 
-function retry() {
+function retry(showLoadingScreen) {
   document.querySelector(".weatherData").style.display = "block";
   document.querySelector(".locationArea").style.display = "none";
   document.querySelector("#retryButton").style.display = "none";
   document.querySelector("#error").style.display = "none";
   document.querySelector("#location").innerHTML = "Loading...";
   loadWeatherData();
-  document.querySelector("#load").setAttribute("class", "");
+  if (showLoadingScreen)
+    document.querySelector("#load").setAttribute("class", "");
 }
 
 function activatePlacesSearch() {
@@ -120,7 +121,7 @@ function changeLocation() {
 
 function enterLocationIfNeeded() {
   if (config.has('location'))
-    retry();
+    retry(true);
   else {
     if (!weather3D) {
       weather3D = new Weather3D(defaultWeatherData, isMetric);
@@ -173,7 +174,7 @@ function retreiveCoords(data) {
   coords = data.results[0].geometry.location;
   console.log(data);
   config.set("location", coords);
-  retry()
+  retry(false);
 }
 
 function fetchLocation() {
