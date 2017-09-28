@@ -117,8 +117,6 @@ Weather3D.prototype.createSceneBasics = function() {
   this.renderer.setSize(WIDTH, HEIGHT);
   this.renderer.toneMapping = THREE.Uncharted2ToneMapping;
 
-  // this.renderer.shadowMap.enabled = true;
-
   this.container = document.getElementById('world');
   this.container.appendChild(this.renderer.domElement);
 
@@ -135,31 +133,11 @@ Weather3D.prototype.createLights = function() {
   this.sunLight.position.set(150, 350, 350);
   this.sunLight.castShadow = false;
 
-  // this.sunLight.castShadow = true;
-  // this.sunLight.shadow.camera.left = -400;
-  // this.sunLight.shadow.camera.right = 400;
-  // this.sunLight.shadow.camera.top = 400;
-  // this.sunLight.shadow.camera.bottom = -400;
-  // this.sunLight.shadow.camera.near = 1;
-  // this.sunLight.shadow.camera.far = 1000;
-  // this.sunLight.shadow.mapSize.width = 4096;
-  // this.sunLight.shadow.mapSize.height = 4096;
-
   this.moonLight = new THREE.DirectionalLight(0xaaaaff, .6);
   this.moonLight.position.set(0, 0, 350);
   this.moonLight.castShadow = false;
 
-  // this.moonLight.castShadow = true;
-  // this.moonLight.shadow.camera.left = -400;
-  // this.moonLight.shadow.camera.right = 400;
-  // this.moonLight.shadow.camera.top = 400;
-  // this.moonLight.shadow.camera.bottom = -400;
-  // this.moonLight.shadow.camera.near = 1;
-  // this.moonLight.shadow.camera.far = 1000;
-  // this.moonLight.shadow.mapSize.width = 4096;
-  // this.moonLight.shadow.mapSize.height = 4096;
-
-  var ch = new THREE.CameraHelper(this.camera);
+  // var ch = new THREE.CameraHelper(this.camera);
   // this.scene.add(ch);
   this.scene.add(this.hemisphereLight);
   this.scene.add(this.sunLight);
@@ -273,7 +251,6 @@ Weather3D.prototype.updateTimeOfDay = function() {
       onUpdate: that.updateSky,
       ease: Quad.easeInOut,
     })
-    // that.updateSky();
 }
 
 Weather3D.prototype.createSky = function() {
@@ -287,7 +264,7 @@ Weather3D.prototype.createSky = function() {
       color: 0xff00ff
     })
   );
-  this.scene.add(this.sphereHelper);
+  // this.scene.add(this.sphereHelper);
 
   // var gui = new dat.GUI();
   // gui.add(this.effectController, "turbidity", 1.0, 20.0, 0.1).onChange(this.updateSky);
