@@ -275,7 +275,6 @@ Weather3D.prototype.createSky = function() {
   // gui.add(this.effectController, "timeOfDay", 0, 1, 0.0001).onChange(this.updateSky);
   // gui.add(this.effectController, "sun").onChange(this.updateSky);
 
-
   this.updateSky();
 }
 
