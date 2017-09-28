@@ -497,8 +497,8 @@ defaultWeatherData =  {
     "id": 6002,
     "message": 0.0065,
     "country": "CH",
-    "sunrise": 1506490064,
-    "sunset": 1506532791
+    "sunrise": Date.now() / 1000 - 21600,
+    "sunset": Date.now() / 1000 + 21600
   },
   "id": 6458866,
   "name": "District de Lausanne",
