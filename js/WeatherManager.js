@@ -1,42 +1,85 @@
 WeatherDataUnit = function(rawUnit) {
   if (rawUnit !== undefined) {
     this.time = rawUnit.dt;
-    this.description = rawUnit.weather.main;
+    this.description = rawUnit.weather[0].main;
     this.clouds = rawUnit.clouds.all;
     this.windSpeed = rawUnit.wind.speed;
-    var d = new Date(this.time);
-    this.day = f.getDay();
+    var d = new Date(this.time * 1000);
+    var now = new Date(Date.now());
+    this.day = d.getDay() - now.getDay();
   }
 }
 
 WeatherDataUnit.combinedFromTwo = function(first, second) {
-  function assert(condition, message) {
-      if (!condition) {
-          message = message || "Assertion failed";
-          if (typeof Error !== "undefined")
-              throw new Error(message);
-      }
-  }
-
-  assert(first.day == second.day, "Tried to combine data from two different days");
+  Utils.assert(first.day == second.day, "Tried to combine data from two different days");
   var result = new WeatherDataUnit();
-  result.description = first.description;
   result.time = (first.time + second.time) / 2;
+  result.description = first.description;
   result.clouds = (first.clouds + second.clouds) / 2;
   result.windSpeed = (first.windSpeed + second.windSpeed) / 2;
+
+  return result;
 }
 
 WeatherManager = function(completeData) {
+  this.fullList = completeData.list;
   this.city = completeData.city.name;
-  this.country = this.getCountryName(completeData.city.country);
+  this.country = WeatherManager.getCountryName(completeData.city.country);
   this.numberOfEntries = completeData.cnt;
-  this.rawUnits = this.buildRawUnits();
+  this.rawUnits = [];
+  this.dayWiseData = [];
+  this.consolibdatedDayWiseData = [];
+  for (var i = 0; i < 5; i++) {
+    this.dayWiseData.push([]);
+    this.consolibdatedDayWiseData.push([]);
+  }
+}
+
+WeatherManager.prototype.setup = function() {
+  this.buildRawUnits();
+  this.buildDayWiseData();
+  this.consolibdateDayWiseData();
 }
 
 WeatherManager.prototype.buildRawUnits = function() {
-  for (var i = 0; i < cnt; ++i) {
-    this.rawUnits.push(new WeatherDataUnit(this.list[i]));
+  for (var i = 1; i < this.numberOfEntries; ++i) {
+    var currentUnit = new WeatherDataUnit(this.fullList[i]);
+    // trim off any info longer than today and 4 more days in the future
+    if (currentUnit.day < 5)
+      this.rawUnits.push(currentUnit);
   }
+}
+
+WeatherManager.prototype.buildDayWiseData = function() {
+  for (var i = 0; i < this.rawUnits.length; i++) {
+    this.dayWiseData[this.rawUnits[i].day].push(this.rawUnits[i]);
+  }
+}
+
+WeatherManager.prototype.consolibdateDayWiseData = function() {
+  for (var i = 0; i < this.dayWiseData.length; i++) {
+    var singleDayEntryCount = this.dayWiseData.length[i];
+    if (i != 0) {
+      Utils.assert(singleDayEntryCount != 8, "Expected 8 entries for any day other than the first day");
+      for (var j = 0; j < singleDayEntryCount; j += 2)
+        this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseData[i][j], this.dayWiseData[i][j + 1]));
+    }
+    else {
+      if (singleDayEntryCount % 2 != 0) {
+        this.consolibdatedDayWiseData[i].push(this.dayWiseData[i][j]);
+        for (var j = 1; j < singleDayEntryCount; j += 2)
+          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseData[i][j], this.dayWiseData[i][j + 1]));
+      }
+      else {
+        for (var j = 0; j < singleDayEntryCount; j += 2)
+          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseData[i][j], this.dayWiseData[i][j + 1]));
+      }
+    }
+  }
+}
+
+WeatherManager.prototype.dayWiseUnits = function() {
+  return this.consolibdatedDayWiseData;
 }
 
 WeatherManager.isoCountries = {
