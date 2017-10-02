@@ -13,9 +13,8 @@ WeatherDataUnit.combinedFromTwo = function(first, second) {
   function assert(condition, message) {
       if (!condition) {
           message = message || "Assertion failed";
-          if (typeof Error !== "undefined") {
+          if (typeof Error !== "undefined")
               throw new Error(message);
-          }
       }
   }
 
@@ -26,7 +25,6 @@ WeatherDataUnit.combinedFromTwo = function(first, second) {
   result.clouds = (first.clouds + second.clouds) / 2;
   result.windSpeed = (first.windSpeed + second.windSpeed) / 2;
 }
-
 
 WeatherManager = function(completeData) {
   this.city = completeData.city.name;
