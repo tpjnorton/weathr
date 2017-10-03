@@ -4,6 +4,46 @@
 		"selected_items":
 		[
 			[
+				"is",
+				"isFirstValue"
+			],
+			[
+				"wea",
+				"WeatherDataUnit"
+			],
+			[
+				"Wa",
+				"WeatherDataUnit"
+			],
+			[
+				"Weathe",
+				"WeatherDataUnit"
+			],
+			[
+				"first",
+				"firstValueSeen"
+			],
+			[
+				"Weath",
+				"WeatherDataUnit"
+			],
+			[
+				"FOREC",
+				"forecastData"
+			],
+			[
+				"fore",
+				"forecastData"
+			],
+			[
+				"foreca",
+				"forecastUrl"
+			],
+			[
+				"curr",
+				"currentDay"
+			],
+			[
 				"get",
 				"getDay"
 			],
@@ -72,10 +112,6 @@
 				"weather3D"
 			],
 			[
-				"wea",
-				"weather3D"
-			],
-			[
 				"sho",
 				"shortDesc"
 			],
@@ -90,10 +126,6 @@
 			[
 				"metr",
 				"metricUnits"
-			],
-			[
-				"is",
-				"isMetric"
 			],
 			[
 				"update",
@@ -380,10 +412,6 @@
 				"q_mult_v"
 			],
 			[
-				"curr",
-				"currentPoseArray"
-			],
-			[
 				"rotatio",
 				"rotationOffset"
 			],
@@ -486,53 +514,25 @@
 			[
 				"res",
 				"resultQ"
-			],
-			[
-				"empt",
-				"emptyQ"
-			],
-			[
-				"cur",
-				"currSensor"
-			],
-			[
-				"sens",
-				"sensors"
-			],
-			[
-				"senso",
-				"sensorNames"
-			],
-			[
-				"mD",
-				"mDragVerticalAxisRotate"
-			],
-			[
-				"WbV",
-				"WbVector3"
-			],
-			[
-				"x",
-				"X"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "js/WeatherManager.js",
+			"file": "js/DataLoader.js",
 			"settings":
 			{
-				"buffer_size": 9126,
+				"buffer_size": 7013,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "js/DataLoader.js",
+			"file": "js/WeatherManager.js",
 			"settings":
 			{
-				"buffer_size": 32928,
+				"buffer_size": 7801,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -666,6 +666,7 @@
 	],
 	"file_history":
 	[
+		"/C/Users/tom/Documents/work.wrl",
 		"/C/Users/tom/Documents/GitHub/weather/js/WeatherObjects.js",
 		"/C/Users/tom/Documents/GitHub/weather/index.html",
 		"/C/Users/tom/Documents/GitHub/weather/main.js",
@@ -792,8 +793,7 @@
 		"/C/msys64/home/tom/develop/webots/tests/api/worlds_index.txt",
 		"/C/Users/tom/AppData/Local/Temp/scp32935/mnt/1TB/home/contest/repository/x3dom/linkedAnimations/css/style.css",
 		"/C/Users/tom/AppData/Local/Temp/scp39471/mnt/1TB/home/contest/repository/www/wwi/8.6/wwi.css",
-		"/C/Users/tom/AppData/Local/Temp/scp29199/mnt/1TB/home/contest/repository/x3dom/linkedAnimations/nao_demo_linked_offsets_bad_poses.html",
-		"/C/msys64/home/tom/develop/renault-hlg/protos/HLGVehicle.proto"
+		"/C/Users/tom/AppData/Local/Temp/scp29199/mnt/1TB/home/contest/repository/x3dom/linkedAnimations/nao_demo_linked_offsets_bad_poses.html"
 	],
 	"find":
 	{
@@ -825,6 +825,24 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"log",
+			"console.log",
+			"number",
+			"day",
+			"number",
+			"this",
+			"WeatherDataUnit",
+			"firstValueSeen",
+			"setForecastData",
+			"forecast",
+			"setf",
+			"weatherData",
+			"updateWeatherScene",
+			"tempUrl",
+			"currentWeatherUrl",
+			"weatherReqUrl",
+			"j",
+			"this.dayWiseRawUnits[i]",
 			"j",
 			"i",
 			"dayWiseData",
@@ -934,25 +952,7 @@
 			"lat",
 			"submit",
 			"locationForm",
-			"locationAcceptButton",
-			"none",
-			"units",
-			"config",
-			"Config",
-			"locationAcceptButton",
-			"submit",
-			"none",
-			"submit",
-			"modeSelector",
-			"label",
-			"weatherData button",
-			"locationBar",
-			"bruh",
-			"locationForm",
-			"AIzaSyCqSSjwgqpY4EMwtLgvlFF4tf0KH5yMx2M",
-			"text",
-			"lastname",
-			"text"
+			"locationAcceptButton"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -978,19 +978,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "js/WeatherManager.js",
+					"file": "js/DataLoader.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9126,
+						"buffer_size": 7013,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1280,
-								1280
+								6772,
+								6772
 							]
 						],
 						"settings":
@@ -1003,7 +1003,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 135.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1011,19 +1011,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "js/DataLoader.js",
+					"file": "js/WeatherManager.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 32928,
+						"buffer_size": 7801,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								32926,
-								32926
+								7624,
+								7624
 							]
 						],
 						"settings":
@@ -1036,7 +1036,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3097.0,
+						"translation.y": 1046.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
