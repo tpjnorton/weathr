@@ -5,8 +5,17 @@ WeatherDataUnit = function(rawUnit) {
     this.clouds = rawUnit.clouds.all;
     this.windSpeed = rawUnit.wind.speed;
     var d = new Date(this.time * 1000);
-    var now = new Date(Date.now());
-    this.day = d.getDay() - now.getDay() + 1;
+    this.realDay = d.getDay();
+
+    if (WeatherDataUnit.isFirstValue === undefined)
+      WeatherDataUnit.isFirstValue = true;
+    else
+      WeatherDataUnit.isFirstValue = false;
+
+    if (WeatherDataUnit.firstValueSeen === undefined)
+      WeatherDataUnit.firstValueSeen = this.realDay;
+
+    this.day = WeatherDataUnit.demodularizeAndBaseNumber(this.realDay);
   }
 }
 
@@ -18,6 +27,17 @@ WeatherDataUnit.combinedFromTwo = function(first, second) {
   result.clouds = (first.clouds + second.clouds) / 2;
   result.windSpeed = (first.windSpeed + second.windSpeed) / 2;
 
+  return result;
+}
+
+WeatherDataUnit.demodularizeAndBaseNumber = function(x) {
+  Utils.assert(WeatherDataUnit.firstValueSeen !== undefined, "No first weather data value seen!");
+  result = x;
+  if (result <= WeatherDataUnit.firstValueSeen && !WeatherDataUnit.isFirstValue) {
+    result += 7;
+  }
+
+  result -= WeatherDataUnit.firstValueSeen;
   return result;
 }
 
