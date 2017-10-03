@@ -57,24 +57,24 @@ WeatherManager.prototype.buildDayWiseData = function() {
 }
 
 WeatherManager.prototype.consolibdateDayWiseData = function() {
-  console.log(this.dayWiseRawUnits[0][0], this.dayWiseRawUnits[1][0])
-  console.log(WeatherDataUnit.combinedFromTwo(this.dayWiseRawUnits[0], this.dayWiseRawUnits[1]))
   for (var i = 0; i < this.dayWiseRawUnits.length; i++) {
-    var singleDayEntryCount = this.dayWiseRawUnits.length[i];
+    var currentDay = this.dayWiseRawUnits[i];
+    var singleDayEntryCount = currentDay.length;
+
     if (i != 0) {
-      Utils.assert(singleDayEntryCount != 8, "Expected 8 entries for any day other than the first day");
+      Utils.assert(singleDayEntryCount == 8, "Expected 8 entries for any day other than the first day");
       for (var j = 0; j < singleDayEntryCount; j += 2)
-        this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseRawUnits[i][j], this.dayWiseRawUnits[i][j + 1]));
+        this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(currentDay[j], currentDay[j + 1]));
     }
     else {
       if (singleDayEntryCount % 2 != 0) {
-        this.consolibdatedDayWiseData[i].push(this.dayWiseRawUnits[i][j]);
-        for (var j = 1; j < singleDayEntryCount; j += 2)
-          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseRawUnits[i][j], this.dayWiseRawUnits[i][j + 1]));
+        this.consolibdatedDayWiseData[i].push(currentDay[j]);
+        for (var k = 1; k < singleDayEntryCount; k += 2)
+          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(currentDay[k], currentDay[k + 1]));
       }
       else {
-        for (var j = 0; j < singleDayEntryCount; j += 2)
-          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseRawUnits[i][j], this.dayWiseRawUnits[i][j + 1]));
+        for (var l = 0; l < singleDayEntryCount; l += 2)
+          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(currentDay[l], currentDay[l + 1]));
       }
     }
   }
