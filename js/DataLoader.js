@@ -1589,7 +1589,4 @@ forecast = {
 
 manager = new WeatherManager(forecast);
 manager.setup();
-// manager.buildRawUnits();
-// manager.buildDayWiseData();
-// manager.consolibdateDayWiseData();
 console.log(manager.dayWiseUnits());

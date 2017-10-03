@@ -6,7 +6,7 @@ WeatherDataUnit = function(rawUnit) {
     this.windSpeed = rawUnit.wind.speed;
     var d = new Date(this.time * 1000);
     var now = new Date(Date.now());
-    this.day = d.getDay() - now.getDay();
+    this.day = d.getDay() - now.getDay() + 1;
   }
 }
 
@@ -27,10 +27,10 @@ WeatherManager = function(completeData) {
   this.country = WeatherManager.getCountryName(completeData.city.country);
   this.numberOfEntries = completeData.cnt;
   this.rawUnits = [];
-  this.dayWiseData = [];
+  this.dayWiseRawUnits = [];
   this.consolibdatedDayWiseData = [];
   for (var i = 0; i < 5; i++) {
-    this.dayWiseData.push([]);
+    this.dayWiseRawUnits.push([]);
     this.consolibdatedDayWiseData.push([]);
   }
 }
@@ -52,27 +52,29 @@ WeatherManager.prototype.buildRawUnits = function() {
 
 WeatherManager.prototype.buildDayWiseData = function() {
   for (var i = 0; i < this.rawUnits.length; i++) {
-    this.dayWiseData[this.rawUnits[i].day].push(this.rawUnits[i]);
+    this.dayWiseRawUnits[this.rawUnits[i].day].push(this.rawUnits[i]);
   }
 }
 
 WeatherManager.prototype.consolibdateDayWiseData = function() {
-  for (var i = 0; i < this.dayWiseData.length; i++) {
-    var singleDayEntryCount = this.dayWiseData.length[i];
+  console.log(this.dayWiseRawUnits[0][0], this.dayWiseRawUnits[1][0])
+  console.log(WeatherDataUnit.combinedFromTwo(this.dayWiseRawUnits[0], this.dayWiseRawUnits[1]))
+  for (var i = 0; i < this.dayWiseRawUnits.length; i++) {
+    var singleDayEntryCount = this.dayWiseRawUnits.length[i];
     if (i != 0) {
       Utils.assert(singleDayEntryCount != 8, "Expected 8 entries for any day other than the first day");
       for (var j = 0; j < singleDayEntryCount; j += 2)
-        this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseData[i][j], this.dayWiseData[i][j + 1]));
+        this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseRawUnits[i][j], this.dayWiseRawUnits[i][j + 1]));
     }
     else {
       if (singleDayEntryCount % 2 != 0) {
-        this.consolibdatedDayWiseData[i].push(this.dayWiseData[i][j]);
+        this.consolibdatedDayWiseData[i].push(this.dayWiseRawUnits[i][j]);
         for (var j = 1; j < singleDayEntryCount; j += 2)
-          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseData[i][j], this.dayWiseData[i][j + 1]));
+          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseRawUnits[i][j], this.dayWiseRawUnits[i][j + 1]));
       }
       else {
         for (var j = 0; j < singleDayEntryCount; j += 2)
-          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseData[i][j], this.dayWiseData[i][j + 1]));
+          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(this.dayWiseRawUnits[i][j], this.dayWiseRawUnits[i][j + 1]));
       }
     }
   }
