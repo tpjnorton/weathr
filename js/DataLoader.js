@@ -174,6 +174,7 @@ function updateWeatherScene(weatherResp) {
 
 function testForecastData(data) {
   forecastData = data;
+  forecastData.coords = config.get("location");
   manager = new WeatherManager(forecastData);
   manager.setup();
   console.log(manager.dayWiseUnits());
