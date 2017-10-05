@@ -105,7 +105,7 @@ Weather3D.prototype.createSceneBasics = function() {
     this.farPlane
   );
 
-  this.scene.fog = new THREE.Fog(0xcacaca, 100, 2000);
+  this.scene.fog = new THREE.Fog(0xdddddd, 100, 2000);
   this.camera.position.x = 0;
   this.camera.position.z = 200;
   this.camera.position.y = params.defaultCamHeight * 1.3;
@@ -317,6 +317,7 @@ Weather3D.prototype.updateSky = function() {
 Weather3D.prototype.updateWeather = function() {
   // hide all objects, we can selectively show them afterwards
   oldTime = this.effectController.timeOfDay;
+  this.scene.fog.far = 2000;
   this.effectController = new EffectController();
   this.effectController.timeOfDay = oldTime;
   this.lightClouds.setCoverage(0);
@@ -368,6 +369,10 @@ Weather3D.prototype.updateWeather = function() {
       this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
       this.earth.mesh.material.color = new THREE.Color(0x396023);
     }
+  }
+
+  if (this.weather.weather[0].main == "Fog") {
+    this.scene.fog.far = 800;
   }
   updateUI(this.weather);
   console.log(this.weather);
@@ -602,7 +607,7 @@ function computeDescription(shortDesc, cloudPercentage) {
     return "Clear Skies";
   }
 
-  else if (shortDesc == "Smoke") {
+  else if (shortDesc == "Smoke" || shortDesc == "Fog") {
     return "Foggy";
   }
 
