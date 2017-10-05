@@ -10,16 +10,6 @@ WeatherDataUnit = function(rawUnit) {
     var d = new Date(this.time * 1000);
     this.realDay = d.getDay();
 
-    if (WeatherDataUnit.isFirstDayValue === undefined)
-      WeatherDataUnit.isFirstDayValue = true;
-    else
-      WeatherDataUnit.isFirstDayValue = false;
-
-    if (WeatherDataUnit.firstDayValueSeen === undefined)
-      WeatherDataUnit.firstDayValueSeen = this.realDay;
-
-    this.day = WeatherDataUnit.demodularizeAndBaseNumber(this.realDay);
-
     this.coords = rawUnit.coords;
   }
 }
@@ -40,19 +30,6 @@ WeatherDataUnit.combinedFromTwo = function(first, second) {
   result.realDay = first.realDay;
   result.coords = first.coords;
 
-  return result;
-}
-
-WeatherDataUnit.demodularizeAndBaseNumber = function(x) {
-  // weather data arrives with day numbers modulo 7, starting anyware in the group
-  // so re-sequentialize it so it's in the range 0-4, starting from 0
-  Utils.assert(WeatherDataUnit.firstDayValueSeen !== undefined, "No first weather data value seen!");
-  let result = x;
-
-  if (result <= WeatherDataUnit.firstDayValueSeen && !WeatherDataUnit.isFirstDayValue)
-    result += 7;
-
-  result -= WeatherDataUnit.firstDayValueSeen;
   return result;
 }
 
@@ -82,11 +59,24 @@ WeatherManager.prototype.setup = function() {
 }
 
 WeatherManager.prototype.buildRawUnits = function() {
-  for (var i = 0 ; i < this.numberOfEntries; ++i) {
+  allUnits = [];
+  days = [];
+  var now = Date.now();
+  for (var i = 0; i < this.numberOfEntries; ++i) {
     var currentUnit = new WeatherDataUnit(this.fullList[i]);
     // trim off any info longer than today and 4 more days in the future
-    if (currentUnit.day < 5 && currentUnit.time * 1000 > Date.now())
-      this.rawUnits.push(currentUnit);
+    allUnits.push(currentUnit);
+    days.push(currentUnit.realDay);
+  }
+  days = Utils.reOrderAndCenterNumbers(days, days[0], 7);
+
+  for (var i = 0; i < this.numberOfEntries; ++i) {
+    if (days[i] >= 5)
+      break;
+
+    allUnits[i].day = days[i];
+    if (allUnits[i].time > now / 1000)
+      this.rawUnits.push(allUnits[i]);
   }
 }
 
@@ -109,11 +99,11 @@ WeatherManager.prototype.consolibdateDayWiseData = function() {
       if (singleDayEntryCount % 2 != 0) {
         this.consolibdatedDayWiseData[i].push(currentDay[0]);
         for (var k = 1; k < singleDayEntryCount; k += 2)
-          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(currentDay[k], currentDay[k + 1]));
+          this.consolibdatedDayWiseData[0].push(WeatherDataUnit.combinedFromTwo(currentDay[k], currentDay[k + 1]));
       }
       else {
         for (var l = 0; l < singleDayEntryCount; l += 2)
-          this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(currentDay[l], currentDay[l + 1]));
+          this.consolibdatedDayWiseData[0].push(WeatherDataUnit.combinedFromTwo(currentDay[l], currentDay[l + 1]));
       }
     }
   }
