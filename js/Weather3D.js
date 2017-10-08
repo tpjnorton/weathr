@@ -331,7 +331,7 @@ Weather3D.prototype.updateWeather = function() {
   // this.weather.clouds.all = 30;
   // this.weather.weather[0].main = "Clear";
   // show objects based on weather type
-  if (this.weather.clouds.all < 75 && (this.weather.weather[0].main != "Rain" &&
+  if (this.weather.clouds.all < 80 && (this.weather.weather[0].main != "Rain" &&
       this.weather.weather[0].main != "Snow" &&
       this.weather.weather[0].main != "Thunderstorm")) {
     this.lightClouds.setCoverage(this.weather.clouds.all);
@@ -597,7 +597,7 @@ function computeDescription(shortDesc, cloudPercentage) {
     else if (cloudPercentage < 50)
       return "Partly&nbsp;Cloudy";
 
-    else if (cloudPercentage < 75)
+    else if (cloudPercentage < 80)
       return "Mostly&nbsp;Cloudy";
 
     else return "Overcast";

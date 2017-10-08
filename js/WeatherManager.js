@@ -7,6 +7,8 @@ WeatherDataUnit = function(rawUnit) {
     this.description = rawUnit.weather[0].main;
     this.clouds = rawUnit.clouds.all;
     this.windSpeed = rawUnit.wind.speed;
+    this.humidity = rawUnit.main.humidity;
+    this.temp = rawUnit.main.temp;
     var d = new Date(this.time * 1000);
     this.realDay = d.getDay();
 
@@ -19,13 +21,16 @@ WeatherDataUnit.combinedFromTwo = function(first, second) {
 
   // create empty object
   var result = new WeatherDataUnit();
+  
   // fill with combined data first
   result.time = (first.time + second.time) / 2;
-  result.description = first.description;
   result.clouds = (first.clouds + second.clouds) / 2;
   result.windSpeed = (first.windSpeed + second.windSpeed) / 2;
+  result.humidity = (first.humidity + second.humidity) / 2;
+  result.temp = (first.temp + second.temp) / 2;
 
   // variables that don't need combining
+  result.description = first.description;
   result.day = first.day;
   result.realDay = first.realDay;
   result.coords = first.coords;
