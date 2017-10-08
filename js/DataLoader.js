@@ -176,7 +176,7 @@ function testForecastData(data) {
   forecastData = data;
   forecastData.coords = config.get("location");
   manager = new WeatherManager(forecastData);
-  manager.setup();
+  manager.setup(weather3D.weather);
   console.log(manager.dayWiseUnits());
 }
 

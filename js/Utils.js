@@ -19,3 +19,9 @@ Utils.reOrderAndCenterNumbers = function(numbers, firstValue, modulo) {
 
   return numbers;
 }
+
+Utils.prepend = function(value, array) {
+  var newArray = array.slice();
+  newArray.unshift(value);
+  return newArray;
+}

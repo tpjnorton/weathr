@@ -40,10 +40,10 @@ WeatherManager = function(completeData) {
   this.numberOfEntries = completeData.cnt;
   this.rawUnits = [];
   this.dayWiseRawUnits = [];
-  this.consolibdatedDayWiseData = [];
+  this.compressedDayWiseData = [];
   for (var i = 0; i < 5; ++i) {
     this.dayWiseRawUnits.push([]);
-    this.consolibdatedDayWiseData.push([]);
+    this.compressedDayWiseData.push([]);
   }
 
   for (var i = 0; i < this.fullList.length; ++i) {
@@ -51,11 +51,12 @@ WeatherManager = function(completeData) {
   }
 }
 
-WeatherManager.prototype.setup = function() {
+WeatherManager.prototype.setup = function(currentWeather) {
   this.buildRawUnits();
   this.buildDayWiseData();
   this.consolibdateDayWiseData();
   this.calculateSunTimes();
+  this.addCurrentWeather(currentWeather);
 }
 
 WeatherManager.prototype.buildRawUnits = function() {
@@ -80,6 +81,20 @@ WeatherManager.prototype.buildRawUnits = function() {
   }
 }
 
+WeatherManager.prototype.addCurrentWeather = function(currentWeather) {
+  firstDay = this.compressedDayWiseData[0];
+  currentWeatherAsUnit = new WeatherDataUnit(currentWeather);
+  currentWeatherAsUnit.sunrise = currentWeather.sys.sunrise;
+  currentWeatherAsUnit.sunset = currentWeather.sys.sunset;
+  currentWeatherAsUnit.name = currentWeather.name;
+  currentWeatherAsUnit.country = currentWeather.sys.country;
+  currentWeatherAsUnit.coords = {};
+  currentWeatherAsUnit.coords.lat = currentWeather.coord.lat;
+  currentWeatherAsUnit.coords.lng = currentWeather.coord.lon;
+  currentWeatherAsUnit.day = 0;
+  this.compressedDayWiseData[0] = Utils.prepend(currentWeatherAsUnit, firstDay);
+}
+
 WeatherManager.prototype.buildDayWiseData = function() {
   for (var i = 0; i < this.rawUnits.length; ++i) {
     this.dayWiseRawUnits[this.rawUnits[i].day].push(this.rawUnits[i]);
@@ -93,30 +108,30 @@ WeatherManager.prototype.consolibdateDayWiseData = function() {
     if (i != 0) {
       Utils.assert(singleDayEntryCount == 8, "Expected 8 entries for any day other than the first day");
       for (var j = 0; j < singleDayEntryCount; j += 2)
-        this.consolibdatedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(currentDay[j], currentDay[j + 1]));
+        this.compressedDayWiseData[i].push(WeatherDataUnit.combinedFromTwo(currentDay[j], currentDay[j + 1]));
     }
     else {
       if (singleDayEntryCount % 2 != 0) {
-        this.consolibdatedDayWiseData[i].push(currentDay[0]);
+        this.compressedDayWiseData[i].push(currentDay[0]);
         for (var k = 1; k < singleDayEntryCount; k += 2)
-          this.consolibdatedDayWiseData[0].push(WeatherDataUnit.combinedFromTwo(currentDay[k], currentDay[k + 1]));
+          this.compressedDayWiseData[0].push(WeatherDataUnit.combinedFromTwo(currentDay[k], currentDay[k + 1]));
       }
       else {
         for (var l = 0; l < singleDayEntryCount; l += 2)
-          this.consolibdatedDayWiseData[0].push(WeatherDataUnit.combinedFromTwo(currentDay[l], currentDay[l + 1]));
+          this.compressedDayWiseData[0].push(WeatherDataUnit.combinedFromTwo(currentDay[l], currentDay[l + 1]));
       }
     }
   }
 }
 
 WeatherManager.prototype.dayWiseUnits = function() {
-  return this.consolibdatedDayWiseData;
+  return this.compressedDayWiseData;
 }
 
 WeatherManager.prototype.calculateSunTimes = function() {
-  for (var i = 0; i < this.consolibdatedDayWiseData.length; i++) {
-    var length = this.consolibdatedDayWiseData[i].length;
-    var currentDay = this.consolibdatedDayWiseData[i]
+  for (var i = 0; i < this.compressedDayWiseData.length; i++) {
+    var length = this.compressedDayWiseData[i].length;
+    var currentDay = this.compressedDayWiseData[i]
     for (var j = 0; j < currentDay.length; j++) {
       let times = suncalc.getTimes(new Date(currentDay[j].time * 1000), currentDay[j].coords.lat, currentDay[j].coords.lng);
       currentDay[j].sunrise = Math.round(times.sunrise.getTime() / 1000);
