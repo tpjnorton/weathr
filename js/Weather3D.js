@@ -244,13 +244,15 @@ Weather3D.prototype.updateTimeOfDay = function() {
     targetTime = 0.75 + (now - sunset) / (2 * ((sunrise + 86400) - sunset));
   }
   else if (now < sunrise) {
-    targetTime = (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)))
+    targetTime = 0.5 * (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)));
   }
   TweenMax.to(that.effectController, 2, {
-      timeOfDay: targetTime,
-      onUpdate: that.updateSky,
-      ease: Quad.easeInOut,
-    })
+    timeOfDay: targetTime,
+    onUpdate: that.updateSky,
+    ease: Quad.easeInOut,
+  })
+
+  console.log(sunset - sunrise);
 }
 
 Weather3D.prototype.createSky = function() {
