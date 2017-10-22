@@ -29,33 +29,6 @@
   -webkit-user-select: none;
 }
 
-.header h1 {
-  font-family: 'Playfair Display';
-  font-size: 4.5em;
-  line-height: 1;
-  margin: 0;
-  letter-spacing: -0.025em;
-  color: inherit;
-}
-
-.header h1 span {
-  font-size: 0.2em;
-  font-style: italic;
-  display: block;
-  margin: 0 0 -1.5em -7em;
-  letter-spacing: 0px;
-}
-
-.header h2 {
-  font-size: 0.585em;
-  margin: 0.25em 0;
-  white-space: nowrap;
-  text-indent: 1em;
-  letter-spacing: 1em;
-  text-transform: uppercase;
-  color: #d6483b;
-}
-
 @media screen and (max-width: 400px) {
   .weatherData {
     position: absolute;
@@ -399,4 +372,45 @@ input[type=button]:active {
   background-color: #adadad;
   box-shadow: 0 0px #666;
   transform: translateY(1px);
+}
+
+input[type=radio] {
+  z-index: 1502;
+  position: absolute;
+  visibility: hidden;
+  display: none;
+}
+
+label {
+  z-index: 1502;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  padding: 6px 0px;
+  width: 70px;
+  text-align: center;
+}
+
+input[type=radio]:checked + label {
+  background: #000;
+}
+
+label + input[type=radio] + label {
+  border-left: solid 1px #fff;
+  margin: 0;
+}
+
+.radio-group {
+  max-width: 73%;
+  z-index: 1502;
+  text-align: center;
+  pointer-events: all;
+  display: inline-block;
+  position: relative;
+  border: solid 1px #fff;
+  border-radius: 3px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: "Roboto Mono";
+  font-size: 13px;
 }
