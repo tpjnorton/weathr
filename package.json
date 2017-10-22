@@ -18,7 +18,6 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^1.6.4",
-    "slick": "^1.12.2",
     "suncalc": "^1.8.0"
   },
   "dependencies": {
