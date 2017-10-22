@@ -1,0 +1,8 @@
+div container -> contains all detailed weather data entries
+	- carousel between each div in this list
+	div day
+		- actually contains a list of divs for the day
+		- buttons switch between different divs in this element
+		div currentTime
+			- contains the UI for one WeatherDataUnit
+
