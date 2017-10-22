@@ -56,8 +56,7 @@ function setUnits(e) {
 
   if (weather3D) {
     weather3D.metricUnits = isMetric;
-    console.log(weatherData);
-    updateUI(weatherData);
+    updateUI(weather3D.weather);
   }
   reloadSettings();
 }
@@ -192,17 +191,42 @@ function testForecastData(data) {
   if (!carouselSlicked) {
     $('.carousel').slick({
       infinite: false,
-      dots: true
+      dots: true,
+      focusOnSelect: false
     });
     carouselSlicked = true;
   }
   weather3D.updateWeather();
+  document.querySelector(".slick-prev").disabled = true;
+  document.addEventListener("keypress", function(e) {
+    var event = e || window.event;
+    var charCode = event.which || event.keyCode;
+    if (charCode == 39) {
+      $('.slick-next').trigger('click');
+    }
+    else if (charCode == 37) {
+      $('.slick-prev').trigger('click');
+    }
+    console.log(e);
+  });
 
   $('.carousel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
     if (weather3D !== null) {
       day = manager.dayWiseUnits()[nextSlide]
       weather3D.weather = day[0];
       weather3D.updateWeather();
+      if (nextSlide == 0) {
+        document.querySelector(".slick-prev").disabled = true;
+        document.querySelector(".slick-next").disabled = false;
+      }
+      else if (nextSlide == 4) {
+        document.querySelector(".slick-prev").disabled = false;
+        document.querySelector(".slick-next").disabled = true;
+      }
+      else {
+        document.querySelector(".slick-prev").disabled = false;
+        document.querySelector(".slick-next").disabled = false;
+      }
     }
   });
 

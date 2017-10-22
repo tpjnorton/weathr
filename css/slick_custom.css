@@ -1,45 +1,81 @@
 .slick-arrow {
-  border: solid;
+  border: none;
   border-color: inherit;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
   padding: 8px;
-  background: none;
+  background: transparent;
   font-size: 0em;
   cursor: pointer;
-  top: 380px;
   pointer-events: all;
   z-index: 1503;
+  position: absolute;
+  top: 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-top: .2rem solid;
+  border-right: .2rem solid;
+  -webkit-transition: all 100ms ease;
+  transition: all 100ms ease;
 }
 
 .slick-arrow:focus {
   outline:none;
 }
 
+.slick-arrow:hover {
+  opacity: 1;
+}
+
 .slick-prev {
-  position:fixed;
   left: 80px;
-  transform: rotate(135deg);
 }
 
 .slick-next {
-  position:fixed;
   right: 80px;
-  transform: rotate(-45deg);
 }
 
+.slick-arrow.slick-prev {
+  transform: translate3d(0, -50%, 0) rotate(-135deg);
+}
+.slick-arrow.slick-next {
+  transform: translate3d(0, -50%, 0) rotate(45deg);
+}
+
+.slick-arrow:hover {
+  border-top: .2rem solid;
+  border-right: .2rem solid;
+  border-color: orange;
+  box-shadow: .2rem -.2rem 0 black;
+}
+
+.slick-arrow:active.slick-prev {
+  transform: translate3d(0, -50%, 0) rotate(-135deg) scale(0.8);
+}
+
+.slick-arrow:active.slick-next {
+  transform: translate3d(0, -50%, 0) rotate(45deg) scale(0.8);
+}
+
+.slick-arrow:disabled {
+  display: none;
+}
 
 @media screen and (max-width: 400px) {
   .slick-prev {
-    position:fixed;
     left: 30px;
     transform: rotate(135deg);
   }
 
   .slick-next {
-    position:fixed;
     right: 30px;
     transform: rotate(-45deg);
+  }
+
+  .slick-arrow {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-top: .15rem solid;
+    border-right: .15rem solid;
+    border-color: inherit;
   }
 }
 
@@ -64,7 +100,7 @@
     margin: 0;
 
     list-style: none;
-
+    pointer-events: all;
     text-align: center;
     color: black;
 }
