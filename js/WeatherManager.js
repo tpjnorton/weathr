@@ -13,7 +13,15 @@ WeatherDataUnit = function(rawUnit, country, city) {
     this.realDay = d.getDay();
     this.country = country;
     this.city = city;
-
+    if (this.day == 0) {
+      this.dayName = "Today";
+    }
+    else if (this.day == 1) {
+      this.dayName = "Tomorrow";
+    }
+    else {
+      this.dayName = Utils.dayNumberToString(this.realDay);
+    }
     this.coords = rawUnit.coords;
   }
 }

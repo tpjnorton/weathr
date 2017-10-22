@@ -144,9 +144,8 @@ function enterLocationIfNeeded() {
     document.querySelector('#locationForm').onkeypress = function(e) {
       var event = e || window.event;
       var charCode = event.which || event.keyCode;
-      if ( charCode == '13' ) {
+      if (charCode == '13')
         fetchLocation();
-      }
     }
     document.querySelector("#locationForm").focus();
     activatePlacesSearch();
@@ -192,22 +191,19 @@ function testForecastData(data) {
     $('.carousel').slick({
       infinite: false,
       dots: true,
-      focusOnSelect: false
+      focusOnSelect: false,
     });
     carouselSlicked = true;
   }
   weather3D.updateWeather();
   document.querySelector(".slick-prev").disabled = true;
-  document.addEventListener("keypress", function(e) {
+  window.addEventListener("keydown", function(e) {
     var event = e || window.event;
     var charCode = event.which || event.keyCode;
-    if (charCode == 39) {
+    if (charCode == 39)
       $('.slick-next').trigger('click');
-    }
-    else if (charCode == 37) {
+    else if (charCode == 37)
       $('.slick-prev').trigger('click');
-    }
-    console.log(e);
   });
 
   $('.carousel').on('beforeChange', function(event, slick, currentSlide, nextSlide){

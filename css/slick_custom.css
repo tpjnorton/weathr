@@ -11,8 +11,8 @@
   top: 50%;
   width: 1.6rem;
   height: 1.6rem;
-  border-top: .2rem solid;
-  border-right: .2rem solid;
+  border-top: .18rem solid;
+  border-right: .18rem solid;
   -webkit-transition: all 100ms ease;
   transition: all 100ms ease;
 }
@@ -34,25 +34,26 @@
 }
 
 .slick-arrow.slick-prev {
-  transform: translate3d(0, -50%, 0) rotate(-135deg);
+  transform: rotate(-135deg);
 }
 .slick-arrow.slick-next {
-  transform: translate3d(0, -50%, 0) rotate(45deg);
+  transform: rotate(45deg);
 }
 
-.slick-arrow:hover {
-  border-top: .2rem solid;
-  border-right: .2rem solid;
-  border-color: orange;
-  box-shadow: .2rem -.2rem 0 black;
+.slick-arrow:hover.slick-prev {
+  transform: rotate(-135deg) scale(1.1);
+}
+
+.slick-arrow:hover.slick-next {
+  transform: rotate(45deg) scale(1.1);
 }
 
 .slick-arrow:active.slick-prev {
-  transform: translate3d(0, -50%, 0) rotate(-135deg) scale(0.8);
+  transform: rotate(-135deg) scale(0.8);
 }
 
 .slick-arrow:active.slick-next {
-  transform: translate3d(0, -50%, 0) rotate(45deg) scale(0.8);
+  transform: rotate(45deg) scale(0.8);
 }
 
 .slick-arrow:disabled {
@@ -148,7 +149,7 @@
 .slick-dots li button:before
 {
     font-family: 'slick';
-    font-size: 12px;
+    font-size: 15px;
     line-height: 20px;
 
     position: absolute;
