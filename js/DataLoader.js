@@ -23,6 +23,11 @@ var coords = {
   lon: ""
 };
 
+currentWeather = undefined;
+forecast = undefined;
+
+var carouselSlicked = false;
+
 document.querySelector("#error").innerHTML = "Weather data could not be loaded." + "<br>" +
   "Please check your internet connection and try again.";
 
@@ -101,6 +106,11 @@ document.querySelector("#hamburgerMenu").addEventListener('click', (e) => {
 }, false)
 
 function retry(showLoadingScreen) {
+  if (carouselSlicked) {
+    $('.carousel').slick('unslick');
+    carouselSlicked = false;
+  }
+  document.querySelector(".carousel").innerHTML = "";
   document.querySelector(".weatherData").style.display = "block";
   document.querySelector(".locationArea").style.display = "none";
   document.querySelector("#retryButton").style.display = "none";
@@ -150,11 +160,6 @@ function loadWeatherData() {
   fetch(currentWeatherUrl)
     .then((resp) => resp.json()) // Transform the data into json
     .then(updateWeatherScene, error)
-
-  let forecastDataUrl = forecastUrl + "?" + "lat=" + pos.lat + "&lon=" + pos.lng + "&" + "APPID=" + weatherApiKey + "&units=metric";
-  fetch(forecastDataUrl)
-    .then((resp) => resp.json()) // Transform the data into json
-    .then(testForecastData, error)
 }
 
 function updateWeatherScene(weatherResp) {
@@ -170,6 +175,11 @@ function updateWeatherScene(weatherResp) {
     weather3D.metricUnits = isMetric;
     weather3D.updateWeather();
   }
+  pos = config.get("location");
+  let forecastDataUrl = forecastUrl + "?" + "lat=" + pos.lat + "&lon=" + pos.lng + "&" + "APPID=" + weatherApiKey + "&units=metric";
+  fetch(forecastDataUrl)
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(testForecastData, error)
 }
 
 function testForecastData(data) {
@@ -177,8 +187,25 @@ function testForecastData(data) {
   forecastData.coords = config.get("location");
   manager = new WeatherManager(forecastData);
   manager.setup(weather3D.weather);
-  console.log(manager.dayWiseUnits());
-  $('.carousel').slick();
+  today = manager.dayWiseUnits()[0];
+  weather3D.weather = today[0];
+  if (!carouselSlicked) {
+    $('.carousel').slick({
+      infinite: false,
+      dots: true
+    });
+    carouselSlicked = true;
+  }
+  weather3D.updateWeather();
+
+  $('.carousel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+    if (weather3D !== null) {
+      day = manager.dayWiseUnits()[nextSlide]
+      weather3D.weather = day[0];
+      weather3D.updateWeather();
+    }
+  });
+
 }
 
 function retreiveCoords(data) {
@@ -187,7 +214,6 @@ function retreiveCoords(data) {
     return;
   }
   coords = data.results[0].geometry.location;
-  console.log(data);
   config.set("location", coords);
   retry(false);
 }

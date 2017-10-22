@@ -1,6 +1,6 @@
 let suncalc = require('suncalc')
 
-WeatherDataUnit = function(rawUnit) {
+WeatherDataUnit = function(rawUnit, country, city) {
   // "web developer" function overloading
   if (rawUnit !== undefined) {
     this.time = rawUnit.dt;
@@ -11,6 +11,8 @@ WeatherDataUnit = function(rawUnit) {
     this.temp = rawUnit.main.temp;
     var d = new Date(this.time * 1000);
     this.realDay = d.getDay();
+    this.country = country;
+    this.city = city;
 
     this.coords = rawUnit.coords;
   }
@@ -34,6 +36,8 @@ WeatherDataUnit.combinedFromTwo = function(first, second) {
   result.day = first.day;
   result.realDay = first.realDay;
   result.coords = first.coords;
+  result.country = first.country;
+  result.city = first.city;
 
   return result;
 }
@@ -50,8 +54,8 @@ WeatherDataUnit.prototype.fillGuiElementWithData = function() {
   vals[1].innerHTML = this.clouds + "%";
   vals[2].innerHTML = (this.windSpeed * 3.6).toFixed() + " km/h";
   vals[3].innerHTML = this.humidity + "%";
-  vals[4].innerHTML = this.sunrise;
-  vals[5].innerHTML = this.sunset;
+  vals[4].innerHTML = Utils.formattedTime(new Date(this.sunrise * 1000));
+  vals[5].innerHTML = Utils.formattedTime(new Date(this.sunset * 1000));
 }
 
 WeatherManager = function(completeData) {
@@ -86,7 +90,7 @@ WeatherManager.prototype.buildRawUnits = function() {
   days = [];
   var now = Date.now();
   for (var i = 0; i < this.numberOfEntries; ++i) {
-    var currentUnit = new WeatherDataUnit(this.fullList[i]);
+    var currentUnit = new WeatherDataUnit(this.fullList[i], this.country, this.city);
     // trim off any info longer than today and 4 more days in the future
     allUnits.push(currentUnit);
     days.push(currentUnit.realDay);
@@ -114,6 +118,8 @@ WeatherManager.prototype.addCurrentWeather = function(currentWeather) {
   currentWeatherAsUnit.coords.lat = currentWeather.coord.lat;
   currentWeatherAsUnit.coords.lng = currentWeather.coord.lon;
   currentWeatherAsUnit.day = 0;
+  currentWeatherAsUnit.country = this.country;
+  currentWeatherAsUnit.city = this.city;
   this.compressedDayWiseData[0] = Utils.prepend(currentWeatherAsUnit, firstDay);
 }
 

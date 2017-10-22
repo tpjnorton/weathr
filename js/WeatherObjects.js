@@ -198,7 +198,7 @@ Stars.prototype.updateOpacity = function(opacity) {
   this.mesh.material.opacity = opacity;
 }
 
-Rain = function(weatherData) {
+Rain = function(weatherUnit) {
   this.particleCount = 1500;
 
   this.particles = new THREE.Geometry();
@@ -210,7 +210,7 @@ Rain = function(weatherData) {
 
     var particle = new THREE.Vector3(x, y, z);
     particle.velocity = new THREE.Vector3(0, -4, 0);
-    particle.maxXvel = weatherData.wind.speed / 10;
+    particle.maxXvel = weatherUnit.windSpeed / 10;
     this.particles.vertices.push(particle);
   }
 
@@ -253,7 +253,7 @@ Rain.prototype.simulateRain = function() {
   this.particles.verticesNeedUpdate = true;
 };
 
-Snow = function(weatherData) {
+Snow = function(weatherUnit) {
   this.particleCount = 1500;
 
   this.particles = new THREE.Geometry();
@@ -265,7 +265,7 @@ Snow = function(weatherData) {
 
     var particle = new THREE.Vector3(x, y, z);
     particle.velocity = new THREE.Vector3(0, -3.5, 0);
-    particle.maxXvel = weatherData.wind.speed / 20;
+    particle.maxXvel = weatherUnit.windSpeed / 20;
     this.particles.vertices.push(particle);
   }
 

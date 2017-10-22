@@ -416,10 +416,16 @@ label + input[type=radio] + label {
 }
 
 .carousel {
+  color: inherit;
+  border-color: inherit;
   z-index: 1502;
   pointer-events: all;
   width: 100%;
   margin: 0 auto;
   display: inline-block;
+  outline: none;
+}
+
+.carousel:focus {
   outline: none;
 }

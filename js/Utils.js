@@ -25,3 +25,18 @@ Utils.prepend = function(value, array) {
   newArray.unshift(value);
   return newArray;
 }
+
+Utils.formattedTime = function(time) {
+  var hours = time.getHours();
+  var minutes = time.getMinutes();
+  var usePM = false;
+  if (hours > 11)
+    usePM = true;
+  hours = hours % 12;
+  if (hours == 0)
+    hours = 12;
+  if (minutes < 10)
+    minutes = "0" + minutes;
+
+  return hours + ":" + minutes + (usePM ? " PM" : " AM");
+}
