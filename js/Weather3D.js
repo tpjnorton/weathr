@@ -251,8 +251,6 @@ Weather3D.prototype.updateTimeOfDay = function() {
     onUpdate: that.updateSky,
     ease: Quad.easeInOut,
   })
-
-  console.log(sunset - sunrise);
 }
 
 Weather3D.prototype.createSky = function() {
