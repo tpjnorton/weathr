@@ -433,6 +433,7 @@ Weather3D.prototype.setTextColor = function(night, rain) {
   if (that.weather.guiElement !== undefined) {
     var divider = that.weather.guiElement.children[0];
     var dots = document.querySelector(".slick-dots");
+    var carousel = document.querySelector(".carousel");
   }
   var hamburger = document.querySelector("#hamburgerMenu");
   var location = document.querySelector("#location");
@@ -441,11 +442,12 @@ Weather3D.prototype.setTextColor = function(night, rain) {
     weatherData.style.color = "#fff";
     header.style.color = "#fff";
     hamburger.style.color = "#fff";
+    location.style.color = "#fff";
     if (that.weather.guiElement !== undefined) {
       divider.style.borderTopColor = "#fff";
       dots.style.color = "#fff";
+      carousel.style.borderColor = "#fff";
     }
-    location.style.color = "#fff";
   }
 
   else {
@@ -455,11 +457,13 @@ Weather3D.prototype.setTextColor = function(night, rain) {
       location.style.color = "#eee";
     else
       location.style.color = "#000";
+    hamburger.style.border = "#000";
+
     if (that.weather.guiElement !== undefined) {
       divider.style.borderTopColor = "#000";
       dots.style.color = "#000";
+      carousel.style.borderColor = "#000";
     }
-    hamburger.style.border = "#000";
   }
 }
 
@@ -500,8 +504,6 @@ Weather3D.prototype.init = function() {
 
 function createUI(weatherData) {
 
-
-  updateUI(weatherData);
 }
 
 function updateUI(weatherUnit) {
