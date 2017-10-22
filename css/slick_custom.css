@@ -18,14 +18,29 @@
 
 .slick-prev {
   position:fixed;
-  left: 30px;
+  left: 80px;
   transform: rotate(135deg);
 }
 
 .slick-next {
   position:fixed;
-  right: 30px;
+  right: 80px;
   transform: rotate(-45deg);
+}
+
+
+@media screen and (max-width: 400px) {
+  .slick-prev {
+    position:fixed;
+    left: 30px;
+    transform: rotate(135deg);
+  }
+
+  .slick-next {
+    position:fixed;
+    right: 30px;
+    transform: rotate(-45deg);
+  }
 }
 
 .slick_slide:focus, .slick_current:focus, .slick_active:focus {
@@ -40,7 +55,7 @@
 .slick-dots
 {
     position: absolute;
-    bottom: -25px;
+    bottom: -30px;
 
     display: block;
 
@@ -61,7 +76,7 @@
 
     width: 20px;
     height: 20px;
-    margin: 0 5px;
+    margin: 0 7px;
     padding: 0;
 
     cursor: pointer;
