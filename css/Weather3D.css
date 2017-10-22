@@ -414,3 +414,12 @@ label + input[type=radio] + label {
   font-family: "Roboto Mono";
   font-size: 13px;
 }
+
+.carousel {
+  z-index: 1502;
+  pointer-events: all;
+  width: 100%;
+  margin: 0 auto;
+  display: inline-block;
+  outline: none;
+}

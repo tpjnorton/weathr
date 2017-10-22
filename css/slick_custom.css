@@ -1,0 +1,26 @@
+.slick-arrow {
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 8px;
+  background: none;
+  font-size: 0em;
+  cursor: pointer;
+  top: 430px;
+}
+
+.slick-arrow:focus {
+  outline:none;
+}
+
+.slick-prev {
+  position:fixed;
+  left: 30px;
+  transform: rotate(135deg);
+}
+
+.slick-next {
+  position:fixed;
+  right: 30px;
+  transform: rotate(-45deg);
+}

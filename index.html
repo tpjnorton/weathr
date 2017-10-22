@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="css/Weather3D.css" />
   <link rel="stylesheet" href="css/titlebar.css" />
   <link rel="stylesheet" href="css/hamburger.css" />
+  <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+  <link rel="stylesheet" href="css/slick_custom.css" />
 </head>
 
 <body id="load">
@@ -40,16 +42,16 @@
         <p id="temp"></p>
         <p id="error"></p>
         <button id="retryButton" class="appButton">Retry</button>
+<!--         <form>
+          <div class="radio-group">
+            <input type="radio" id="option-one" name="selector"><label for="option-one">Morning</label>
+            <input type="radio" id="option-two" name="selector"><label for="option-two">Midday</label>
+            <input type="radio" id="option-three" name="selector"><label for="option-three">Afternoon</label>
+            <input type="radio" id="option-four" name="selector"><label for="option-four">Evening</label>
+          </div>
+        </form> -->
         <div class="carousel">
-          <form>
-            <div class="radio-group">
-              <input type="radio" id="option-one" name="selector"><label for="option-one">Morning</label>
-              <input type="radio" id="option-two" name="selector"><label for="option-two">Midday</label>
-              <input type="radio" id="option-three" name="selector"><label for="option-three">Afternoon</label>
-              <input type="radio" id="option-four" name="selector"><label for="option-four">Evening</label>
-            </div>
-          </form>
-          
+
         </div>
       </div>
       <div class="locationArea">
@@ -79,6 +81,7 @@
 <script type="text/javascript" src="node_modules/dat.gui/build/dat.gui.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9u9lyhhSKoxU0OMVhonpe40U_FE4eg60&libraries=places"></script>
 <script>window.$ = window.jQuery = require('./js/jquery-3.2.1.min.js');</script>
+<script type="text/javascript" src="slick/slick.min.js"></script>
 <script>
 require('./js/Utils.js')
 require('./js/WeatherManager.js')

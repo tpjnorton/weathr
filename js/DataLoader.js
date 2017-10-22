@@ -178,6 +178,7 @@ function testForecastData(data) {
   manager = new WeatherManager(forecastData);
   manager.setup(weather3D.weather);
   console.log(manager.dayWiseUnits());
+  $('.carousel').slick();
 }
 
 function retreiveCoords(data) {
