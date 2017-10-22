@@ -38,6 +38,22 @@ WeatherDataUnit.combinedFromTwo = function(first, second) {
   return result;
 }
 
+WeatherDataUnit.prototype.fillGuiElementWithData = function() {
+  Utils.assert(this.guiElement !== undefined, "Cannot fill GUI element that does not exist");
+  var values = this.guiElement.querySelector(".values");
+  var vals = values.children;
+
+  var sunriseTime = new Date(this.sunrise * 1000);
+  var sunsetTime = new Date(this.sunset * 1000);
+
+  vals[0].innerHTML = this.description;
+  vals[1].innerHTML = this.clouds + "%";
+  vals[2].innerHTML = (this.windSpeed * 3.6).toFixed() + " km/h";
+  vals[3].innerHTML = this.humidity + "%";
+  vals[4].innerHTML = this.sunrise;
+  vals[5].innerHTML = this.sunset;
+}
+
 WeatherManager = function(completeData) {
   this.fullList = completeData.list;
   this.city = completeData.city.name;
@@ -150,10 +166,15 @@ WeatherManager.prototype.attachGuiElements = function() {
   for (var i = 0; i < this.compressedDayWiseData.length; i++) {
     var length = this.compressedDayWiseData[i].length;
     var currentDay = this.compressedDayWiseData[i];
+    var dayElement = document.createElement("div");
     for (var j = 0; j < currentDay.length; j++) {
       currentDay[j].guiElement = WeatherManager.createWeatherHtmlElement();
-      document.querySelector(".carousel").appendChild(currentDay[j].guiElement);
+      currentDay[j].fillGuiElementWithData();
+      if (j > 0)
+        currentDay[j].guiElement.style.display = "none";
+      dayElement.appendChild(currentDay[j].guiElement);
     }
+    document.querySelector(".carousel").appendChild(dayElement);
   }
 }
 
@@ -169,9 +190,8 @@ WeatherManager.createWeatherHtmlElement = function() {
 
   var descs = [];
 
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 6; i++)
     descs[i] = document.createElement("p");
-  }
 
   descs[0].innerHTML = "Weather";
   descs[1].innerHTML = "Cloud&nbsp;Coverage";
@@ -180,22 +200,19 @@ WeatherManager.createWeatherHtmlElement = function() {
   descs[4].innerHTML = "Sunrise";
   descs[5].innerHTML = "Sunset";
 
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 6; i++)
     descriptors.appendChild(descs[i]);
-  }
 
   var values = document.createElement("div");
   values.setAttribute("class", "values");
 
   var vals = [];
 
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 6; i++)
     vals[i] = document.createElement("p");
-  }
 
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 6; i++)
     values.appendChild(vals[i]);
-  }
 
   dataContainer.appendChild(descriptors);
   dataContainer.appendChild(values);
