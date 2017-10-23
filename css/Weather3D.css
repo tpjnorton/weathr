@@ -33,25 +33,6 @@
   -webkit-user-select: none;
 }
 
-@media screen and (max-width: 400px) {
-  .weatherData {
-    position: absolute;
-    top: 1vh;
-    width: 100%;
-    text-align: center;
-    -webkit-user-select: none;
-  }
-
-  .weatherData #error {
-    margin-top: 20px;
-    font-family: 'Roboto Mono', sans-serif;
-    color: inherit;
-    font-size: 0.8em;
-    color: #fff;
-    width: 70%;
-  }
-}
-
 .weatherData {
   position: absolute;
   top: 3vh;
@@ -432,4 +413,29 @@ label + input[type=radio] + label {
 
 .carousel:focus {
   outline: none;
+}
+
+@media all and (max-width: 400px) {
+  .weatherData {
+    position: absolute;
+    top: 1vh;
+    width: 100%;
+    text-align: center;
+    -webkit-user-select: none;
+  }
+
+  .weatherData #error {
+    margin-top: 20px;
+    font-family: 'Roboto Mono', sans-serif;
+    color: inherit;
+    font-size: 0.8em;
+    color: #fff;
+    width: 70%;
+  }
+
+  .weatherData #location {
+    margin-top: 5vh;
+    font-size: 11vw;
+    padding-bottom: 12px;
+  }
 }
