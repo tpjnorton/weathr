@@ -209,11 +209,12 @@ function testForecastData(data) {
   $('.carousel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
     if (weather3D !== null) {
       day = manager.dayWiseUnits()[nextSlide]
-      weather3D.weather = day[0];
-      weather3D.updateWeather();
       if (nextSlide == 0) {
         document.querySelector(".slick-prev").disabled = true;
         document.querySelector(".slick-next").disabled = false;
+        weather3D.weather = day[0];
+        weather3D.updateWeather();
+        return;
       }
       else if (nextSlide == 4) {
         document.querySelector(".slick-prev").disabled = false;
@@ -223,6 +224,8 @@ function testForecastData(data) {
         document.querySelector(".slick-prev").disabled = false;
         document.querySelector(".slick-next").disabled = false;
       }
+      weather3D.weather = day[1];
+      weather3D.updateWeather();
     }
   });
 
