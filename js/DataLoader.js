@@ -192,6 +192,7 @@ function testForecastData(data) {
       infinite: false,
       dots: true,
       focusOnSelect: false,
+      speed: 200
     });
     carouselSlicked = true;
   }
