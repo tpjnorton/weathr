@@ -318,6 +318,7 @@ Weather3D.prototype.updateSky = function() {
 
 Weather3D.prototype.updateWeather = function() {
   // hide all objects, we can selectively show them afterwards
+  console.log(this.weather);
   oldTime = this.effectController.timeOfDay;
   this.scene.fog.far = 2000;
   this.effectController = new EffectController();

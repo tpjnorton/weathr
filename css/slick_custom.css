@@ -80,96 +80,60 @@
   }
 }
 
-.slick_slide:focus, .slick_current:focus, .slick_active:focus {
-  outline: none;
-}
-
 .slick-dotted.slick-slider
 {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .slick-dots
 {
-    position: absolute;
-    bottom: -30px;
+  font-family: "Quicksand";
+  font-size: 13px;
+  position: absolute;
+  bottom: -20px;
 
-    display: block;
+  display: block;
 
-    width: 100%;
-    padding: 0;
-    margin: 0;
-
-    list-style: none;
-    pointer-events: all;
-    text-align: center;
-    color: black;
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+  pointer-events: all;
+  text-align: center;
+  opacity: 1;
+  transform: translateX(-6px);
 }
+
 .slick-dots li
 {
-    position: relative;
-
-    display: inline-block;
-
-    width: 20px;
-    height: 20px;
-    margin: 0 7px;
-    padding: 0;
-
-    cursor: pointer;
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 15px;
+  padding: 0;
+  cursor: pointer;
 }
-.slick-dots li button
+.slick-dots li a
 {
-    font-size: 0;
-    line-height: 0;
-
-    display: block;
-
-    width: 20px;
-    height: 20px;
-    padding: 5px;
-
-    cursor: pointer;
-
-    color: inherit;
-    border: 0;
-    outline: none;
-    background: transparent;
+  line-height: 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  cursor: pointer;
+  color: inherit;
+  border: 0;
+  outline: none;
+  background: transparent;
 }
-.slick-dots li button:hover,
-.slick-dots li button:focus
+.slick-dots li a:hover,
+.slick-dots li a:focus
 {
-    outline: none;
+  font-weight: bold;
 }
-.slick-dots li button:hover:before,
-.slick-dots li button:focus:before
-{
-    opacity: 1;
-}
-.slick-dots li button:before
-{
-    font-family: 'slick';
-    font-size: 15px;
-    line-height: 20px;
 
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 20px;
-    height: 20px;
-
-    content: '•';
-    text-align: center;
-
-    opacity: .25;
-    color: inherit;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.slick-dots li.slick-active button:before
-{
-    opacity: .75;
-    color: inherit;
+.slick-active a {
+  font-weight: bold;
+  font-size: 15px;
+  padding-right: 30px;
 }

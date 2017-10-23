@@ -187,12 +187,17 @@ function testForecastData(data) {
   manager.setup(weather3D.weather);
   today = manager.dayWiseUnits()[0];
   weather3D.weather = today[0];
+  firstDay = today[0].realDay;
   if (!carouselSlicked) {
     $('.carousel').slick({
       infinite: false,
       dots: true,
       focusOnSelect: false,
-      speed: 200
+      speed: 200,
+      customPaging : function(slider, i) {
+        var thumb = $(slider.$slides[i]).data();
+        return '<a class=slick-dots>' + Utils.dayNumberToString((i + firstDay) % 7).substring(0, 3) + '</a>';
+        }
     });
     carouselSlicked = true;
   }
@@ -225,7 +230,7 @@ function testForecastData(data) {
         document.querySelector(".slick-prev").disabled = false;
         document.querySelector(".slick-next").disabled = false;
       }
-      weather3D.weather = day[1];
+      weather3D.weather = day[0];
       weather3D.updateWeather();
     }
   });

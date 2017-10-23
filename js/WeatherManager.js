@@ -53,7 +53,12 @@ WeatherDataUnit.combinedFromTwo = function(first, second) {
 WeatherDataUnit.prototype.fillGuiElementWithData = function() {
   Utils.assert(this.guiElement !== undefined, "Cannot fill GUI element that does not exist");
   var values = this.guiElement.querySelector(".values");
+  var todayText = this.guiElement.querySelector(".todayText");
   var vals = values.children;
+
+  var date = new Date(this.time * 1000)
+  var today = this.day == 0 ? "<strong>Today</strong>, " : this.day == 1 ? "<strong>Tomorrow</strong>, " : ""; 
+  todayText.innerHTML = today + date.toDateString();
 
   var sunriseTime = new Date(this.sunrise * 1000);
   var sunsetTime = new Date(this.sunset * 1000);
@@ -195,8 +200,11 @@ WeatherManager.prototype.attachGuiElements = function() {
 WeatherManager.createWeatherHtmlElement = function() {
   var dataContainer = document.createElement("div");
   dataContainer.setAttribute("class", "detailedData");
+  var todayText = document.createElement("p");
+  todayText.setAttribute("class", "todayText");
+  dataContainer.appendChild(todayText);
   var hr = document.createElement("hr");
-  hr.setAttribute("class", "divider")
+  hr.setAttribute("class", "divider");
   dataContainer.appendChild(hr);
 
   var descriptors = document.createElement("div");

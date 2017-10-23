@@ -158,6 +158,7 @@ LightClouds.prototype.driftClouds = function() {
 }
 
 LightClouds.prototype.setCoverage = function(percentage) {
+  console.log(percentage);
   var numCloudsToShow = this.cloudNum * (percentage / 100);
   for (var i = 0; i < numCloudsToShow; i++) {
     this.clouds[i].mesh.visible = true;
