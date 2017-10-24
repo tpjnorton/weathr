@@ -4,8 +4,8 @@ WeatherDataUnit = function(rawUnit, country, city) {
   // "web developer" function overloading
   if (rawUnit !== undefined) {
     this.time = rawUnit.dt;
-    this.description = rawUnit.weather[0].main;
     this.clouds = rawUnit.clouds.all;
+    this.description = WeatherManager.computeDescription(rawUnit.weather[0].main, this.clouds);
     this.windSpeed = rawUnit.wind.speed;
     this.humidity = rawUnit.main.humidity;
     this.temp = rawUnit.main.temp;
@@ -31,7 +31,7 @@ WeatherDataUnit.combinedFromTwo = function(first, second) {
 
   // create empty object
   var result = new WeatherDataUnit();
-  
+
   // fill with combined data first
   result.time = (first.time + second.time) / 2;
   result.clouds = (first.clouds + second.clouds) / 2;
@@ -57,7 +57,7 @@ WeatherDataUnit.prototype.fillGuiElementWithData = function() {
   var vals = values.children;
 
   var date = new Date(this.time * 1000)
-  var today = this.day == 0 ? "<strong>Today</strong>, " : this.day == 1 ? "<strong>Tomorrow</strong>, " : ""; 
+  var today = this.day == 0 ? "<strong>Today</strong>, " : this.day == 1 ? "<strong>Tomorrow</strong>, " : "";
   todayText.innerHTML = today + date.toDateString();
 
   var sunriseTime = new Date(this.sunrise * 1000);
@@ -249,4 +249,31 @@ WeatherManager.getCountryName = function(countryCode) {
     return this.isoCountries[countryCode];
   else
     return countryCode;
+}
+
+WeatherManager.computeDescription = function(shortDesc, cloudPercentage) {
+  if (shortDesc == "Clouds") {
+    if (cloudPercentage < 30)
+      return "Scattered&nbsp;Clouds";
+
+    else if (cloudPercentage < 50)
+      return "Partly&nbsp;Cloudy";
+
+    else if (cloudPercentage < 80)
+      return "Mostly&nbsp;Cloudy";
+
+    else
+      return "Overcast";
+  }
+
+  else if (shortDesc == "Clear") {
+    return "Clear Skies";
+  }
+
+  else if (shortDesc == "Smoke" || shortDesc == "Fog") {
+    return "Foggy";
+  }
+
+  else
+    return shortDesc;
 }

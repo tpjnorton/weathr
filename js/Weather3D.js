@@ -525,28 +525,3 @@ function updateUI(weatherUnit) {
   // updateTime.innerHTML = "Data Last Updated at: " + formattedTime(new Date(weatherUnit.dt * 1000));
   document.querySelector("#load").setAttribute("class", "loaded");
 }
-
-function computeDescription(shortDesc, cloudPercentage) {
-  if (shortDesc == "Clouds") {
-    if (cloudPercentage < 30)
-      return "Scattered&nbsp;Clouds";
-
-    else if (cloudPercentage < 50)
-      return "Partly&nbsp;Cloudy";
-
-    else if (cloudPercentage < 80)
-      return "Mostly&nbsp;Cloudy";
-
-    else return "Overcast";
-  }
-
-  else if (shortDesc == "Clear") {
-    return "Clear Skies";
-  }
-
-  else if (shortDesc == "Smoke" || shortDesc == "Fog") {
-    return "Foggy";
-  }
-
-  else return shortDesc;
-}
