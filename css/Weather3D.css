@@ -104,7 +104,8 @@
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid;
+  border-color: inherit;
   margin-top: 0.1em;
   margin-bottom: 0.3em;
   color: inherit;
