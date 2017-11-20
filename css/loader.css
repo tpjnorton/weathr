@@ -53,7 +53,7 @@
 
 .loaded #loader {
   top: 120%;
-  transition: all 0.3s ease-in;
+  transition: all 500ms cubic-bezier(0.960, -0.425, 1.000, 1.195); /* custom */
 }
 
 #loaderText p {
@@ -66,11 +66,11 @@
 .loaded #loader-wrapper .loader-section.section-left {
   left: -600px;
   transition: all 0.5s ease-out;
-  transition-delay: 0.2s;
+  transition-delay: 0.4s;
 }
 
 .loaded #loader-wrapper .loader-section.section-right {
   right: -600px;
   transition: all 0.5s ease-out;
-  transition-delay: 0.2s;
+  transition-delay: 0.4s;
 }
