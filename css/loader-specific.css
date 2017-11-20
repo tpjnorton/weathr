@@ -1,0 +1,285 @@
+#sunLayer {
+  isolation: isolate;
+  animation: sunAnimation 2s infinite ease-out;
+  animation-delay: -0.5s;
+}
+
+@keyframes sunAnimation {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  40% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(0px, 300px);
+  }
+  90% {
+    transform: translate(0px, 300px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+#sunHalo {
+  fill: rgb(255, 224, 112);
+  fill-opacity: 0.54;
+}
+
+#sun {
+  fill: rgb(255, 224, 112);
+}
+
+#moonLayer {
+  isolation: isolate;
+  animation: moonAnimation 2s infinite ease-out;
+  animation-delay: -0.5s;
+}
+
+@keyframes moonAnimation {
+  0% {
+    transform: translate(-140px, 300px);
+  }
+  40% {
+    transform: translate(-140px, 300px);
+  }
+
+  50% {
+    transform: translate(-140px, -80px);
+  }
+  90% {
+    transform: translate(-140px, -80px);
+  }
+  100% {
+    transform: translate(-140px, 300px);
+  }
+}
+
+@keyframes topFaceAnimation {
+  0% {
+    fill: rgb(83, 138, 87);
+  }
+
+  40% {
+    fill: rgb(83, 138, 87);
+  }
+  
+  50% {
+    fill: rgb(6, 14, 28);
+  }
+
+  90% {
+    fill: rgb(6, 14, 28);
+  }
+  100% {
+    fill: rgb(83, 138, 87);
+  }
+}
+
+@keyframes leftFaceAnimation {
+  0% {
+    fill: rgb(70, 121, 74);
+  }
+
+  40% {
+    fill: rgb(70, 121, 74);
+  }
+  
+  50% {
+    fill: rgb(7, 15, 28);
+  }
+
+  90% {
+    fill: rgb(7, 15, 28);
+  }
+  100% {
+    fill: rgb(70, 121, 74);
+  }
+}
+
+@keyframes rightFaceAnimation {
+  0% {
+    fill: rgb(109, 179, 113);
+  }
+
+  40% {
+    fill: rgb(109, 179, 113);
+  }
+
+  50% {
+    fill: rgb(12, 27, 51);
+  }
+
+  90% {
+    fill: rgb(12, 27, 51);
+  }
+  100% {
+    fill: rgb(109, 179, 113);
+  }
+}
+
+@keyframes cloudAnimation {
+  0% {
+    fill: rgb(232, 232, 232);
+  }
+
+  40% {
+    fill: rgb(232, 232, 232);
+  }
+
+  50% {
+    fill: rgb(70, 70, 70);
+  }
+
+  90% {
+    fill: rgb(70, 70, 70);
+  }
+  100% {
+    fill: rgb(232, 232, 232);
+  }
+}
+
+#moonHalo {
+  fill: rgb(255, 244, 203);
+  fill-opacity: 0.54;
+}
+
+#moon {
+  fill: rgb(240, 230, 193);
+}
+
+#earth {
+  isolation: isolate;
+}
+
+#earthTopFace {
+  fill: rgb(83, 138, 87);
+  animation: topFaceAnimation 2s infinite ease-out;
+  animation-delay: -0.5s;
+}
+#earthLeftFace {
+  fill: rgb(70, 121, 74);
+  animation: leftFaceAnimation 2s infinite ease-out;
+  animation-delay: -0.5s;
+}
+
+#earthRightFace {
+  fill: rgb(109, 179, 113);
+  animation: rightFaceAnimation 2s infinite ease-out;
+  animation-delay: -0.5s;
+}
+
+#mudLeftFace {
+  fill: rgb(100, 86, 73);
+}
+
+#mudRightFace {
+  fill: rgb(142, 121, 99);
+}
+
+#SyrMhOcUkxG {
+  fill: rgb(79, 71, 64);
+}
+
+#Hk8M3u5Iyef {
+  fill: rgb(79, 71, 64);
+}
+
+#Bywfnu9UJef {
+  fill: rgb(55, 50, 45);
+}
+
+#B1dG2O9IygG {
+  fill: rgb(94, 85, 76);
+}
+
+#rkFG2O98yxG {
+  fill: rgb(81, 74, 66);
+}
+
+#rJcM2u98yef {
+  fill: rgb(94, 85, 76);
+}
+
+
+#cloud1Group {
+  isolation: isolate;
+}
+
+#cloud1 {
+  fill: rgb(240, 239, 239);
+  animation: cloudAnimation 2s infinite ease-out;
+  animation-delay: -0.5s;
+}
+
+#cloud2Group {
+  isolation: isolate;
+}
+
+#cloud2 {
+  fill: rgb(232, 232, 232);
+  animation: cloudAnimation 2s infinite ease-out;
+  animation-delay: -0.5s;
+}
+
+#cloud3Group {
+  isolation: isolate;
+}
+
+#cloud3 {
+  fill: rgb(232, 232, 232);
+  animation: cloudAnimation 2s infinite ease-out;
+  animation-delay: -0.5s;
+}
+
+@keyframes cloud1Animation {
+  0% {
+    transform: translate(-6px, -3px);
+  }
+  50% {
+    transform: translate(0px, 0px);
+  }
+  100% {
+    transform: translate(-6px, -3px);
+  }
+}
+
+#cloud1Group {
+  transform-origin: 50% 50% !important;
+  animation: cloud1Animation 2s infinite linear;
+}
+
+@keyframes cloud2Animation {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(-15px, -9px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+#cloud2Group {
+  transform-origin: 50% 50% !important;
+  animation: cloud2Animation 2s infinite linear;
+}
+
+@keyframes cloud3Animation {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(-5px, -2px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+#cloud3Group {
+  transform-origin: 50% 50% !important;
+  animation: cloud3Animation 2s infinite linear;
+}

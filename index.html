@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/titlebar.css" />
   <link rel="stylesheet" href="css/hamburger.css" />
   <link rel="stylesheet" href="css/loader.css" />
+  <link rel="stylesheet" href="css/loader-specific.css" />
   <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
   <link rel="stylesheet" href="css/slick_custom.css" />
 </head>
@@ -53,156 +54,6 @@
     <div id="loader-wrapper">
       <div id="loader">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 690.4 648.746" id="HJ8-h_9U1ez">
-          <style>
-            #sunLayer {
-              isolation: isolate;
-            }
-
-            #sunHalo {
-              fill: rgb(255, 224, 112);
-              fill-opacity: 0.54;
-            }
-
-            #sun {
-              fill: rgb(255, 224, 112);
-            }
-
-            #moonLayer {
-              isolation: isolate;
-            }
-
-            #moonHalo {
-              fill: rgb(255, 244, 203);
-              fill-opacity: 0.54;
-            }
-
-            #moon {
-              fill: rgb(240, 230, 193);
-            }
-
-            #earth {
-              isolation: isolate;
-            }
-
-            #earthTopFace {
-              fill: rgb(83, 138, 87);
-            }
-
-            #mudLeftFace {
-              fill: rgb(100, 86, 73);
-            }
-
-            #mudRightFace {
-              fill: rgb(142, 121, 99);
-            }
-
-            #SyrMhOcUkxG {
-              fill: rgb(79, 71, 64);
-            }
-
-            #Hk8M3u5Iyef {
-              fill: rgb(79, 71, 64);
-            }
-
-            #Bywfnu9UJef {
-              fill: rgb(55, 50, 45);
-            }
-
-            #B1dG2O9IygG {
-              fill: rgb(94, 85, 76);
-            }
-
-            #rkFG2O98yxG {
-              fill: rgb(81, 74, 66);
-            }
-
-            #rJcM2u98yef {
-              fill: rgb(94, 85, 76);
-            }
-
-            #earthLeftFace {
-              fill: rgb(70, 121, 74);
-            }
-
-            #earthRightFace {
-              fill: rgb(109, 179, 113);
-            }
-
-            #cloud1Group {
-              isolation: isolate;
-            }
-
-            #cloud1 {
-              fill: rgb(240, 239, 239);
-            }
-
-            #cloud2Group {
-              isolation: isolate;
-            }
-
-            #cloud2 {
-              fill: rgb(232, 232, 232);
-            }
-
-            #cloud3Group {
-              isolation: isolate;
-            }
-
-            #cloud3 {
-              fill: rgb(232, 232, 232);
-            }
-
-            @keyframes cloud1Animation {
-              0% {
-                transform: translate(-6px, -3px);
-              }
-              50% {
-                transform: translate(0px, 0px);
-              }
-              100% {
-                transform: translate(-6px, -3px);
-              }
-            }
-
-            #cloud1Group {
-              transform-origin: 50% 50% !important;
-              animation: cloud1Animation 2s infinite linear;
-            }
-
-            @keyframes cloud2Animation {
-              0% {
-                transform: translate(0px, 0px);
-              }
-              50% {
-                transform: translate(-15px, -9px);
-              }
-              100% {
-                transform: translate(0px, 0px);
-              }
-            }
-
-            #cloud2Group {
-              transform-origin: 50% 50% !important;
-              animation: cloud2Animation 2s infinite linear;
-            }
-
-            @keyframes cloud3Animation {
-              0% {
-                transform: translate(0px, 0px);
-              }
-              50% {
-                transform: translate(-5px, -2px);
-              }
-              100% {
-                transform: translate(0px, 0px);
-              }
-            }
-
-            #cloud3Group {
-              transform-origin: 50% 50% !important;
-              animation: cloud3Animation 2s infinite linear;
-            }
-          </style>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="640 234.6 690.4 648.746" width="690.4" height="648.746" id="HJ8-h_9U1ez">
               <g id="sunLayer">
                   <g id="SyuW2d9LJxG">
@@ -288,10 +139,11 @@
                       <path d=" M 1114.933 550.784 C 1117.695 550.879 1119.521 549.343 1119.521 546.402 C 1119.521 541.768 1114.989 535.39 1109.406 532.167 L 999.637 468.791 C 994.054 465.568 989.521 466.713 989.521 471.346 C 989.521 474.288 991.348 477.932 994.11 481.026 L 971.424 467.928 C 964.855 464.136 959.521 464.818 959.521 469.452 C 959.521 474.085 964.855 480.926 971.424 484.719 L 1127.619 574.898 C 1134.188 578.691 1139.521 578.008 1139.521 573.375 C 1139.521 568.741 1134.188 561.9 1127.619 558.108 L 1114.933 550.784 Z " id="cloud3"/>
                   </g>
               </g>
+              <path id="OrbitPath" d=" M 280 75.357 C 280 -1.92 351.694 -23.266 440 27.718 C 528.306 78.701 600 182.832 600 260.109 C 600 337.385 528.306 358.731 440 307.747 C 351.694 256.764 280 152.633 280 75.357 Z " fill="none"/>
           </svg>
         </svg>
+        <p id="loaderText">Loading..</p>
       </div>
-      <p id="loaderText">Loading..</p>
       <div class="loader-section section-left"></div>
       <div class="loader-section section-right"></div>
     </div>
