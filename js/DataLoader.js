@@ -268,7 +268,7 @@ function error() {
   document.querySelector("#location").innerHTML = "Oh No!";
   document.querySelector("#error").style.display = "block";
   document.querySelector("#retryButton").style.display = "inline-block";
-  document.querySelector("#load").setAttribute("class", "loaded");
+  document.querySelector("#loader-wrapper").setAttribute("class", "loaded");
   document.querySelector("#world").innerHTML = "";
   document.querySelector(".weatherData").style.color = "fff";
   weather3D = null;

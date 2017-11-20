@@ -1,0 +1,79 @@
+.successfully-saved.hide-opacity{
+    opacity: 0;
+}
+
+.loaded {
+    color: #FFFFFF;
+    text-align: center;
+
+    -webkit-transition: opacity 3s ease-in-out;
+    -moz-transition: opacity 3s ease-in-out;
+    -ms-transition: opacity 3s ease-in-out;
+    -o-transition: opacity 3s ease-in-out;
+     opacity: 1;
+}
+
+#loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  pointer-events: none;
+}
+
+#loader {
+  z-index: 201;
+  display: block;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+}
+
+#loader-wrapper .loader-section {
+  position: fixed;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: #222222;
+  background: linear-gradient(#242434, #345434);
+}
+
+#loader-wrapper .loader-section.section-left {
+  left: 0;
+}
+
+#loader-wrapper .loader-section.section-right {
+  right: 0;
+}
+
+
+.loaded #loader {
+  opacity: 0;
+  transition: all 0.5s ease-out;
+}
+
+.loaded #loader-wrapper {
+  opacity: 0;
+  transition: all 0.5s ease-out;
+}
+
+#loaderText p {
+  z-index: 201;
+  text-align: center;
+  font-size: 5em;
+}
+
+.loaded #loader-wrapper .loader-section.section-left {
+  left: -600;
+  transition: all 0.5s ease-out;
+}
+
+.loaded #loader-wrapper .loader-section.section-right {
+  right: -600;
+  transition: all 0.5s ease-out;
+}
