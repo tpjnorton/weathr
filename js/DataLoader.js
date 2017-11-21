@@ -169,10 +169,12 @@ function updateWeatherScene(weatherResp) {
 }
 
 function testForecastData(data) {
+  // we've got our new weather data, so now we can hide the change location form
   document.querySelector(".weatherData").style.display = "block";
   document.querySelector(".locationArea").style.display = "none";
   forecastData = data;
   forecastData.coords = config.get("location");
+
   if (!weather3D) {
     weather3D = new Weather3D(config.get("weatherData"), isMetric);
     weather3D.init();
@@ -182,6 +184,7 @@ function testForecastData(data) {
     weather3D.metricUnits = isMetric;
     weather3D.updateWeather();
   }
+
   manager = new WeatherManager(forecastData);
   manager.setup(weather3D.weather);
   today = manager.dayWiseUnits()[0];
