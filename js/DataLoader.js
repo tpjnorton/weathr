@@ -132,7 +132,7 @@ function enterLocationIfNeeded() {
     retry(true);
   else {
     if (!weather3D) {
-      weather3D = new Weather3D(defaultWeatherData, isMetric);
+      weather3D = new Weather3D(defaultWeatherDataAsUnit, isMetric);
       weather3D.init();
     }
     document.querySelector(".weatherData").style.display = "none";
@@ -307,9 +307,9 @@ defaultWeatherData = {
     "deg": 90
   },
   "clouds": {
-    "all": 20
+    "all": 0
   },
-  "dt": Date.now(),
+  "dt": Date.now() / 1000,
   "sys": {
     "type": 1,
     "id": 6002,
@@ -322,3 +322,7 @@ defaultWeatherData = {
   "name": "District de Lausanne",
   "cod": 200
 };
+
+defaultWeatherDataAsUnit = new WeatherDataUnit(defaultWeatherData);
+defaultWeatherDataAsUnit.sunrise = defaultWeatherData.sys.sunrise;
+defaultWeatherDataAsUnit.sunset = defaultWeatherData.sys.sunset;
