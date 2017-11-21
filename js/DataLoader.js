@@ -174,7 +174,7 @@ function testForecastData(data) {
   document.querySelector(".locationArea").style.display = "none";
   forecastData = data;
   forecastData.coords = config.get("location");
-
+  let updateRequired = false;
   if (!weather3D) {
     weather3D = new Weather3D(config.get("weatherData"), isMetric);
     weather3D.init();
@@ -182,7 +182,7 @@ function testForecastData(data) {
   else {
     weather3D.weather = config.get("weatherData");
     weather3D.metricUnits = isMetric;
-    weather3D.updateWeather();
+    updateRequired = true;
   }
 
   manager = new WeatherManager(forecastData);
@@ -203,7 +203,8 @@ function testForecastData(data) {
     });
     carouselSlicked = true;
   }
-  weather3D.updateWeather();
+  if (updateRequired)
+    weather3D.updateWeather();
   document.querySelector(".slick-prev").disabled = true;
   window.addEventListener("keydown", function(e) {
     var event = e || window.event;
