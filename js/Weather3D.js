@@ -17,7 +17,7 @@ var Colors = {
   nightTime: 0x010321
 };
 
-EffectController = function(){
+EffectController = function() {
   this.turbidity = 10;
   this.rayleigh = 2;
   this.mieCoefficient = 0.005;
@@ -82,7 +82,6 @@ Weather3D.prototype.createSceneObjects = function() {
   this.createSnow(this.weather);
   this.createEarth();
   this.createStormEvents();
-  createUI(this.weather);
   this.createSky();
 
   this.earth.moveSurface(100000000);
@@ -504,10 +503,6 @@ Weather3D.prototype.createWeatherScene = function() {
 
 Weather3D.prototype.init = function() {
   this.preLoadCloudModels();
-}
-
-function createUI(weatherData) {
-
 }
 
 function updateUI(weatherUnit) {
