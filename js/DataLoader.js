@@ -110,8 +110,6 @@ function retry(showLoadingScreen) {
     carouselSlicked = false;
   }
   document.querySelector(".carousel").innerHTML = "";
-  document.querySelector(".weatherData").style.display = "block";
-  document.querySelector(".locationArea").style.display = "none";
   document.querySelector("#retryButton").style.display = "none";
   document.querySelector("#error").style.display = "none";
   loadWeatherData();
@@ -163,16 +161,6 @@ function loadWeatherData() {
 function updateWeatherScene(weatherResp) {
   weatherData = weatherResp;
   config.set("weatherData", weatherResp);
-  weatherData.sys.country = WeatherManager.getCountryName(weatherData.sys.country);
-  if (!weather3D) {
-    weather3D = new Weather3D(weatherResp, isMetric);
-    weather3D.init();
-  }
-  else {
-    weather3D.weather = weatherResp;
-    weather3D.metricUnits = isMetric;
-    weather3D.updateWeather();
-  }
   pos = config.get("location");
   let forecastDataUrl = forecastUrl + "?" + "lat=" + pos.lat + "&lon=" + pos.lng + "&" + "APPID=" + weatherApiKey + "&units=metric";
   fetch(forecastDataUrl)
@@ -181,8 +169,19 @@ function updateWeatherScene(weatherResp) {
 }
 
 function testForecastData(data) {
+  document.querySelector(".weatherData").style.display = "block";
+  document.querySelector(".locationArea").style.display = "none";
   forecastData = data;
   forecastData.coords = config.get("location");
+  if (!weather3D) {
+    weather3D = new Weather3D(config.get("weatherData"), isMetric);
+    weather3D.init();
+  }
+  else {
+    weather3D.weather = config.get("weatherData");
+    weather3D.metricUnits = isMetric;
+    weather3D.updateWeather();
+  }
   manager = new WeatherManager(forecastData);
   manager.setup(weather3D.weather);
   today = manager.dayWiseUnits()[0];
