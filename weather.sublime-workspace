@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"upda",
+				"updateRequired"
+			],
+			[
+				"weather",
+				"weather3D"
+			],
+			[
+				"Weather",
+				"Weather3D"
+			],
+			[
+				"default",
+				"defaultWeatherData"
+			],
+			[
 				"wid",
 				"width"
 			],
@@ -112,10 +128,6 @@
 				"currentWeatherAsUnit"
 			],
 			[
-				"weather",
-				"weather"
-			],
-			[
 				"curree",
 				"currentWeatherAsUnit"
 			],
@@ -160,10 +172,6 @@
 				"getDay"
 			],
 			[
-				"Weather",
-				"WeatherManager"
-			],
-			[
 				"cons",
 				"consolibdatedDayWiseData"
 			],
@@ -206,10 +214,6 @@
 			[
 				"loc",
 				"locDOM"
-			],
-			[
-				"upda",
-				"updateSky"
 			],
 			[
 				"fet",
@@ -510,10 +514,6 @@
 			[
 				"mul",
 				"m4_mult"
-			],
-			[
-				"tr",
-				"translation"
 			]
 		]
 	},
@@ -531,7 +531,16 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 16165,
+				"buffer_size": 13043,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "css/loader-specific.css",
+			"settings":
+			{
+				"buffer_size": 4030,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -540,8 +549,44 @@
 			"file": "js/DataLoader.js",
 			"settings":
 			{
-				"buffer_size": 8916,
+				"buffer_size": 9205,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/Weather3D.js",
+			"settings":
+			{
+				"buffer_size": 16380,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/WeatherObjects.js",
+			"settings":
+			{
+				"buffer_size": 10218,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 2213 files for \"weatherData.sys.country\"\n\nC:\\Users\\tom\\Documents\\GitHub\\weather\\js\\DataLoader.js:\n  164    weatherData = weatherResp;\n  165    config.set(\"weatherData\", weatherResp);\n  166:   weatherData.sys.country = WeatherManager.getCountryName(weatherData.sys.country);\n  167    if (!weather3D) {\n  168      weather3D = new Weather3D(weatherResp, isMetric);\n\n2 matches in 1 file\n\n\nSearching 21 files for \"weatherData.sys.country\"\n\nC:\\Users\\tom\\Documents\\GitHub\\weather\\js\\DataLoader.js:\n  164    weatherData = weatherResp;\n  165    config.set(\"weatherData\", weatherResp);\n  166:   weatherData.sys.country = WeatherManager.getCountryName(weatherData.sys.country);\n  167    if (!weather3D) {\n  168      weather3D = new Weather3D(weatherResp, isMetric);\n\n2 matches in 1 file\n\n\nSearching 21 files for \"deltaTime\"\n\nC:\\Users\\tom\\Documents\\GitHub\\weather\\js\\Weather3D.js:\n   29  \n   30  var that;\n   31: var deltaTime = 0.01;\n   32  \n   33  var params = {\n   ..\n  385  Weather3D.prototype.startRenderLoop = function() {\n  386    that.newTime = new Date().getTime();\n  387:   deltaTime = that.newTime - that.oldTime;\n  388    that.oldTime = that.newTime;\n  389  \n\nC:\\Users\\tom\\Documents\\GitHub\\weather\\js\\WeatherObjects.js:\n   41      v.x = vprops.x + Math.cos(vprops.ang / 10) * vprops.amp * scale;\n   42      v.y = vprops.y + Math.sin(vprops.ang / 10) * vprops.amp * scale;\n   43:     vprops.ang += vprops.speed * deltaTime * scale;\n   44      this.mesh.geometry.verticesNeedUpdate = true;\n   45    }\n   ..\n   93      v.x = vprops.x + Math.cos(vprops.ang / 10) * vprops.amp;\n   94      v.y = vprops.y + Math.sin(vprops.ang / 10) * vprops.amp;\n   95:     vprops.ang += vprops.speed * deltaTime;\n   96      this.mesh.geometry.verticesNeedUpdate = true;\n   97    }\n\n4 matches across 2 files\n",
+			"settings":
+			{
+				"buffer_size": 1796,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "js/WeatherManager.js",
+			"settings":
+			{
+				"buffer_size": 13275,
 				"line_ending": "Windows"
 			}
 		},
@@ -549,8 +594,19 @@
 			"file": "css/Weather3D.css",
 			"settings":
 			{
-				"buffer_size": 4975,
+				"buffer_size": 5090,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "@font-face {\n    font-family: 'codropsicons';\n    font-weight: normal;\n    font-style: normal;\n    src: url('../fonts/codropsicons/codropsicons.eot');\n    src: url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'), url('../fonts/codropsicons/codropsicons.woff') format('woff'), url('../fonts/codropsicons/codropsicons.ttf') format('truetype'), url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');\n}\n\n*,\n*::after,\n*::before {\n    -webkit-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\nbody {\n    font-family: 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;\n    margin: 0;\n    color: #444;\n    background: #f6f6f6;\n}\n\na {\n    text-decoration: none;\n    color: #d1b790;\n    outline: none;\n}\n\na:hover,\na:focus {\n    color: #bba077;\n    outline: none;\n}\n\n\n/* Top Navigation Style */\n\n.meta {\n    font-size: 0.75em;\n    line-height: 1;\n    position: absolute;\n    top: 1em;\n    left: 1em;\n    display: -webkit-flex;\n    display: flex;\n    -webkit-flex-wrap: wrap;\n    flex-wrap: wrap;\n    white-space: nowrap;\n    border-top: 1px solid #d1b790;\n}\n\n.meta::after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 1px;\n    height: 100%;\n    background: #d1b790;\n}\n\n.meta a {\n    display: block;\n    padding: 1em 1.35em;\n    border: 1px solid #d1b790;\n    border-top: 0;\n}\n\n.meta a:not(:last-child) {\n    border-right: 0;\n}\n\n.codrops-icon {\n    width: 4em;\n}\n\n.codrops-icon span {\n    display: none;\n}\n\n.codrops-icon::before {\n    font-family: 'codropsicons';\n    font-size: 1.15em;\n    font-weight: normal;\n    font-style: normal;\n    font-variant: normal;\n    line-height: 1;\n    text-transform: none;\n    speak: none;\n    -webkit-font-smoothing: antialiased;\n}\n\n.codrops-icon--drop::before {\n    content: '\\e001';\n    color: #09c;\n}\n\n.codrops-icon--prev::before {\n    content: '\\e004';\n}\n\n\n/* Demo links */\n\n.demo-link {\n    font-family: 'Playfair Display';\n    font-weight: bold;\n    text-align: center;\n    letter-spacing: 0.2em;\n    text-transform: uppercase;\n}\n\n.demo-link--current {\n    color: #bba077;\n}\n\n@media screen and (max-width:40em) {\n    .meta {\n        right: 1em;\n    }\n    .demo-link {\n        -webkit-flex: 1;\n        flex: 1;\n    }\n}\n\n/* Styles for sponsor */\nbody #cdawrap { top: auto; right: auto; bottom: 12px; left: 12px; border: 1px solid #d1b790; background: none; }\n.partisan { position: absolute; bottom: 0; left: 0; width: 38em; padding: 4.5em 7.5em 1.5em 5.5em; }\n.partisan__bg { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.5; }\n.partisan__link { position: relative; display: -webkit-flex; display: flex; -webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }\n.partisan__img, .partisan__title { opacity: 0.85; -webkit-transition: opacity 0.1s; transition: opacity 0.1s; }\n.partisan__link:hover .partisan__img, .partisan__link:hover .partisan__title { opacity: 1; }\n.partisan__img { max-width: 42%; }\n.partisan__title { font-family: 'Playfair Display'; font-weight: bold; position: relative; margin: 0.5em 0 0 0.85em; color: #555d27; }\n.partisan__title::before { content: 'Sponsored by:'; font-size: 0.5em; font-weight: bold; position: absolute; bottom: 100%; left: 0; padding: 0 0 1em 0; letter-spacing: 0.25em; text-transform: uppercase; color: #95a534; }\n@media screen and (max-width:80em) {\n    .partisan { font-size: 76%; }\n    .partisan__title::before { font-size: 0.25em; }\n}\n@media screen and (max-width:60em) {\n    .game-holder .message--instructions { bottom: 5.5em; }\n    .partisan { width: 100%; height: auto; padding: 1.75em 0.5em 0.5em; text-align: center; background: rgba(190, 215, 48, 0.5); }\n    .partisan__bg { display: none; }\n    .partisan__img { display: none; }\n    .partisan__title { margin: 0; }\n    .partisan__title::before { width: 100%; padding: 0 0 0.25em; }\n}\n",
+			"file": "css/demo.css",
+			"file_size": 4079,
+			"file_write_time": 131514880096987047,
+			"settings":
+			{
+				"buffer_size": 3931,
 				"line_ending": "Windows"
 			}
 		},
@@ -558,16 +614,7 @@
 			"file": "css/loader.css",
 			"settings":
 			{
-				"buffer_size": 1373,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "js/Weather3D.js",
-			"settings":
-			{
-				"buffer_size": 16442,
+				"buffer_size": 1482,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -584,17 +631,8 @@
 			"file": "/C/Users/Tom/AppData/Roaming/Weather/config.json",
 			"settings":
 			{
-				"buffer_size": 781,
+				"buffer_size": 774,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "js/WeatherObjects.js",
-			"settings":
-			{
-				"buffer_size": 10245,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
 			}
 		}
 	],
@@ -730,6 +768,7 @@
 	],
 	"file_history":
 	[
+		"/C/Users/tom/Documents/GitHub/weather/js/Weather3D.js",
 		"/C/Users/tom/Documents/GitHub/weather/css/loader.css",
 		"/C/Users/tom/Documents/GitHub/weather/index.html",
 		"/C/Users/tom/Documents/GitHub/weather/css/slick_custom.css",
@@ -856,18 +895,18 @@
 		"/C/msys64/home/tom/develop/webots/include/controller/c/webots/types.h",
 		"/C/msys64/home/tom/develop/webots/include/controller/c/webots/supervisor.h",
 		"/C/msys64/home/tom/develop/webots/include/controller/c/webots/nodes.h",
-		"/C/Users/tom/Documents/supervisor_get_def.wrl",
-		"/C/msys64/home/tom/develop/webots/resources/languages/cpp/Supervisor.cpp"
+		"/C/Users/tom/Documents/supervisor_get_def.wrl"
 	],
 	"find":
 	{
-		"height": 26.0
+		"height": 49.0
 	},
 	"find_in_files":
 	{
-		"height": 90.0,
+		"height": 135.0,
 		"where_history":
 		[
+			"C:\\Users\\tom\\Documents\\GitHub\\weather\\js, C:\\Users\\tom\\Documents\\GitHub\\weather\\css",
 			"",
 			"<current file>",
 			"C:\\msys64\\home\\tom\\develop\\renault-hlg\\controllers",
@@ -889,6 +928,39 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"createUI",
+			"THREE",
+			"preLoadCloudModels",
+			"lightCloudMeshes",
+			"createLightClouds",
+			"this.lightCloudMeshes",
+			"this",
+			"createLightClouds",
+			"updateRequired",
+			"this",
+			"bruhHello",
+			"weather3D",
+			"updateUI",
+			"deltaTime",
+			"oldTime",
+			"newTime",
+			"preLoadCloudModels",
+			"sunrise",
+			"defaultWeatherData",
+			"this.sunrise",
+			"defaultWeatherData",
+			"updateSky",
+			"defaultWeatherData",
+			"updateSky",
+			"createSky",
+			"createSceneObjects",
+			"createWeatherScene",
+			"preLoadCloudModels",
+			"init",
+			"loadWeatherData",
+			"locationArea",
+			"weatherData.sys.country",
+			"updateWeatherScene",
 			"200px",
 			"toBp",
 			"opacity",
@@ -983,40 +1055,7 @@
 			"200ms",
 			"fff",
 			"carousel",
-			"none",
-			";\n",
-			"inherit",
-			"back",
-			"webkit",
-			"border",
-			"top",
-			"position",
-			"top",
-			"index",
-			"font",
-			"padding",
-			"background",
-			"true",
-			"4",
-			"arrow",
-			".right",
-			".left",
-			"left",
-			"setUnits",
-			"0",
-			"focus",
-			"000",
-			"setTextColor",
-			"transparent",
-			"inherit",
-			"fff",
-			"document",
-			"}\n",
-			"function",
-			"formattedTime",
-			"updateUI",
-			"document",
-			"updateUI"
+			"none"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1071,7 +1110,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
@@ -1080,15 +1119,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16165,
+						"buffer_size": 13043,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								14933,
-								14943
+								12102,
+								12102
 							]
 						],
 						"settings":
@@ -1102,31 +1141,61 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 389.0,
+						"translation.y": 1232.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "js/DataLoader.js",
+					"file": "css/loader-specific.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8916,
+						"buffer_size": 4030,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2757,
-								2788
-							],
+								3408,
+								3408
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2506.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/DataLoader.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9205,
+						"regions":
+						{
+						},
+						"selection":
+						[
 							[
-								3440,
-								3409
+								5672,
+								5672
 							]
 						],
 						"settings":
@@ -1140,47 +1209,213 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1635.0,
+						"translation.y": 2184.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "css/Weather3D.css",
+					"buffer": 4,
+					"file": "js/Weather3D.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4975,
+						"buffer_size": 16380,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1465,
-								1469
+								0,
+								16380
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6855.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "js/WeatherObjects.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10218,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1374,
+								1383
 							],
 							[
-								3130,
-								3134
-							],
+								3012,
+								3021
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1218.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1796,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										202,
+										225
+									],
+									[
+										258,
+										281
+									],
+									[
+										595,
+										618
+									],
+									[
+										651,
+										674
+									],
+									[
+										915,
+										924
+									],
+									[
+										1082,
+										1091
+									],
+									[
+										1422,
+										1431
+									],
+									[
+										1691,
+										1700
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
 							[
-								3408,
-								3412
-							],
+								1426,
+								1426
+							]
+						],
+						"settings":
+						{
+							"default_dir": "C:\\Users\\tom\\Documents\\GitHub\\weather",
+							"detect_indentation": false,
+							"git_gutter_is_enabled": false,
+							"incomplete_sync": null,
+							"line_numbers": false,
+							"output_tag": 3,
+							"remote_loading": false,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"synced": false,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 288.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "js/WeatherManager.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13275,
+						"regions":
+						{
+						},
+						"selection":
+						[
 							[
-								3579,
-								3583
-							],
+								4189,
+								4196
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1297.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "css/Weather3D.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5090,
+						"regions":
+						{
+						},
+						"selection":
+						[
 							[
-								3974,
-								3978
-							],
-							[
-								4390,
-								4394
+								235,
+								235
 							]
 						],
 						"settings":
@@ -1197,24 +1432,58 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "css/loader.css",
+					"buffer": 9,
+					"file": "css/demo.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1373,
+						"buffer_size": 3931,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1233,
-								1233
+								649,
+								639
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "css/loader.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1482,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								925,
+								925
 							]
 						],
 						"settings":
@@ -1228,47 +1497,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 234.0,
+						"translation.y": 252.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "js/Weather3D.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16442,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 6616.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
+					"buffer": 11,
 					"file": "package.json",
 					"semi_transient": false,
 					"settings":
@@ -1297,16 +1533,16 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 12,
 					"file": "/C/Users/Tom/AppData/Roaming/Weather/config.json",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 781,
+						"buffer_size": 774,
 						"regions":
 						{
 						},
@@ -1329,40 +1565,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "js/WeatherObjects.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10245,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2231.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1433,6 +1636,42 @@
 		"selected_items":
 		[
 			[
+				"weather",
+				"js\\WeatherObjects.js"
+			],
+			[
+				"demo",
+				"css\\demo.css"
+			],
+			[
+				"index",
+				"index.html"
+			],
+			[
+				"wea",
+				"js\\Weather3D.js"
+			],
+			[
+				"weather3d.",
+				"js\\Weather3D.js"
+			],
+			[
+				"datal",
+				"js\\DataLoader.js"
+			],
+			[
+				"loader",
+				"css\\loader-specific.css"
+			],
+			[
+				"weatherma",
+				"js\\WeatherManager.js"
+			],
+			[
+				"weather3d",
+				"js\\Weather3D.js"
+			],
+			[
 				"main",
 				"main.js"
 			],
@@ -1471,10 +1710,6 @@
 			[
 				"ui",
 				"js\\ui.js"
-			],
-			[
-				"wea",
-				"js\\Weather3D.js"
 			],
 			[
 				"i",
