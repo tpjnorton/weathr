@@ -61,7 +61,6 @@ function setUnits(e) {
   reloadSettings();
 }
 
-// config.delete("location");
 const menu = new Menu()
 unitsMetric = new MenuItem({
   isMetric: true,
@@ -155,20 +154,20 @@ function loadWeatherData() {
   let currentWeatherUrl = tempUrl + "?" + "lat=" + pos.lat + "&lon=" + pos.lng + "&" + "APPID=" + weatherApiKey + "&units=metric";
   fetch(currentWeatherUrl)
     .then((resp) => resp.json()) // Transform the data into json
-    .then(updateWeatherScene, error)
+    .then(loadForecastData, error)
 }
 
-function updateWeatherScene(weatherResp) {
+function loadForecastData(weatherResp) {
   weatherData = weatherResp;
   config.set("weatherData", weatherResp);
   pos = config.get("location");
   let forecastDataUrl = forecastUrl + "?" + "lat=" + pos.lat + "&lon=" + pos.lng + "&" + "APPID=" + weatherApiKey + "&units=metric";
   fetch(forecastDataUrl)
     .then((resp) => resp.json()) // Transform the data into json
-    .then(testForecastData, error)
+    .then(finalizeForecastData, error)
 }
 
-function testForecastData(data) {
+function finalizeForecastData(data) {
   // we've got our new weather data, so now we can hide the change location form
   document.querySelector(".weatherData").style.display = "block";
   document.querySelector(".locationArea").style.display = "none";
@@ -187,6 +186,7 @@ function testForecastData(data) {
 
   manager = new WeatherManager(forecastData);
   manager.setup(weather3D.weather);
+
   today = manager.dayWiseUnits()[0];
   weather3D.weather = today[0];
   firstDay = today[0].realDay;
