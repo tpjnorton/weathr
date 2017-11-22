@@ -151,6 +151,7 @@ function enterLocationIfNeeded() {
 
 function loadWeatherData() {
   pos = config.get("location");
+  pos = pos.coords;
   let currentWeatherUrl = tempUrl + "?" + "lat=" + pos.lat + "&lon=" + pos.lng + "&" + "APPID=" + weatherApiKey + "&units=metric";
   fetch(currentWeatherUrl)
     .then((resp) => resp.json()) // Transform the data into json
@@ -161,6 +162,7 @@ function loadForecastData(weatherResp) {
   weatherData = weatherResp;
   config.set("weatherData", weatherResp);
   pos = config.get("location");
+  pos = pos.coords;
   let forecastDataUrl = forecastUrl + "?" + "lat=" + pos.lat + "&lon=" + pos.lng + "&" + "APPID=" + weatherApiKey + "&units=metric";
   fetch(forecastDataUrl)
     .then((resp) => resp.json()) // Transform the data into json
@@ -172,7 +174,12 @@ function finalizeForecastData(data) {
   document.querySelector(".weatherData").style.display = "block";
   document.querySelector(".locationArea").style.display = "none";
   forecastData = data;
-  forecastData.coords = config.get("location");
+  pos = config.get("location");
+  city = pos.city;
+  country = pos.country;
+  forecastData.coords = pos.coords;
+  forecastData.city.name = city;
+  forecastData.city.country = country;
   let updateRequired = false;
   if (!weather3D) {
     weather3D = new Weather3D(config.get("weatherData"), isMetric);
@@ -240,14 +247,36 @@ function finalizeForecastData(data) {
 
 }
 
-function retreiveCoords(data) {
-  if (data.status != "OK") {
+function retreiveCoords(geocodingResponse) {
+  if (geocodingResponse.status != "OK") {
     error();
     return;
   }
-  coords = data.results[0].geometry.location;
-  config.set("location", coords);
+  saveLocationInformation(geocodingResponse);
   retry(false);
+}
+
+function saveLocationInformation(response) {
+  let results = response.results[0];
+  let coords = results.geometry.location;
+  let address = response.results[0].address_components;
+  let city = "";
+  let country = "";
+  let location = {};
+
+  city = address[0].long_name;
+
+  for (var value of address) {
+    if (value.types[0] == "country")
+      country = value.long_name;
+  }
+
+  location.coords = coords;
+  location.city = city;
+  location.country = country;
+
+
+  config.set("location", location);
 }
 
 function fetchLocation() {

@@ -507,7 +507,7 @@ Weather3D.prototype.init = function() {
 
 function updateUI(weatherUnit) {
   var locDOM = document.querySelector("#location");
-  var counrty = document.querySelector("#country");
+  var country = document.querySelector("#country");
   locDOM.innerHTML = weatherUnit.city;
   country.innerHTML = weatherUnit.country;
   var tempDOM = document.querySelector("#temp");
