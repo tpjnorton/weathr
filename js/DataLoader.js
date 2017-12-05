@@ -266,9 +266,17 @@ function saveLocationInformation(response) {
 
   city = address[0].long_name;
 
+  console.log(address);
+
   for (var value of address) {
     if (value.types[0] == "country")
       country = value.long_name;
+    else {
+      // if (value.types[0] === "administrative_area_level_2" || value.types[1] === "administrative_area_level_2")
+      //   city = city + ", " + value.short_name;
+      if (value.types[0] === "administrative_area_level_1" || value.types[1] === "administrative_area_level_1")
+        city = city + ", " + value.short_name;
+    }
   }
 
   location.coords = coords;
