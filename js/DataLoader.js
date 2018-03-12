@@ -220,7 +220,7 @@ function testForecastData(data) {
       if (nextSlide == 0) {
         document.querySelector(".slick-prev").disabled = true;
         document.querySelector(".slick-next").disabled = false;
-        weather3D.weather = day[2];
+        weather3D.weather = day[0];
         weather3D.updateWeather();
         return;
       }
@@ -232,7 +232,7 @@ function testForecastData(data) {
         document.querySelector(".slick-prev").disabled = false;
         document.querySelector(".slick-next").disabled = false;
       }
-      weather3D.weather = day[2];
+      weather3D.weather = day[0];
       weather3D.updateWeather();
     }
   });
