@@ -316,6 +316,9 @@ Weather3D.prototype.updateSky = function() {
 }
 
 Weather3D.prototype.updateWeather = function() {
+  if (this.scene === undefined)
+    return;
+
   // hide all objects, we can selectively show them afterwards
   console.log(this.weather);
   oldTime = this.effectController.timeOfDay;
@@ -428,6 +431,9 @@ Weather3D.prototype.renderOneFrame = function() {
 }
 
 Weather3D.prototype.setTextColor = function(night, rain) {
+  if (that.weather.guiElement == undefined)
+    return;
+
   var weatherData = document.querySelector(".weatherData");
   var header = document.querySelector(".header");
   if (that.weather.guiElement !== undefined) {
