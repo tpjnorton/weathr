@@ -194,40 +194,6 @@ WeatherManager.prototype.attachGuiElements = function() {
     }
     document.querySelector(".carousel").appendChild(dayElement);
   }
-
-  var switcher = document.createElement("div");
-  switcher.setAttribute("class", "forecastSwitcher");
-
-  var morning = document.createElement("button");
-  morning.innerHTML = "Morning";
-  var afternoon = document.createElement("button");
-  afternoon.innerHTML = "Afternoon";
-  var evening = document.createElement("button");
-
-  morning.onclick = () => { 
-    morning.setAttribute("class", "active"); 
-    afternoon.setAttribute("class", "");
-    evening.setAttribute("class", "");
-  }
-
-  afternoon.onclick = () => { 
-    afternoon.setAttribute("class", "active"); 
-    morning.setAttribute("class", "");
-    evening.setAttribute("class", "");
-  }
-
-  evening.onclick = () => { 
-    evening.setAttribute("class", "active"); 
-    morning.setAttribute("class", "");
-    afternoon.setAttribute("class", "");
-  }
-
-  evening.innerHTML = "Evening";
-  morning.click();
-  switcher.appendChild(morning);
-  switcher.appendChild(afternoon);
-  switcher.appendChild(evening);
-  $(switcher).insertBefore(".carousel");
 }
 
 WeatherManager.createWeatherHtmlElement = function() {

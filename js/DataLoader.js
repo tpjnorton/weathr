@@ -23,6 +23,8 @@ var coords = {
   lon: ""
 };
 
+var currentDay = 0;
+
 currentWeather = undefined;
 forecast = undefined;
 
@@ -203,6 +205,47 @@ function testForecastData(data) {
     });
     carouselSlicked = true;
   }
+
+
+  var switcher = document.createElement("div");
+  switcher.setAttribute("class", "forecastSwitcher");
+
+  var morning = document.createElement("button");
+  morning.innerHTML = "Morning";
+  var afternoon = document.createElement("button");
+  afternoon.innerHTML = "Afternoon";
+  var evening = document.createElement("button");
+
+  morning.onclick = () => { 
+    morning.setAttribute("class", "active"); 
+    afternoon.setAttribute("class", "");
+    evening.setAttribute("class", "");
+    handleSwitcherClick(manager);
+  }
+
+  afternoon.onclick = () => { 
+    afternoon.setAttribute("class", "active"); 
+    morning.setAttribute("class", "");
+    evening.setAttribute("class", "");
+    handleSwitcherClick(manager);
+  }
+
+  evening.onclick = () => { 
+    evening.setAttribute("class", "active"); 
+    morning.setAttribute("class", "");
+    afternoon.setAttribute("class", "");
+    handleSwitcherClick(manager);
+  }
+
+  evening.innerHTML = "Evening";
+  morning.click();
+  switcher.appendChild(morning);
+  switcher.appendChild(afternoon);
+  switcher.appendChild(evening);
+  $(switcher).insertBefore(".carousel");
+
+
+  document.querySelector(".forecastSwitcher").style.visibility = "hidden";
   weather3D.updateWeather();
   document.querySelector(".slick-prev").disabled = true;
   window.addEventListener("keydown", function(e) {
@@ -214,7 +257,8 @@ function testForecastData(data) {
       $('.slick-prev').trigger('click');
   });
 
-  $('.carousel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+  $('.carousel').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+    currentDay = nextSlide;
     if (weather3D !== null) {
       day = manager.dayWiseUnits()[nextSlide]
       if (nextSlide == 0) {
@@ -222,6 +266,8 @@ function testForecastData(data) {
         document.querySelector(".slick-next").disabled = false;
         weather3D.weather = day[0];
         weather3D.updateWeather();
+        document.querySelector(".forecastSwitcher").style.visibility = "hidden";
+        console.log(day);
         return;
       }
       else if (nextSlide == 4) {
@@ -232,11 +278,25 @@ function testForecastData(data) {
         document.querySelector(".slick-prev").disabled = false;
         document.querySelector(".slick-next").disabled = false;
       }
-      weather3D.weather = day[0];
+
+      document.querySelector(".forecastSwitcher").style.visibility = "visible";
+      weather3D.weather = day[$(".active").index() + 1];
       weather3D.updateWeather();
     }
   });
 
+}
+
+function handleSwitcherClick(manager) {
+  let days = manager.dayWiseUnits();
+  weather3D.weather = days[currentDay][$(".active").index() + 1];
+
+  for (i = 0; i < days[currentDay].length; ++i) {
+    days[currentDay][i].guiElement.style.display = "none";
+  }
+
+  days[currentDay][$(".active").index() + 1].guiElement.style.display = "block";
+  weather3D.updateWeather();
 }
 
 function retreiveCoords(data) {
