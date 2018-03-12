@@ -246,6 +246,12 @@ Weather3D.prototype.updateTimeOfDay = function() {
   else if (now < sunrise) {
     targetTime = 0.5 * (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)));
   }
+
+  if (targetTime < 0.0)
+    targetTime += 1.0;
+  else if (targetTime > 1.0)
+    targetTime -= 1.0;
+
   TweenMax.to(that.skyParams, 2, {
     timeOfDay: targetTime,
     onUpdate: that.updateSky,
