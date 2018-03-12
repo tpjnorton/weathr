@@ -206,46 +206,47 @@ function testForecastData(data) {
     carouselSlicked = true;
   }
 
+  if (document.querySelector(".forecastSwitcher") === null) {
+    var switcher = document.createElement("div");
+    switcher.setAttribute("class", "forecastSwitcher");
 
-  var switcher = document.createElement("div");
-  switcher.setAttribute("class", "forecastSwitcher");
+    var morning = document.createElement("button");
+    morning.innerHTML = "Morning";
+    var afternoon = document.createElement("button");
+    afternoon.innerHTML = "Afternoon";
+    var evening = document.createElement("button");
 
-  var morning = document.createElement("button");
-  morning.innerHTML = "Morning";
-  var afternoon = document.createElement("button");
-  afternoon.innerHTML = "Afternoon";
-  var evening = document.createElement("button");
+    morning.onclick = () => { 
+      morning.setAttribute("class", "active"); 
+      afternoon.setAttribute("class", "");
+      evening.setAttribute("class", "");
+      handleSwitcherClick(manager);
+    }
 
-  morning.onclick = () => { 
-    morning.setAttribute("class", "active"); 
-    afternoon.setAttribute("class", "");
-    evening.setAttribute("class", "");
-    handleSwitcherClick(manager);
+    afternoon.onclick = () => { 
+      afternoon.setAttribute("class", "active"); 
+      morning.setAttribute("class", "");
+      evening.setAttribute("class", "");
+      handleSwitcherClick(manager);
+    }
+
+    evening.onclick = () => { 
+      evening.setAttribute("class", "active"); 
+      morning.setAttribute("class", "");
+      afternoon.setAttribute("class", "");
+      handleSwitcherClick(manager);
+    }
+
+    evening.innerHTML = "Evening";
+    morning.click();
+    switcher.appendChild(morning);
+    switcher.appendChild(afternoon);
+    switcher.appendChild(evening);
+    $(switcher).insertBefore(".carousel");
+    
+    document.querySelector(".forecastSwitcher").style.visibility = "hidden";
   }
 
-  afternoon.onclick = () => { 
-    afternoon.setAttribute("class", "active"); 
-    morning.setAttribute("class", "");
-    evening.setAttribute("class", "");
-    handleSwitcherClick(manager);
-  }
-
-  evening.onclick = () => { 
-    evening.setAttribute("class", "active"); 
-    morning.setAttribute("class", "");
-    afternoon.setAttribute("class", "");
-    handleSwitcherClick(manager);
-  }
-
-  evening.innerHTML = "Evening";
-  morning.click();
-  switcher.appendChild(morning);
-  switcher.appendChild(afternoon);
-  switcher.appendChild(evening);
-  $(switcher).insertBefore(".carousel");
-
-
-  document.querySelector(".forecastSwitcher").style.visibility = "hidden";
   weather3D.updateWeather();
   document.querySelector(".slick-prev").disabled = true;
   window.addEventListener("keydown", function(e) {
@@ -411,6 +412,6 @@ defaultWeatherData = {
     "sunset": Date.now() / 1000 + 21600
   },
   "id": 6458866,
-  "name": "District de Lausanne",
+  "name": "Lausanne",
   "cod": 200
 };
