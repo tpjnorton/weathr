@@ -280,6 +280,47 @@ input[type=button]:active {
   outline: none;
 }
 
+.forecastSwitcher button {
+  font-family: 'Roboto Mono', sans-serif;
+  border: 1px solid transparent;
+  color: inherit;
+  background: rgba(135, 255, 227, 0.2);
+  padding: 7px 10px;
+  margin: 5px 0px;
+  margin-top: 10px;
+  z-index: 2000;
+  pointer-events: all;
+  cursor: pointer;
+  transition: background-color 0.1s linear;
+}
+
+.forecastSwitcher button:nth-child(1) {
+  border-radius: 4px 0px 0px 4px;
+}
+
+.forecastSwitcher button:nth-child(2) {
+  border-radius: 0px;
+}
+
+.forecastSwitcher button:nth-child(3) {
+  border-radius: 0px 4px 4px 0px;
+}
+
+.forecastSwitcher button:hover {
+  background: #80bfb0;
+}
+
+.forecastSwitcher .active {
+  background: #87ffe3;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0px 2px 16px 0 rgba(0,0,0,0.2)
+}
+
+.forecastSwitcher .active:hover {
+  background: #87ffe3;
+}
+
 @media all and (max-width: 400px) {
   .weatherData {
     position: absolute;
