@@ -17,7 +17,7 @@ var Colors = {
   nightTime: 0x010321
 };
 
-EffectController = function() {
+SkyParams = function() {
   this.turbidity = 10;
   this.rayleigh = 2;
   this.mieCoefficient = 0.005;
@@ -36,8 +36,7 @@ var params = {
 
   earthRadius: 800,
   earthLength: 800,
-  earthRotationSpeed: 0.006,
-
+  
   displacementMinAmp: 4,
   displacementMaxAmp: 10,
   displacementMinSpeed: 0.001,
@@ -54,7 +53,7 @@ Weather3D = function(weather, metricUnits) {
   this.params = params;
   this.newTime = new Date().getTime();
   this.oldTime = new Date().getTime();
-  this.effectController = new EffectController();
+  this.skyParams = new SkyParams();
   this.weather = weather;
   that = this;
   this.stormEventsPossible = false;
@@ -192,7 +191,7 @@ Weather3D.prototype.createLightClouds = function(cloudCoverage) {
 
 Weather3D.prototype.updateLightColors = function() {
   var newColor;
-  var dayTime = this.effectController.timeOfDay;
+  var dayTime = this.skyParams.timeOfDay;
   var starOpacity;
   if (dayTime < 0.74 && dayTime >= 0.26) {
     this.sunLight.color = new THREE.Color(0xffffff);
@@ -236,7 +235,7 @@ Weather3D.prototype.updateTimeOfDay = function() {
   var now = Date.now() / 1000;
   if (that.weather.time > now)
     now = that.weather.time;
-  var originalTime = that.effectController.timeOfDay;
+  var originalTime = that.skyParams.timeOfDay;
   var targetTime;
   if (now >= sunrise && now <= sunset) {
     targetTime = 0.25 + (now - sunrise) / (2 * (sunset - sunrise));
@@ -247,7 +246,7 @@ Weather3D.prototype.updateTimeOfDay = function() {
   else if (now < sunrise) {
     targetTime = 0.5 * (now - (sunset - 86400)) / (2 * (sunrise - (sunset - 86400)));
   }
-  TweenMax.to(that.effectController, 2, {
+  TweenMax.to(that.skyParams, 2, {
     timeOfDay: targetTime,
     onUpdate: that.updateSky,
     ease: Quad.easeInOut,
@@ -265,16 +264,16 @@ Weather3D.prototype.createSky = function() {
       color: 0xff00ff
     })
   );
-  // this.scene.add(this.sphereHelper);
+
 
   // var gui = new dat.GUI();
-  // gui.add(this.effectController, "turbidity", 1.0, 20.0, 0.1).onChange(this.updateSky);
-  // gui.add(this.effectController, "rayleigh", 0.0, 4, 0.001).onChange(this.updateSky);
-  // gui.add(this.effectController, "mieCoefficient", 0.0, 0.1, 0.001).onChange(this.updateSky);
-  // gui.add(this.effectController, "mieDirectionalG", 0.0, 1, 0.001).onChange(this.updateSky);
-  // gui.add(this.effectController, "luminance", 0.0, 2).onChange(this.updateSky);
-  // gui.add(this.effectController, "timeOfDay", 0, 1, 0.0001).onChange(this.updateSky);
-  // gui.add(this.effectController, "sun").onChange(this.updateSky);
+  // gui.add(this.skyParams, "turbidity", 1.0, 20.0, 0.1).onChange(this.updateSky);
+  // gui.add(this.skyParams, "rayleigh", 0.0, 4, 0.001).onChange(this.updateSky);
+  // gui.add(this.skyParams, "mieCoefficient", 0.0, 0.1, 0.001).onChange(this.updateSky);
+  // gui.add(this.skyParams, "mieDirectionalG", 0.0, 1, 0.001).onChange(this.updateSky);
+  // gui.add(this.skyParams, "luminance", 0.0, 2).onChange(this.updateSky);
+  // gui.add(this.skyParams, "timeOfDay", 0, 1, 0.0001).onChange(this.updateSky);
+  // gui.add(this.skyParams, "sun").onChange(this.updateSky);
 
   this.updateSky();
 }
@@ -287,20 +286,20 @@ Weather3D.prototype.createStormEvents = function() {
 
 Weather3D.prototype.updateSky = function() {
   var uniforms = that.sky.uniforms;
-  uniforms.turbidity.value = that.effectController.turbidity;
-  uniforms.rayleigh.value = that.effectController.rayleigh;
-  uniforms.luminance.value = that.effectController.luminance;
-  uniforms.mieCoefficient.value = that.effectController.mieCoefficient;
-  uniforms.mieDirectionalG.value = that.effectController.mieDirectionalG;
+  uniforms.turbidity.value = that.skyParams.turbidity;
+  uniforms.rayleigh.value = that.skyParams.rayleigh;
+  uniforms.luminance.value = that.skyParams.luminance;
+  uniforms.mieCoefficient.value = that.skyParams.mieCoefficient;
+  uniforms.mieDirectionalG.value = that.skyParams.mieDirectionalG;
 
-  that.sphereHelper.position.x = Math.sin((that.effectController.timeOfDay * 2 * Math.PI) - (Math.PI)) * 250;
-  that.sphereHelper.position.y = Math.cos((that.effectController.timeOfDay * 2 * Math.PI) - (Math.PI)) * 500;
+  that.sphereHelper.position.x = Math.sin((that.skyParams.timeOfDay * 2 * Math.PI) - (Math.PI)) * 250;
+  that.sphereHelper.position.y = Math.cos((that.skyParams.timeOfDay * 2 * Math.PI) - (Math.PI)) * 500;
   that.sphereHelper.position.z = -600;
-  that.sphereHelper.visible = that.effectController.sun;
+  that.sphereHelper.visible = that.skyParams.sun;
   that.sky.uniforms.sunPosition.value.copy(that.sphereHelper.position);
 
-  that.moon.mesh.position.x = Math.sin((that.effectController.timeOfDay * 2 * Math.PI)) * 250 * 1.2;
-  that.moon.mesh.position.y = -50 + Math.cos((that.effectController.timeOfDay * 2 * Math.PI)) * 500 * 1.1 - 100;
+  that.moon.mesh.position.x = Math.sin((that.skyParams.timeOfDay * 2 * Math.PI)) * 250 * 1.2;
+  that.moon.mesh.position.y = -50 + Math.cos((that.skyParams.timeOfDay * 2 * Math.PI)) * 500 * 1.1 - 100;
   that.moon.mesh.position.z = -600;
 
   that.sun.mesh.position.x = that.sphereHelper.position.x * 1.2;
@@ -320,11 +319,11 @@ Weather3D.prototype.updateWeather = function() {
     return;
 
   // hide all objects, we can selectively show them afterwards
-  console.log(this.weather);
-  oldTime = this.effectController.timeOfDay;
-  this.scene.fog.far = 2000;
-  this.effectController = new EffectController();
-  this.effectController.timeOfDay = oldTime;
+  console.log(this);
+  oldTime = this.skyParams.timeOfDay;
+    
+  this.skyParams = new SkyParams();
+  this.skyParams.timeOfDay = oldTime;
   this.lightClouds.setCoverage(0);
   this.heavyClouds.mesh.visible = false;
   this.rain.rainPointCloud.visible = false;
@@ -349,14 +348,14 @@ Weather3D.prototype.updateWeather = function() {
     this.heavyClouds.mesh.visible = true;
     this.ambientLight.color = new THREE.Color(0xce3ece);
     this.ambientLight.intensity = 0.3;
-    this.effectController.rayleigh = 1;
-    this.effectController.turbidity = 11;
-    this.effectController.luminance = 0.6;
-    this.effectController.mieDirectionalG = 0.087;
+    this.skyParams.rayleigh = 1;
+    this.skyParams.turbidity = 11;
+    this.skyParams.luminance = 0.6;
+    this.skyParams.mieDirectionalG = 0.087;
     this.sunLight.intensity = 0.8;
     this.earth.mesh.material.color = new THREE.Color(Colors.greenDesaturated);
     this.heavyClouds.mesh.material.color = new THREE.Color(Colors.grey);
-    this.effectController.turbidity = 80;
+    this.skyParams.turbidity = 80;
     if (this.weather.description === "Rain" || this.weather.description === "Drizzle") {
       this.rain.rainPointCloud.visible = true;
       this.heavyClouds.mesh.material.color = new THREE.Color(Colors.greyDark);
@@ -365,7 +364,7 @@ Weather3D.prototype.updateWeather = function() {
     else if (this.weather.description == "Snow") {
       this.snow.snowPointCloud.visible = true;
       this.earth.mesh.material.color = new THREE.Color(0x999999);
-      this.effectController.rayleigh = 0.1;
+      this.skyParams.rayleigh = 0.1;
     }
 
     else if (this.weather.description == "Thunderstorm") {
@@ -436,12 +435,10 @@ Weather3D.prototype.setTextColor = function(night, rain) {
 
   var weatherData = document.querySelector(".weatherData");
   var header = document.querySelector(".header");
-  if (that.weather.guiElement !== undefined) {
-    var divider = that.weather.guiElement.children[0];
-    var dots = document.querySelector(".slick-dots");
-    var next = document.querySelector(".slick-next");
-    var prev = document.querySelector(".slick-prev");
-  }
+  var divider = that.weather.guiElement.children[0];
+  var dots = document.querySelector(".slick-dots");
+  var next = document.querySelector(".slick-next");
+  var prev = document.querySelector(".slick-prev");
   var hamburger = document.querySelector("#hamburgerMenu");
   var location = document.querySelector("#location");
 
