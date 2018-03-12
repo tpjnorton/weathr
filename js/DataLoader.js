@@ -61,6 +61,7 @@ function setUnits(e) {
   reloadSettings();
 }
 
+// config.delete("location");
 const menu = new Menu()
 unitsMetric = new MenuItem({
   isMetric: true,
@@ -131,7 +132,7 @@ function enterLocationIfNeeded() {
     retry(true);
   else {
     if (!weather3D) {
-      weather3D = new Weather3D(defaultWeatherDataAsUnit, isMetric);
+      weather3D = new Weather3D(defaultWeatherData, isMetric);
       weather3D.init();
     }
     document.querySelector(".weatherData").style.display = "none";
@@ -151,36 +152,29 @@ function enterLocationIfNeeded() {
 
 function loadWeatherData() {
   pos = config.get("location");
-  pos = pos.coords;
   let currentWeatherUrl = tempUrl + "?" + "lat=" + pos.lat + "&lon=" + pos.lng + "&" + "APPID=" + weatherApiKey + "&units=metric";
   fetch(currentWeatherUrl)
     .then((resp) => resp.json()) // Transform the data into json
-    .then(loadForecastData, error)
+    .then(updateWeatherScene, error)
 }
 
-function loadForecastData(weatherResp) {
+function updateWeatherScene(weatherResp) {
   weatherData = weatherResp;
   config.set("weatherData", weatherResp);
   pos = config.get("location");
-  pos = pos.coords;
   let forecastDataUrl = forecastUrl + "?" + "lat=" + pos.lat + "&lon=" + pos.lng + "&" + "APPID=" + weatherApiKey + "&units=metric";
   fetch(forecastDataUrl)
     .then((resp) => resp.json()) // Transform the data into json
-    .then(finalizeForecastData, error)
+    .then(testForecastData, error)
 }
 
-function finalizeForecastData(data) {
+function testForecastData(data) {
   // we've got our new weather data, so now we can hide the change location form
   document.querySelector(".weatherData").style.display = "block";
   document.querySelector(".locationArea").style.display = "none";
   forecastData = data;
-  pos = config.get("location");
-  city = pos.city;
-  country = pos.country;
-  forecastData.coords = pos.coords;
-  forecastData.city.name = city;
-  forecastData.city.country = country;
-  let updateRequired = false;
+  forecastData.coords = config.get("location");
+
   if (!weather3D) {
     weather3D = new Weather3D(config.get("weatherData"), isMetric);
     weather3D.init();
@@ -188,12 +182,11 @@ function finalizeForecastData(data) {
   else {
     weather3D.weather = config.get("weatherData");
     weather3D.metricUnits = isMetric;
-    updateRequired = true;
+    weather3D.updateWeather();
   }
 
   manager = new WeatherManager(forecastData);
   manager.setup(weather3D.weather);
-
   today = manager.dayWiseUnits()[0];
   weather3D.weather = today[0];
   firstDay = today[0].realDay;
@@ -210,8 +203,7 @@ function finalizeForecastData(data) {
     });
     carouselSlicked = true;
   }
-  if (updateRequired)
-    weather3D.updateWeather();
+  weather3D.updateWeather();
   document.querySelector(".slick-prev").disabled = true;
   window.addEventListener("keydown", function(e) {
     var event = e || window.event;
@@ -228,7 +220,7 @@ function finalizeForecastData(data) {
       if (nextSlide == 0) {
         document.querySelector(".slick-prev").disabled = true;
         document.querySelector(".slick-next").disabled = false;
-        weather3D.weather = day[0];
+        weather3D.weather = day[2];
         weather3D.updateWeather();
         return;
       }
@@ -240,21 +232,23 @@ function finalizeForecastData(data) {
         document.querySelector(".slick-prev").disabled = false;
         document.querySelector(".slick-next").disabled = false;
       }
-      weather3D.weather = day[0];
+      weather3D.weather = day[2];
       weather3D.updateWeather();
     }
   });
 
 }
 
-function retreiveCoords(geocodingResponse) {
-  if (geocodingResponse.status != "OK") {
+function retreiveCoords(data) {
+  if (data.status != "OK") {
     error();
     return;
   }
-  saveLocationInformation(geocodingResponse);
+  coords = data.results[0].geometry.location;
+  config.set("location", coords);
   retry(false);
 }
+
 
 function saveLocationInformation(response) {
   let results = response.results[0];
@@ -345,9 +339,9 @@ defaultWeatherData = {
     "deg": 90
   },
   "clouds": {
-    "all": 0
+    "all": 20
   },
-  "dt": Date.now() / 1000,
+  "dt": Date.now(),
   "sys": {
     "type": 1,
     "id": 6002,
@@ -360,7 +354,3 @@ defaultWeatherData = {
   "name": "District de Lausanne",
   "cod": 200
 };
-
-defaultWeatherDataAsUnit = new WeatherDataUnit(defaultWeatherData);
-defaultWeatherDataAsUnit.sunrise = defaultWeatherData.sys.sunrise;
-defaultWeatherDataAsUnit.sunset = defaultWeatherData.sys.sunset;
