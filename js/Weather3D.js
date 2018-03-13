@@ -252,6 +252,8 @@ Weather3D.prototype.updateTimeOfDay = function() {
   else if (targetTime > 1.0)
     targetTime -= 1.0;
 
+  TweenMax.killAll();
+
   TweenMax.to(that.skyParams, 2, {
     timeOfDay: targetTime,
     onUpdate: that.updateSky,
