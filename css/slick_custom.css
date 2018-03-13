@@ -49,11 +49,11 @@
 }
 
 .slick-arrow:active.slick-prev {
-  transform: rotate(-135deg) scale(0.8);
+  transform: rotate(-135deg) scale(1.3);
 }
 
 .slick-arrow:active.slick-next {
-  transform: rotate(45deg) scale(0.8);
+  transform: rotate(45deg) scale(1.3);
 }
 
 .slick-arrow:disabled {
