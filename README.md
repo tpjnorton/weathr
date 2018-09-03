@@ -1,4 +1,4 @@
-# Weather
+# Weathr
 
 ![alt text](https://tn12787.github.io/resources/weather_screenshot.png)
 
