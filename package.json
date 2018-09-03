@@ -1,6 +1,6 @@
 {
-  "name": "Weather",
-  "version": "0.0.1",
+  "name": "Weathr",
+  "version": "1.0.0",
   "description": "A beautiful weather application",
   "main": "main.js",
   "scripts": {
